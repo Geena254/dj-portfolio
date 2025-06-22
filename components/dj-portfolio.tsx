@@ -19,10 +19,9 @@ import {
   Phone,
 } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
-
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import CustomCursor from "@/components/custom-cursor"
 import SectionTransition from "@/components/section-transition"
 import Navbar from "@/components/navbar"
@@ -31,7 +30,7 @@ import ImageWithLoading from "@/components/image-with-loading"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
-  const dropdownRef = useRef(null)
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -44,17 +43,17 @@ export default function DJPortfolio() {
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false)
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const musicPlatforms = [
     { name: "YouTube", icon: Youtube, href: "http://www.youtube.com/@shangatatu" },
@@ -81,7 +80,7 @@ export default function DJPortfolio() {
         />
         <div className="absolute inset-0 img-hover-zoom">
           <ImageWithLoading
-            src="/images/shangatatu-beach-dj.jpg"
+            src="/images/dj-mix.jpg"
             alt="SHANGATATU performing on the beach at sunset"
             width={1920}
             height={1080}
@@ -121,9 +120,9 @@ export default function DJPortfolio() {
             <Button
               size="lg"
               className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
-              onClick={() => (window.location.href = "mailto:tatushanga@gmail.com")}
+              onClick={() => window.open('https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view', '_blank')}
             >
-              <span className="relative z-10">Book Now</span>
+              <span className="relative z-10">View Rate Card</span>
               <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
             </Button>
 
@@ -182,7 +181,7 @@ export default function DJPortfolio() {
 
       {/* Bio Section */}
       <SectionTransition>
-        <section id="about" className="relative px-4 py-32 md:px-6 lg:px-8">
+        <section id="about" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start">
               <motion.div
@@ -191,7 +190,7 @@ export default function DJPortfolio() {
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
-                    src="/images/shangatatu-beach.jpg"
+                    src="/images/BK 9.jpg"
                     alt="SHANGATATU at the beach"
                     width={600}
                     height={600}
@@ -217,36 +216,52 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                    Shangatatu is a coastal-born creative force who channels African dance music, visual art and
-                    storytelling into immersive, soul-stirring experiences. With over 13 years behind the decks, his
-                    sets are raw, spiritual and a fusion of ancestral rhythm and modern freedom.
+                  Shangatatu is a vibrant creative born and rooted on Kenya's coast
+                  channeling positive frequencies through African dance music,
+                  merchandise and art into hypnotic, tribal soundscapes that speak to
+                  both ancient rhythm and modern freedom. With now 13 years behind
+                  the decks, Shangatatu's energy is raw, spiritual and deeply connected to
+                  nature. He is a three-in-one artist: DJ/Producer, visual Artist and human
+                  experience. Drawing inspiration from African ancestry, coastal life and
+                  street-art culture, Shangatatu creates immersive sets that go beyond
+                  music and regularly he blends his shows with live painting, body art
+                  and storytelling, forming a unique aesthetic that's both palpable and
+                  abstract like his art.
+                  Whether spinning at a festival,wedding,beach session or guest mixing
+                  on radio and podcasts, Shangatatu continues to redefine artistry on his
+                  own terms - one beat, one brushstroke and one spirit at a time.
                   </p>
                   <p className="text-xl text-gray-300 leading-relaxed">
                     As the founder of{" "}
                     <a
-                      href="https://www.instagram.com/_wira_afrika/"
+                      href="https://www.instagram.com/wirainternational/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-secondary hover:text-secondary-400 transition-colors"
                     >
-                      @_wira_afrika
+                      @wirainternational
                     </a>
-                    , he curates space for movement, connection and cultural elevation.
+                    , a festival series celebrating
+                    African dance music and alternative art, he curates space for movement,
+                    connection and cultural elevation.
                   </p>
                 </motion.div>
                 <div className="flex flex-wrap gap-4 pt-6">
                   <Button
                     variant="outline"
                     className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300"
-                    onClick={() => (window.location.href = "mailto:tatushanga@gmail.com")}
+                    onClick={() => window.open('https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view', '_blank')}
                   >
-                    <Mail className="mr-2 h-4 w-4" />
-                    EMAIL ME
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    VIEW RATE CARD
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
-                  <Button className="group bg-secondary text-white hover:bg-secondary-700 transition-all duration-300">
+                  <Button
+                    className="group bg-secondary text-white hover:bg-secondary-700 transition-all duration-300"
+                    onClick={() => window.open('https://wa.me/254715781364', '_blank')}
+                  >
                     <Phone className="mr-2 h-4 w-4" />
-                    Call Me
+                    WhatsApp Me
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </div>
@@ -284,7 +299,7 @@ export default function DJPortfolio() {
 
       {/* YouTube Mixes Section */}
       <SectionTransition>
-        <section id="mixes" className="relative px-4 py-32 md:px-6 lg:px-8">
+        <section id="mixes" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -296,88 +311,87 @@ export default function DJPortfolio() {
                 Check out my latest performances and mixes from festivals and events around the world
               </p>
             </div>
-            <Carousel className="mx-auto max-w-6xl">
-              <CarouselContent>
-                {[
-                  {
-                    id: "moaLC_1fAFU",
-                    title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
-                    views: "2.5K",
-                  },
-                  {
-                    id: "Yg3FI1IIfZg",
-                    title: "Shangatatu Live at Kilifi New Year 2024",
-                    views: "1.8K",
-                  },
-                  {
-                    id: "rPILNx29pVA",
-                    title: "Shangatatu - Deep House Mix",
-                    views: "3.2K",
-                  },
-                  {
-                    id: "yAoKY0mttR0",
-                    title: "Sunset Sessions with Shangatatu",
-                    views: "2.1K",
-                  },
-                  {
-                    id: "Wa9pYvHimc0",
-                    title: "Shangatatu Beach House Mix",
-                    views: "4.5K",
-                  },
-                ].map((mix) => (
-                  <CarouselItem key={mix.id} className="md:basis-1/2 lg:basis-1/3">
-                    <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {[
+                {
+                  id: "pKNEODiRdEk",
+                  title: "Shangatatu Live at Salty's Kite Village",
+                  views: "0.8K",
+                },
+                {
+                  id: "moaLC_1fAFU",
+                  title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
+                  views: "2.5K",
+                },
+                {
+                  id: "Yg3FI1IIfZg",
+                  title: "Shangatatu Live at Kilifi New Year 2024",
+                  views: "1.8K",
+                },
+              ].map((mix) => (
+                <div key={mix.id} className="group">
+                  <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      className="relative aspect-video overflow-hidden rounded-2xl glass shadow-lg"
+                    >
+                      <div className="img-hover-zoom h-full">
+                        <ImageWithLoading
+                          src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
+                          alt={mix.title}
+                          width={1280}
+                          height={720}
+                          className="object-cover h-full w-full"
+                        />
+                      </div>
                       <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="group relative aspect-video overflow-hidden rounded-2xl mx-2 glass shadow-lg"
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="img-hover-zoom h-full">
-                          <ImageWithLoading
-                            src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
-                            alt={mix.title}
-                            width={1280}
-                            height={720}
-                            className="object-cover h-full w-full"
-                          />
-                        </div>
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
-                            >
-                              <Play className="h-8 w-8" />
-                            </Button>
-                          </div>
-                        </motion.div>
-                        <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
-                          <h3 className="text-lg font-semibold text-white mb-2">{mix.title}</h3>
-                          <div className="flex items-center justify-between">
-                            <p className="text-sm text-secondary">{mix.views} views</p>
-                            <ExternalLink className="h-4 w-4 text-secondary" />
-                          </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
+                          >
+                            <Play className="h-8 w-8" />
+                          </Button>
                         </div>
                       </motion.div>
-                    </a>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
+                      <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <h3 className="text-lg font-semibold text-white mb-2">{mix.title}</h3>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-secondary">{mix.views} views</p>
+                          <ExternalLink className="h-4 w-4 text-secondary" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link href="/mixes">
+                <Button
+                  size="lg"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                >
+                  <span className="relative z-10">Explore More Mixes</span>
+                  <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </SectionTransition>
 
       {/* Past Events Section */}
       <SectionTransition>
-        <section id="events" className="relative px-4 py-32 md:px-6 lg:px-8">
+        <section id="events" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -389,79 +403,165 @@ export default function DJPortfolio() {
                 Explore the festivals and venues where I've performed around the globe
               </p>
             </div>
-            <Carousel className="mx-auto max-w-6xl">
-              <CarouselContent>
-                {[
-                  {
-                    name: "Beneath The Baobab Festival",
-                    location: "Kilifi, Kenya",
-                    date: "December 2023",
-                    image: "/images/beneath-the-baobab.jpg",
-                  },
-                  {
-                    name: "Wira Kilifi 7.0",
-                    location: "The Terrace, Kilifi, Kenya",
-                    date: "11th December 2023",
-                    image: "/images/wira-kilifi.jpg",
-                  },
-                  {
-                    name: "TomorrowLand Music Festival",
-                    location: "Boom, Antwerp, Belgium",
-                    date: "May 2024",
-                    image: "/images/tomorrowland.jpg",
-                  },
-                  {
-                    name: "Klub House Experience",
-                    location: "Tamasha Sports Bar & Grill, Eldoret",
-                    date: "22nd December 2023",
-                    image: "/images/klub-house-experience.jpg",
-                  },
-                  {
-                    name: "The Afters KE",
-                    location: "Kilifi Caves, Kenya",
-                    date: "3rd January 2024",
-                    image: "/images/the-afters-ke.jpg",
-                  },
-                ].map((event, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <Card className="overflow-hidden glass mx-2 shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors">
-                      <motion.div whileHover={{ scale: 1.05 }} className="relative aspect-video group">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {[
+                {
+                  name: "Boogie Festival",
+                  location: "Arusha, Tanzania",
+                  date: "23rd - 25th March 2025",
+                  image: "/images/boogie.jpg",
+                },
+                {
+                  name: "Wira Kilifi 8.0",
+                  location: "The Terrace, Kilifi, Kenya",
+                  date: "11th December 2023",
+                  image: "/images/wira 8.0.jpeg",
+                },
+                {
+                  name: "Beneath The Baobab Festival",
+                  location: "Kilifi, Kenya",
+                  date: "December 2023",
+                  image: "/images/beneath-the-baobab.jpg",
+                },
+              ].map((event, index) => (
+                <div key={index} className="group">
+                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                    <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-video">
+                      <div className="img-hover-zoom h-full">
+                        <ImageWithLoading
+                          src={event.image || "/placeholder.svg"}
+                          alt={event.name}
+                          width={600}
+                          height={400}
+                          className="object-cover h-full w-full"
+                        />
+                      </div>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.div>
+                    <CardContent className="p-6">
+                      <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <MapPin className="h-4 w-4 text-secondary" />
+                          {event.location}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <Calendar className="h-4 w-4 text-secondary" />
+                          {event.date}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link href="/events">
+                <Button
+                  size="lg"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                >
+                  <span className="relative z-10">Explore More Events</span>
+                  <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </SectionTransition>
+
+      <SectionTransition>
+        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">Visual Art Gallery</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Explore SHANGATATU's visual art creations that blend traditional African motifs with contemporary digital expression
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {[
+                {
+                  title: "Ancestral Visions",
+                  description: "Digital collage exploring spiritual connections",
+                  image: "/images/art-1.jpg",
+                  year: "2023",
+                },
+                {
+                  title: "Coastal Rhythms",
+                  description: "Mixed media on canvas inspired by Swahili culture",
+                  image: "/images/art-2.jpg",
+                  year: "2022",
+                },
+                {
+                  title: "Techno Tribal",
+                  description: "Digital illustration fusing tradition and futurism",
+                  image: "/images/art-3.jpg",
+                  year: "2024",
+                },
+              ].map((artwork, index) => (
+                <Link href="/art-gallery" key={index}>
+                  <motion.div 
+                    whileHover={{ scale: 1.03 }}
+                    className="group cursor-pointer"
+                  >
+                    <Card className="overflow-hidden glass shadow-lg border-white/10 hover:border-secondary/30 transition-colors h-full">
+                      <div className="relative aspect-square">
                         <div className="img-hover-zoom h-full">
                           <ImageWithLoading
-                            src={event.image || "/placeholder.svg"}
-                            alt={event.name}
+                            src={artwork.image}
+                            alt={artwork.title}
                             width={600}
-                            height={400}
+                            height={600}
                             className="object-cover h-full w-full"
                           />
                         </div>
                         <motion.div
-                          className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                          className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                           transition={{ duration: 0.3 }}
                         />
-                      </motion.div>
+                      </div>
                       <CardContent className="p-6">
-                        <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
-                        <div className="flex flex-col space-y-2">
-                          <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <MapPin className="h-4 w-4 text-secondary" />
-                            {event.location}
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <Calendar className="h-4 w-4 text-secondary" />
-                            {event.date}
-                          </div>
+                        <h3 className="mb-2 text-xl font-semibold text-white group-hover:text-secondary transition-colors">
+                          {artwork.title}
+                        </h3>
+                        <p className="text-gray-400 mb-2">{artwork.description}</p>
+                        <div className="flex items-center gap-2 text-sm text-secondary">
+                          <Calendar className="h-4 w-4" />
+                          {artwork.year}
                         </div>
                       </CardContent>
                     </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
+                  </motion.div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link href="/art-gallery" prefetch={true}>
+                <Button
+                  size="lg"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                >
+                  <span className="relative z-10">View Full Art Gallery</span>
+                  <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </SectionTransition>
@@ -470,7 +570,7 @@ export default function DJPortfolio() {
       <SectionTransition>
         <section
           id="contact"
-          className="relative px-4 py-32 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20"
+          className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20"
         >
           <div className="mx-auto max-w-6xl">
             <div className="text-center mb-16">
@@ -504,14 +604,14 @@ export default function DJPortfolio() {
                     <Phone className="h-6 w-6 text-secondary mt-1" />
                     <div>
                       <h4 className="text-lg font-medium text-white">Phone</h4>
-                      <p className="text-gray-400">+254 (0) 712 345 678</p>
+                      <p className="text-gray-400">+254 (0) 715 781 364</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <MapPin className="h-6 w-6 text-secondary mt-1" />
                     <div>
                       <h4 className="text-lg font-medium text-white">Based In</h4>
-                      <p className="text-gray-400">Nairobi, Kenya</p>
+                      <p className="text-gray-400">Mombasa, Kenya</p>
                     </div>
                   </div>
                 </div>

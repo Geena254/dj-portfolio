@@ -32,11 +32,12 @@ export default function WiraPage() {
 
   const handleTicketPurchase = () => {
     setIsTicketLoading(true)
-    // Simulate ticket purchase process
+    // Open ticket purchase link in new tab
+    window.open('https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b', '_blank')
+    // Simulate loading state for better UX
     setTimeout(() => {
       setIsTicketLoading(false)
-      "https://l.instagram.com/?u=https%3A%2F%2Fturnapp.events%2Fevents%2Ffestivals%2Fshangatatu%2Fwira-80%2F166ebe10-f51e-11ef-8834-ab8723ecd244%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAae19koLTrvuf-ijoELu9kNej6M-C4V07ujTs1EJHXvvJeyYavf6w6uHUPZooQ_aem_jAykM41a1xhGB0ATPyEz6A&e=AT1PfREZywBL3hb4uA_FjP1w1cJShytj3zeHj7nJY4M8qAhoyxSEyyBN8b1p24Tmu0ZOAFy_ERvu9rDInpNXFoztGyrVQU9dZcvbTg"
-    }, 2000)
+    }, 1000)
   }
 
   const copyToClipboard = (text: string) => {
@@ -68,7 +69,7 @@ export default function WiraPage() {
       <section className="relative min-h-screen overflow-hidden">
         <div className="absolute inset-0">
           <ImageWithLoading
-            src="/images/wira-kilifi.jpg"
+            src="/images/wira-face.jpg"
             alt="Wira Afrika Event"
             width={1920}
             height={1080}
@@ -114,12 +115,12 @@ export default function WiraPage() {
               {isTicketLoading ? (
                 <>
                   <LoadingSpinner size="sm" className="mr-2" />
-                  Processing...
+                  Redirecting...
                 </>
               ) : (
                 <>
                   <Ticket className="mr-2 h-4 w-4" />
-                  Get Tickets
+                  Buy Tickets
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </>
               )}
@@ -127,7 +128,7 @@ export default function WiraPage() {
             <Button
               size="lg"
               className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8"
-              onClick={() => window.open("https://www.instagram.com/_wira_afrika/", "_blank")}
+              onClick={() => window.open("https://www.instagram.com/wirainternational/", "_blank")}
             >
               <Instagram className="mr-2 h-4 w-4" />
               Follow Wira Afrika
@@ -149,7 +150,7 @@ export default function WiraPage() {
       </section>
 
       {/* About Wira Section */}
-      <section className="relative px-4 py-32 md:px-6 lg:px-8">
+      <section className="relative px-4 py-20 md:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <motion.div
@@ -191,7 +192,7 @@ export default function WiraPage() {
               className="relative aspect-square overflow-hidden rounded-2xl glass"
             >
               <ImageWithLoading
-                src="/images/shangatatu-beach.jpg"
+                src="/images/BK 7.jpg"
                 alt="Wira Afrika Community"
                 width={600}
                 height={600}
@@ -203,8 +204,110 @@ export default function WiraPage() {
         </div>
       </section>
 
+      {/* Past Wira Events */}
+      <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-16 text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              <h2 className="text-4xl font-bold gradient-text">Wira Events</h2>
+              <div className="h-1 w-10 bg-secondary rounded-full"></div>
+            </div>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Celebrating African culture through music, art, and community gatherings
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Wira Kilifi 9.0",
+                location: "The Terrace, Kilifi, Kenya",
+                date: "Coming Soon",
+                image: "/images/wira 8.0.jpeg",
+                description: "The next chapter in the Wira Afrika journey",
+                ticketLink: "https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b"
+              },
+              {
+                name: "Wira Kilifi 8.0",
+                location: "The Terrace, Kilifi, Kenya",
+                date: "17th April 2025",
+                image: "/images/wira-kilifi.jpg",
+                description: "A celebration of coastal culture and electronic music"
+              },
+              {
+                name: "Wira Beach Vibes",
+                location: "Fisherman's Creek, Shanzu",
+                date: "30th March 2025",
+                image: "/images/wira beach vibe.jpg",
+                description: "Sunday afternoon vibes by the beach"
+              },
+              {
+                name: "Wira 6.0 Hello Summer Edition",
+                location: "Nairobi, Kenya",
+                date: "17th August 2024",
+                image: "/images/wira-hello.jpg",
+                description: "Urban culture meets traditional rhythms"
+              },
+              {
+                name: "Wira Beach Festival",
+                location: "Diani Beach, Kenya",
+                date: "Planning Phase",
+                image: "/placeholder.svg?height=400&width=600",
+                description: "A multi-day celebration of African creativity"
+              },
+            ].map((event, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full flex flex-col">
+                  <div className="relative aspect-video group">
+                    <ImageWithLoading
+                      src={event.image || "/placeholder.svg"}
+                      alt={event.name}
+                      width={600}
+                      height={400}
+                      className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  </div>
+                  <CardContent className="p-6 flex-1 flex flex-col">
+                    <h3 className="mb-2 text-xl font-semibold text-white">{event.name}</h3>
+                    <p className="text-gray-400 mb-4">{event.description}</p>
+                    <div className="flex flex-col space-y-2 mt-auto">
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <MapPin className="h-4 w-4 text-secondary" />
+                        {event.location}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <Calendar className="h-4 w-4 text-secondary" />
+                        {event.date}
+                      </div>
+                      {event.ticketLink && (
+                        <Button
+                          size="sm"
+                          className="mt-4 bg-secondary hover:bg-secondary-700"
+                          onClick={() => window.open(event.ticketLink, '_blank')}
+                        >
+                          <Ticket className="mr-2 h-4 w-4" />
+                          Get Tickets
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Share Wira Sessions Section */}
-      <section className="relative px-4 py-32 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/10">
+      <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/10">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
@@ -237,7 +340,6 @@ export default function WiraPage() {
                   <p>🤝 Tag friends who love the movement</p>
                 </div>
               </Card>
-
               <Card className="glass p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Share2 className="h-6 w-6 text-secondary" />
@@ -342,99 +444,8 @@ export default function WiraPage() {
         </div>
       </section>
 
-      {/* Past Wira Events */}
-      <section className="relative px-4 py-32 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
-              <h2 className="text-4xl font-bold gradient-text">Wira Events</h2>
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
-            </div>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Celebrating African culture through music, art, and community gatherings
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Wira Kilifi 8.0",
-                location: "The Terrace, Kilifi, Kenya",
-                date: "17th April 2025",
-                image: "/images/wira 8.0.jpeg",
-                description: "A celebration of coastal culture and electronic music",
-              },
-              {
-                name: "Wira Kilifi 7.0",
-                location: "The Terrace, Kilifi, Kenya",
-                date: "11th December 2024",
-                image: "/images/wira-kilifi.jpg",
-                description: "A celebration of coastal culture and electronic music",
-              },
-              {
-                name: "Wira Beach Vibes",
-                location: "Fisherman's Creek, Shanzu",
-                date: "30th March 2025",
-                image: "/images/wira beach vibe.jpg",
-                description: "Another Sunday afternoom to serve vibes by my home beachsand of Shanzu all afternion into the early evening",
-              },
-              {
-                name: "Wira 6.0 Hello Summer Edition",
-                location: "Nairobi, Kenya",
-                date: "17th August 2024",
-                image: "/images/wira-hello.jpg",
-                description: "Urban culture meets traditional rhythms",
-              },
-              {
-                name: "Wira Beach Festival",
-                location: "Diani Beach, Kenya",
-                date: "Planning Phase",
-                image: "/placeholder.svg?height=400&width=600",
-                description: "A multi-day celebration of African creativity",
-              },
-            ].map((event, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors">
-                  <div className="relative aspect-video group">
-                    <ImageWithLoading
-                      src={event.image || "/placeholder.svg"}
-                      alt={event.name}
-                      width={600}
-                      height={400}
-                      className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="mb-2 text-xl font-semibold text-white">{event.name}</h3>
-                    <p className="text-gray-400 mb-4">{event.description}</p>
-                    <div className="flex flex-col space-y-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <MapPin className="h-4 w-4 text-secondary" />
-                        {event.location}
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <Calendar className="h-4 w-4 text-secondary" />
-                        {event.date}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Call to Action */}
-      <section className="relative px-4 py-32 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
+      <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -457,12 +468,12 @@ export default function WiraPage() {
                 {isTicketLoading ? (
                   <>
                     <LoadingSpinner size="sm" className="mr-2" />
-                    Getting Tickets...
+                    Redirecting...
                   </>
                 ) : (
                   <>
                     <Ticket className="mr-2 h-4 w-4" />
-                    Get Tickets
+                    Buy Tickets Now
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </>
                 )}
@@ -499,7 +510,7 @@ export default function WiraPage() {
             </div>
             <div className="flex gap-6">
               <Link
-                href="https://www.instagram.com/_wira_afrika/"
+                href="https://www.instagram.com/wirainternational/"
                 target="_blank"
                 className="p-2 hover:text-secondary transition-colors duration-300"
                 title="Instagram"

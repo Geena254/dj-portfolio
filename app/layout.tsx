@@ -10,7 +10,24 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 export const metadata: Metadata = {
   title: "SHANGATATU | DJ & Music Producer",
   description: "Electronic and House Music DJ based in Kenya",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: "/images/favicon.ico",
+    shortcut: "/images/favicon-96x96.png",
+    apple: "/images/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "SHANGATATU | DJ & Music Producer",
+    description: "Electronic and House Music DJ based in Kenya",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SHANGATATU DJ",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
@@ -20,6 +37,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* You can add additional meta tags here if needed */}
+      </head>
       <body className={`${inter.variable} font-sans`}>
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
       </body>

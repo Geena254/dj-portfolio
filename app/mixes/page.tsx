@@ -13,6 +13,20 @@ import BackToTop from "@/components/back-to-top"
 export default function MixesPage() {
   const mixes = [
     {
+      id: "pKNEODiRdEk",
+      title: "Shangatatu Live at Salty's Kite Village",
+      views: "0.8K",
+      duration: "00:49:23",
+      genre: "Afro House",
+    },
+    {
+      id: "gSHBFFL5zYE",
+      title: "RaveCave Extended Mix",
+      views: "1.0K",
+      duration: "2:43:30",
+      genre: "Afro House",
+    },
+    {
       id: "moaLC_1fAFU",
       title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
       views: "2.5K",
@@ -68,13 +82,23 @@ export default function MixesPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-primary/40 to-black" />
+      <section className="relative min-h-screen overflow-hidden">
+        <div className="absolute inset-0">
+          <ImageWithLoading
+            src="/images/mixes.jpg"
+            alt="Wira Afrika Event"
+            width={1920}
+            height={1080}
+            className="object-cover h-full w-full"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-[60vh] flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -82,7 +106,7 @@ export default function MixesPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 text-6xl md:text-8xl font-bold tracking-tighter gradient-text"
           >
-            MIXES
+            MY MIXES
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -96,6 +120,7 @@ export default function MixesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4"
           >
             <Button
               size="lg"
@@ -113,7 +138,7 @@ export default function MixesPage() {
       </section>
 
       {/* Platforms Section */}
-      <section className="relative px-4 py-16 md:px-6 lg:px-8">
+      <section className="relative px-4 py-14 md:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
             <h2 className="text-3xl font-bold gradient-text mb-4">Listen on Your Favorite Platform</h2>
@@ -149,7 +174,7 @@ export default function MixesPage() {
       </section>
 
       {/* Latest Mixes Section */}
-      <section className="relative px-4 py-32 md:px-6 lg:px-8">
+      <section className="relative px-4 py-20 md:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="mb-16 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">

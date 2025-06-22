@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Music, Calendar, Home, Headphones, Users } from "lucide-react"
+import { Menu, X, Pencil, Music, Calendar, Home, Headphones, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -31,6 +31,7 @@ export default function Navbar() {
     { name: "Wira", icon: Users, href: "/wira" },
     { name: "Mixes", icon: Headphones, href: "/mixes" },
     { name: "Events", icon: Calendar, href: "/events" },
+    { name: "Artistry", icon: Pencil, href: "/art-gallery" }
   ]
 
   return (
@@ -59,12 +60,6 @@ export default function Navbar() {
               <span className="block h-0.5 max-w-0 bg-secondary transition-all duration-300 group-hover:max-w-full" />
             </Link>
           ))}
-          <Button
-            className="bg-secondary hover:bg-secondary-600 text-white"
-            onClick={() => (window.location.href = "mailto:tatushanga@gmail.com")}
-          >
-            Book Now
-          </Button>
         </div>
 
         {/* Mobile Navigation Toggle */}
@@ -100,15 +95,6 @@ export default function Navbar() {
                   <span>{item.name}</span>
                 </Link>
               ))}
-              <Button
-                className="w-full bg-secondary hover:bg-secondary-600 text-white"
-                onClick={() => {
-                  window.location.href = "mailto:tatushanga@gmail.com"
-                  setIsOpen(false)
-                }}
-              >
-                Book Now
-              </Button>
             </div>
           </motion.div>
         )}

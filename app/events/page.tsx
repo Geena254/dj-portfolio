@@ -56,12 +56,13 @@ export default function EventsPage() {
 
   const upcomingEvents = [
     {
-      name: "Wira Nairobi Sessions",
+      name: "Wira 8.0",
       location: "Nairobi, Kenya",
       date: "March 2025",
       time: "8:00 PM",
       description: "Urban culture meets traditional rhythms in the capital",
       type: "Cultural Event",
+      image: "/images/wira 8.0.jpeg",
       status: "Coming Soon",
     },
     {
@@ -151,12 +152,13 @@ export default function EventsPage() {
               >
                 <Card className="overflow-hidden glass shadow-lg border-secondary/30 hover:border-secondary/50 transition-colors">
                   <div className="relative aspect-video bg-gradient-to-br from-secondary/20 to-primary/20">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <Ticket className="h-16 w-16 text-secondary mx-auto mb-4" />
-                        <span className="text-secondary font-bold text-lg">{event.status}</span>
-                      </div>
-                    </div>
+                    <ImageWithLoading
+                        src={event.image || "/placeholder.svg"}
+                        alt={event.name}
+                        width={600}
+                        height={400}
+                        className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
                   <CardContent className="p-6">
                     <div className="mb-2">
@@ -167,6 +169,10 @@ export default function EventsPage() {
                     <h3 className="mb-3 text-xl font-semibold text-white">{event.name}</h3>
                     <p className="text-gray-400 mb-4">{event.description}</p>
                     <div className="flex flex-col space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <Ticket className="h-4 w-4 text-secondary" />
+                        {event.status}
+                      </div>
                       <div className="flex items-center gap-2 text-sm text-gray-400">
                         <MapPin className="h-4 w-4 text-secondary" />
                         {event.location}

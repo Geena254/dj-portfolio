@@ -35,8 +35,7 @@ export default function WiraPage() {
     // Simulate ticket purchase process
     setTimeout(() => {
       setIsTicketLoading(false)
-      // In a real app, this would redirect to a ticketing platform
-      window.open("https://www.instagram.com/_wira_afrika/", "_blank")
+      "https://l.instagram.com/?u=https%3A%2F%2Fturnapp.events%2Fevents%2Ffestivals%2Fshangatatu%2Fwira-80%2F166ebe10-f51e-11ef-8834-ab8723ecd244%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAae19koLTrvuf-ijoELu9kNej6M-C4V07ujTs1EJHXvvJeyYavf6w6uHUPZooQ_aem_jAykM41a1xhGB0ATPyEz6A&e=AT1PfREZywBL3hb4uA_FjP1w1cJShytj3zeHj7nJY4M8qAhoyxSEyyBN8b1p24Tmu0ZOAFy_ERvu9rDInpNXFoztGyrVQU9dZcvbTg"
     }, 2000)
   }
 
@@ -49,18 +48,13 @@ export default function WiraPage() {
   const shareContent = [
     {
       platform: "Instagram Stories",
-      hashtag: "#WiraAfrika #Shangatatu #AfricanCulture",
+      hashtag: "#wiraafrika #shangatatu",
       handle: "@_wira_afrika @shangatatu",
     },
     {
       platform: "Instagram Posts",
-      hashtag: "#WiraAfrika #AfricanMusic #CulturalCelebration #Shangatatu",
+      hashtag: "wWiraAfrika #shangatatu",
       handle: "@_wira_afrika @shangatatu",
-    },
-    {
-      platform: "Twitter/X",
-      hashtag: "#WiraAfrika #AfricanCulture #ElectronicMusic",
-      handle: "@shangatatu @_wira_afrika",
     },
   ]
 
@@ -365,17 +359,31 @@ export default function WiraPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
+                name: "Wira Kilifi 8.0",
+                location: "The Terrace, Kilifi, Kenya",
+                date: "17th April 2025",
+                image: "/images/wira 8.0.jpeg",
+                description: "A celebration of coastal culture and electronic music",
+              },
+              {
                 name: "Wira Kilifi 7.0",
                 location: "The Terrace, Kilifi, Kenya",
-                date: "11th December 2023",
+                date: "11th December 2024",
                 image: "/images/wira-kilifi.jpg",
                 description: "A celebration of coastal culture and electronic music",
               },
               {
-                name: "Wira Nairobi Sessions",
+                name: "Wira Beach Vibes",
+                location: "Fisherman's Creek, Shanzu",
+                date: "30th March 2025",
+                image: "/images/wira beach vibe.jpg",
+                description: "Another Sunday afternoom to serve vibes by my home beachsand of Shanzu all afternion into the early evening",
+              },
+              {
+                name: "Wira 6.0 Hello Summer Edition",
                 location: "Nairobi, Kenya",
-                date: "Coming Soon",
-                image: "/placeholder.svg?height=400&width=600",
+                date: "17th August 2024",
+                image: "/images/wira-hello.jpg",
                 description: "Urban culture meets traditional rhythms",
               },
               {

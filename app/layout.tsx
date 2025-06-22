@@ -2,6 +2,8 @@ import type React from "react"
 import "@/styles/globals.css"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import PageLoading from "@/components/page-loading"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -18,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans`}>{children}</body>
+      <body className={`${inter.variable} font-sans`}>
+        <Suspense fallback={<PageLoading />}>{children}</Suspense>
+      </body>
     </html>
   )
 }

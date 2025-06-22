@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Music, Calendar, User, Home, Headphones } from "lucide-react"
+import { Menu, X, Music, Calendar, Home, Headphones, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -27,10 +27,10 @@ export default function Navbar() {
   }, [])
 
   const navItems = [
-    { name: "Home", icon: Home, href: "#home" },
-    { name: "About", icon: User, href: "#about" },
-    { name: "Mixes", icon: Headphones, href: "#mixes" },
-    { name: "Events", icon: Calendar, href: "#events" },
+    { name: "Home", icon: Home, href: "/" },
+    { name: "Wira", icon: Users, href: "/wira" },
+    { name: "Mixes", icon: Headphones, href: "/mixes" },
+    { name: "Events", icon: Calendar, href: "/events" },
   ]
 
   return (
@@ -41,7 +41,7 @@ export default function Navbar() {
       className={`navbar fixed top-0 left-0 right-0 z-50 px-4 py-4 ${scrolled ? "navbar-scrolled" : "bg-transparent"}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link href="#home" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Music className="h-6 w-6 text-secondary" />
           <span className="text-xl font-bold text-white">SHANGATATU</span>
         </Link>

@@ -18,8 +18,6 @@ import {
   Mail,
   Phone,
 } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 import { useRef, useState, useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -29,6 +27,7 @@ import CustomCursor from "@/components/custom-cursor"
 import SectionTransition from "@/components/section-transition"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
+import ImageWithLoading from "@/components/image-with-loading"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
@@ -81,8 +80,8 @@ export default function DJPortfolio() {
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
         />
         <div className="absolute inset-0 img-hover-zoom">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/828b992a-8595-4c1d-873d-7dde4276be57.jpeg-R1moPfRRAJqCRku2p33vzFZjYHlogI.png"
+          <ImageWithLoading
+            src="/images/shangatatu-beach-dj.jpg"
             alt="SHANGATATU performing on the beach at sunset"
             width={1920}
             height={1080}
@@ -191,8 +190,8 @@ export default function DJPortfolio() {
                 className="relative aspect-square overflow-hidden rounded-2xl w-full max-w-[300px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
-                  <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapinst.app_469641759_1654206108528960_2192077164960891779_n_1080.jpg-uPJGqbPfiHt5Dsnz2wqc6KyH8PlkxY.jpeg"
+                  <ImageWithLoading
+                    src="/images/shangatatu-beach.jpg"
                     alt="SHANGATATU at the beach"
                     width={600}
                     height={600}
@@ -257,6 +256,7 @@ export default function DJPortfolio() {
         </section>
       </SectionTransition>
 
+      {/* Stats Section */}
       <SectionTransition>
         <section className="relative px-4 py-16 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
@@ -332,7 +332,7 @@ export default function DJPortfolio() {
                         className="group relative aspect-video overflow-hidden rounded-2xl mx-2 glass shadow-lg"
                       >
                         <div className="img-hover-zoom h-full">
-                          <Image
+                          <ImageWithLoading
                             src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
                             alt={mix.title}
                             width={1280}
@@ -396,43 +396,38 @@ export default function DJPortfolio() {
                     name: "Beneath The Baobab Festival",
                     location: "Kilifi, Kenya",
                     date: "December 2023",
-                    image:
-                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/470901269_585942197724926_1842517933061666804_n.webp-m5c7gcriOh3GUrIqNkILLNSgB2q6ED.jpeg",
+                    image: "/images/beneath-the-baobab.jpg",
                   },
                   {
                     name: "Wira Kilifi 7.0",
                     location: "The Terrace, Kilifi, Kenya",
                     date: "11th December 2023",
-                    image:
-                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapinst.app_469493915_1296552101375007_2137199242574670138_n_1080.jpg-49WPhkG7eLGJvLowJF0mlxkRXhdOFC.jpeg",
+                    image: "/images/wira-kilifi.jpg",
                   },
                   {
                     name: "TomorrowLand Music Festival",
                     location: "Boom, Antwerp, Belgium",
                     date: "May 2024",
-                    image:
-                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tom%202.jpg-aJ7YPLGB5GQBleTd85Ta1VapAPQwu0.jpeg",
+                    image: "/images/tomorrowland.jpg",
                   },
                   {
                     name: "Klub House Experience",
                     location: "Tamasha Sports Bar & Grill, Eldoret",
                     date: "22nd December 2023",
-                    image:
-                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapinst.app_470161936_577049328354609_6551019382768178396_n_1080.jpg-VGorghKffsnbRZZak32QWXGEqieyfz.jpeg",
+                    image: "/images/klub-house-experience.jpg",
                   },
                   {
                     name: "The Afters KE",
                     location: "Kilifi Caves, Kenya",
                     date: "3rd January 2024",
-                    image:
-                      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapinst.app_469992076_1478247976203365_4909023232889377759_n_1080.jpg-R7nG1njQfRtFT9rJZoHtrWIUHSFk1p.jpeg",
+                    image: "/images/the-afters-ke.jpg",
                   },
                 ].map((event, index) => (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <Card className="overflow-hidden glass mx-2 shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors">
                       <motion.div whileHover={{ scale: 1.05 }} className="relative aspect-video group">
                         <div className="img-hover-zoom h-full">
-                          <Image
+                          <ImageWithLoading
                             src={event.image || "/placeholder.svg"}
                             alt={event.name}
                             width={600}
@@ -600,15 +595,14 @@ export default function DJPortfolio() {
           <div className="mt-8 text-center text-sm text-gray-500">
             <p>
               Website designed with ❤️ by{" "}
-              <Link
+              <a
                 href="https://georginadev.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-secondary hover:underline inline-flex items-center"
               >
                 Georgina <ExternalLink className="h-3 w-3 ml-1" />
-              </Link>
-              {" for SHANGATATU"}
+              </a>
             </p>
           </div>
         </motion.div>

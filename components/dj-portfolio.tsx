@@ -101,7 +101,7 @@ export default function DJPortfolio() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 text-6xl md:text-8xl font-bold tracking-tighter gradient-text"
           >
-            SHANGATATU THE DJ
+            SHANGATATU
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}

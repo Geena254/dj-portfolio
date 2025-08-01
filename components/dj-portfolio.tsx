@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import {
   Cloud,
   Facebook,
@@ -18,8 +18,9 @@ import {
   Mail,
   Phone,
 } from "lucide-react"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useCallback } from "react"
 import Link from "next/link"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
@@ -40,6 +41,22 @@ export default function DJPortfolio() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [
+    { src: "/images/dj-mix.jpg", alt: "" },
+    { src: "/images/_DSF4970.jpg", alt: "" },
+    { src: "/images/_DSF4984.jpg", alt: "" },
+  ];
+
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -78,15 +95,41 @@ export default function DJPortfolio() {
           style={{ y, opacity }}
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
         />
-        <div className="absolute inset-0 img-hover-zoom">
-          <ImageWithLoading
-            src="/images/dj-mix.jpg"
-            alt="SHANGATATU performing on the beach at sunset"
-            width={1920}
-            height={1080}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-10000 ease-in-out hover:scale-110"
-            priority
-          />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
+                className="absolute inset-0"
+              >
+                <ImageWithLoading
+                  src={slides[currentSlide].src}
+                  alt={slides[currentSlide].alt}
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </AnimatePresence>
+            
+            {/* Slide indicators */}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 w-2 rounded-full transition-colors ${
+                    index === currentSlide ? 'bg-white' : 'bg-white/50'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40" />
         <motion.div
@@ -107,9 +150,9 @@ export default function DJPortfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-8 text-xl md:text-2xl font-light text-gray-300 max-w-2xl"
+            className="mb-8 text-xxl md:text-2xl font-bold text-gray-200 max-w-2xl"
           >
-            Elevating the electronic music scene with cutting-edge house and techno beats from Kenya to the world
+            Sultan Of Enjoyment
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -216,20 +259,14 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                  Shangatatu is a vibrant creative born and rooted on Kenya's coast
+                  Shangatatu is a vibrant creative born and rooted on Kenya’s coast
                   channeling positive frequencies through African dance music,
-                  merchandise and art into hypnotic, tribal soundscapes that speak to
-                  both ancient rhythm and modern freedom. With now 13 years behind
-                  the decks, Shangatatu's energy is raw, spiritual and deeply connected to
+                  merchandise and art into hypnotic, tribal soundscapes that speak to both
+                  ancient rhythm and modern freedom. With now 13 years behind the
+                  decks, Shangatatu’s energy is raw, spiritual and deeply connected to
                   nature. He is a three-in-one artist: DJ/Producer, visual Artist and human
-                  experience. Drawing inspiration from African ancestry, coastal life and
-                  street-art culture, Shangatatu creates immersive sets that go beyond
-                  music and regularly he blends his shows with live painting, body art
-                  and storytelling, forming a unique aesthetic that's both palpable and
-                  abstract like his art.
-                  Whether spinning at a festival,wedding,beach session or guest mixing
-                  on radio and podcasts, Shangatatu continues to redefine artistry on his
-                  own terms - one beat, one brushstroke and one spirit at a time.
+                  experience.
+
                   </p>
                   <p className="text-xl text-gray-300 leading-relaxed">
                     As the founder of{" "}

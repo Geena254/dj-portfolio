@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
   title: "SHANGATATU | DJ & Music Producer",
-  description: "Electronic and House Music DJ based in Kenya",
+  description: "Electronic and House Music DJ based in Diani, Kenya",
   generator: 'v0.dev',
   icons: {
     icon: "/images/favicon.ico",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "SHANGATATU | DJ & Music Producer",
-    description: "Electronic and House Music DJ based in Kenya",
+    description: "Electronic and House Music DJ based in Diani, Kenya",
     images: [
       {
         url: "/images/og-image.jpg",

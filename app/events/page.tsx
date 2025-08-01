@@ -1,8 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Calendar, MapPin, ArrowLeft, ExternalLink, Ticket, Clock } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Calendar, MapPin, ArrowLeft, Ticket, Clock } from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
@@ -11,6 +12,25 @@ import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
 
 export default function EventsPage() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  // Events-specific slides with zoom effect
+  const slides = [
+    { src: "/images/dj-back.jpg", alt: "DJ Events" },
+    { src: "/images/boogie.jpg", alt: "Boogie Festival" },
+    { src: "/images/beneath-the-baobab.jpg", alt: "Beneath The Baobab" },
+    { src: "/images/tomorrowland.jpg", alt: "Tomorrowland" },
+  ]
+
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [slides.length])
+
   const pastEvents = [
     {
       name: "Boogie Festival",
@@ -101,17 +121,30 @@ export default function EventsPage() {
       <Navbar />
       <BackToTop />
 
-      {/* Hero Section */}
+      {/* Hero Section with Zoom Effect */}
       <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <ImageWithLoading
-            src="/images/dj-back.jpg"
-            alt="Wira Afrika Event"
-            width={1920}
-            height={1080}
-            className="object-cover h-full w-full"
-            priority
-          />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0"
+              >
+                <ImageWithLoading
+                  src={slides[currentSlide].src || "/placeholder.svg"}
+                  alt={slides[currentSlide].alt}
+                  width={1920}
+                  height={1080}
+                  className="object-cover h-full w-full"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
         <motion.div
@@ -144,7 +177,7 @@ export default function EventsPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8"
+              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
               asChild
             >
               <Link href="/">
@@ -183,7 +216,7 @@ export default function EventsPage() {
                   <Card className="overflow-hidden glass shadow-lg border-secondary/30 hover:border-secondary/50 transition-colors group">
                     <div className="relative aspect-video bg-gradient-to-br from-secondary/20 to-primary/20">
                       <ImageWithLoading
-                        src={event.image}
+                        src={event.image || "/placeholder.svg"}
                         alt={event.name}
                         width={600}
                         height={400}
@@ -251,7 +284,7 @@ export default function EventsPage() {
                 <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors group">
                   <div className="relative aspect-video">
                     <ImageWithLoading
-                      src={event.image}
+                      src={event.image || "/placeholder.svg"}
                       alt={event.name}
                       width={600}
                       height={400}

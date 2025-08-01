@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Calendar,
   MapPin,
@@ -17,7 +17,7 @@ import {
   Check,
 } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
@@ -29,12 +29,31 @@ import LoadingSpinner from "@/components/loading-spinner"
 export default function WiraPage() {
   const [isTicketLoading, setIsTicketLoading] = useState(false)
   const [copiedText, setCopiedText] = useState("")
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  // Wira-specific slides with slide left-to-right effect
+  const slides = [
+    { src: "/images/wira-face.jpg", alt: "Wira Afrika Event" },
+    { src: "/images/wira 8.0.jpeg", alt: "Wira 8.0" },
+    { src: "/images/wira-hello.jpg", alt: "Wira Hello Summer" },
+    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibes" },
+  ]
+
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [slides.length])
 
   const handleTicketPurchase = () => {
     setIsTicketLoading(true)
-    // Open ticket purchase link in new tab
-    window.open('https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b', '_blank')
-    // Simulate loading state for better UX
+    window.open(
+      "https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b",
+      "_blank",
+    )
     setTimeout(() => {
       setIsTicketLoading(false)
     }, 1000)
@@ -54,7 +73,7 @@ export default function WiraPage() {
     },
     {
       platform: "Instagram Posts",
-      hashtag: "wWiraAfrika #shangatatu",
+      hashtag: "#WiraAfrika #shangatatu",
       handle: "@_wira_afrika @shangatatu",
     },
   ]
@@ -65,17 +84,30 @@ export default function WiraPage() {
       <Navbar />
       <BackToTop />
 
-      {/* Hero Section */}
+      {/* Hero Section with Left-to-Right Slide Effect */}
       <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <ImageWithLoading
-            src="/images/wira-face.jpg"
-            alt="Wira Afrika Event"
-            width={1920}
-            height={1080}
-            className="object-cover h-full w-full"
-            priority
-          />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ x: "100%" }}
+                animate={{ x: "0%" }}
+                exit={{ x: "-100%" }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <ImageWithLoading
+                  src={slides[currentSlide].src || "/placeholder.svg"}
+                  alt={slides[currentSlide].alt}
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
         <motion.div
@@ -137,7 +169,7 @@ export default function WiraPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8"
+              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
               asChild
             >
               <Link href="/">
@@ -226,35 +258,36 @@ export default function WiraPage() {
                 date: "Coming Soon",
                 image: "/images/wira 8.0.jpeg",
                 description: "The next chapter in the Wira Afrika journey",
-                ticketLink: "https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b"
+                ticketLink:
+                  "https://turnapp.events/events/parties/shangatatu/wira-90/477a2d80-478a-11f0-99cc-bf0630b4dc0b",
               },
               {
                 name: "Wira Kilifi 8.0",
                 location: "The Terrace, Kilifi, Kenya",
                 date: "17th April 2025",
                 image: "/images/wira-kilifi.jpg",
-                description: "A celebration of coastal culture and electronic music"
+                description: "A celebration of coastal culture and electronic music",
               },
               {
                 name: "Wira Beach Vibes",
                 location: "Fisherman's Creek, Shanzu",
                 date: "30th March 2025",
                 image: "/images/wira beach vibe.jpg",
-                description: "Sunday afternoon vibes by the beach"
+                description: "Sunday afternoon vibes by the beach",
               },
               {
                 name: "Wira 6.0 Hello Summer Edition",
                 location: "Nairobi, Kenya",
                 date: "17th August 2024",
                 image: "/images/wira-hello.jpg",
-                description: "Urban culture meets traditional rhythms"
+                description: "Urban culture meets traditional rhythms",
               },
               {
                 name: "Wira Beach Festival",
                 location: "Diani Beach, Kenya",
                 date: "Planning Phase",
                 image: "/placeholder.svg?height=400&width=600",
-                description: "A multi-day celebration of African creativity"
+                description: "A multi-day celebration of African creativity",
               },
             ].map((event, index) => (
               <motion.div
@@ -291,7 +324,7 @@ export default function WiraPage() {
                         <Button
                           size="sm"
                           className="mt-4 bg-secondary hover:bg-secondary-700"
-                          onClick={() => window.open(event.ticketLink, '_blank')}
+                          onClick={() => window.open(event.ticketLink, "_blank")}
                         >
                           <Ticket className="mr-2 h-4 w-4" />
                           Get Tickets
@@ -490,7 +523,7 @@ export default function WiraPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8"
+                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
                 onClick={() => (window.location.href = "mailto:tatushanga@gmail.com")}
               >
                 Get Involved

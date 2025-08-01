@@ -18,7 +18,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react"
-import { useRef, useState, useEffect, useCallback } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -31,7 +31,7 @@ import ImageWithLoading from "@/components/image-with-loading"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -42,35 +42,35 @@ export default function DJPortfolio() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0)
   const slides = [
     { src: "/images/dj-mix.jpg", alt: "" },
     { src: "/images/_DSF4970.jpg", alt: "" },
     { src: "/images/_DSF4984.jpg", alt: "" },
-  ];
+  ]
 
   // Auto-advance slides
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [slides.length]);
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [slides.length])
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
+        setIsDropdownOpen(false)
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const musicPlatforms = [
     { name: "YouTube", icon: Youtube, href: "http://www.youtube.com/@shangatatu" },
@@ -100,14 +100,14 @@ export default function DJPortfolio() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ scale: 1.2, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
                 className="absolute inset-0"
               >
                 <ImageWithLoading
-                  src={slides[currentSlide].src}
+                  src={slides[currentSlide].src || "/placeholder.svg"}
                   alt={slides[currentSlide].alt}
                   width={1920}
                   height={1080}
@@ -115,20 +115,6 @@ export default function DJPortfolio() {
                 />
               </motion.div>
             </AnimatePresence>
-            
-            {/* Slide indicators */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-              {slides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 w-2 rounded-full transition-colors ${
-                    index === currentSlide ? 'bg-white' : 'bg-white/50'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40" />
@@ -163,7 +149,9 @@ export default function DJPortfolio() {
             <Button
               size="lg"
               className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
-              onClick={() => window.open('https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view', '_blank')}
+              onClick={() =>
+                window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
+              }
             >
               <span className="relative z-10">View Rate Card</span>
               <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -173,7 +161,7 @@ export default function DJPortfolio() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8"
+                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 Listen Now
@@ -259,14 +247,11 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                  Shangatatu is a vibrant creative born and rooted on Kenya’s coast
-                  channeling positive frequencies through African dance music,
-                  merchandise and art into hypnotic, tribal soundscapes that speak to both
-                  ancient rhythm and modern freedom. With now 13 years behind the
-                  decks, Shangatatu’s energy is raw, spiritual and deeply connected to
-                  nature. He is a three-in-one artist: DJ/Producer, visual Artist and human
-                  experience.
-
+                    Shangatatu is a vibrant creative born and rooted on Kenya’s coast channeling positive frequencies
+                    through African dance music, merchandise and art into hypnotic, tribal soundscapes that speak to
+                    both ancient rhythm and modern freedom. With now 13 years behind the decks, Shangatatu’s energy is
+                    raw, spiritual and deeply connected to nature. He is a three-in-one artist: DJ/Producer, visual
+                    Artist and human experience.
                   </p>
                   <p className="text-xl text-gray-300 leading-relaxed">
                     As the founder of{" "}
@@ -278,16 +263,17 @@ export default function DJPortfolio() {
                     >
                       @wirainternational
                     </a>
-                    , a festival series celebrating
-                    African dance music and alternative art, he curates space for movement,
-                    connection and cultural elevation.
+                    , a festival series celebrating African dance music and alternative art, he curates space for
+                    movement, connection and cultural elevation.
                   </p>
                 </motion.div>
                 <div className="flex flex-wrap gap-4 pt-6">
                   <Button
                     variant="outline"
-                    className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300"
-                    onClick={() => window.open('https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view', '_blank')}
+                    className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 bg-transparent"
+                    onClick={() =>
+                      window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
+                    }
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     VIEW RATE CARD
@@ -295,7 +281,7 @@ export default function DJPortfolio() {
                   </Button>
                   <Button
                     className="group bg-secondary text-white hover:bg-secondary-700 transition-all duration-300"
-                    onClick={() => window.open('https://wa.me/254715781364', '_blank')}
+                    onClick={() => window.open("https://wa.me/254715781364", "_blank")}
                   >
                     <Phone className="mr-2 h-4 w-4" />
                     WhatsApp Me
@@ -348,7 +334,7 @@ export default function DJPortfolio() {
                 Check out my latest performances and mixes from festivals and events around the world
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
@@ -440,7 +426,7 @@ export default function DJPortfolio() {
                 Explore the festivals and venues where I've performed around the globe
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
@@ -524,10 +510,11 @@ export default function DJPortfolio() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Explore SHANGATATU's visual art creations that blend traditional African motifs with contemporary digital expression
+                Explore SHANGATATU's visual art creations that blend traditional African motifs with contemporary
+                digital expression
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
@@ -550,15 +537,12 @@ export default function DJPortfolio() {
                 },
               ].map((artwork, index) => (
                 <Link href="/art-gallery" key={index}>
-                  <motion.div 
-                    whileHover={{ scale: 1.03 }}
-                    className="group cursor-pointer"
-                  >
+                  <motion.div whileHover={{ scale: 1.03 }} className="group cursor-pointer">
                     <Card className="overflow-hidden glass shadow-lg border-white/10 hover:border-secondary/30 transition-colors h-full">
                       <div className="relative aspect-square">
                         <div className="img-hover-zoom h-full">
                           <ImageWithLoading
-                            src={artwork.image}
+                            src={artwork.image || "/placeholder.svg"}
                             alt={artwork.title}
                             width={600}
                             height={600}

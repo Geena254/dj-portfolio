@@ -20,6 +20,7 @@ import {
 } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
+import type { HTMLDivElement } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -217,14 +218,14 @@ export default function DJPortfolio() {
             <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="relative aspect-square overflow-hidden rounded-2xl w-full max-w-[300px] mx-auto glass"
+                className="relative h-[500px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
                     src="/images/BK 9.jpg"
                     alt="SHANGATATU at the beach"
-                    width={600}
-                    height={600}
+                    width={1000}
+                    height={1200}
                     className="object-cover h-full w-full"
                   />
                 </div>
@@ -668,7 +669,7 @@ export default function DJPortfolio() {
       </SectionTransition>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/10 px-4 py-12 bg-black">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

@@ -17,6 +17,7 @@ import {
   ExternalLink,
   Mail,
   Phone,
+  Shirt,
 } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
@@ -501,6 +502,7 @@ export default function DJPortfolio() {
         </section>
       </SectionTransition>
 
+      {/* Visual Art Gallery Section - Updated to Coming Soon */}
       <SectionTransition>
         <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
@@ -516,73 +518,59 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {[
-                {
-                  title: "Ancestral Visions",
-                  description: "Digital collage exploring spiritual connections",
-                  image: "/images/art-1.jpg",
-                  year: "2023",
-                },
-                {
-                  title: "Coastal Rhythms",
-                  description: "Mixed media on canvas inspired by Swahili culture",
-                  image: "/images/art-2.jpg",
-                  year: "2022",
-                },
-                {
-                  title: "Techno Tribal",
-                  description: "Digital illustration fusing tradition and futurism",
-                  image: "/images/art-3.jpg",
-                  year: "2024",
-                },
-              ].map((artwork, index) => (
-                <Link href="/art-gallery" key={index}>
-                  <motion.div whileHover={{ scale: 1.03 }} className="group cursor-pointer">
-                    <Card className="overflow-hidden glass shadow-lg border-white/10 hover:border-secondary/30 transition-colors h-full">
-                      <div className="relative aspect-square">
-                        <div className="img-hover-zoom h-full">
-                          <ImageWithLoading
-                            src={artwork.image || "/placeholder.svg"}
-                            alt={artwork.title}
-                            width={600}
-                            height={600}
-                            className="object-cover h-full w-full"
-                          />
-                        </div>
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      </div>
-                      <CardContent className="p-6">
-                        <h3 className="mb-2 text-xl font-semibold text-white group-hover:text-secondary transition-colors">
-                          {artwork.title}
-                        </h3>
-                        <p className="text-gray-400 mb-2">{artwork.description}</p>
-                        <div className="flex items-center gap-2 text-sm text-secondary">
-                          <Calendar className="h-4 w-4" />
-                          {artwork.year}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </Link>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link href="/art-gallery" prefetch={true}>
+            <div className="flex flex-col items-center justify-center h-64 bg-white/5 rounded-2xl border border-white/10 shadow-lg">
+              <h3 className="text-3xl font-bold text-gray-300 mb-4">Art Gallery Coming Soon!</h3>
+              <p className="text-lg text-gray-400 text-center max-w-md">
+                Stay tuned for an immersive experience into Shangatatu's unique visual artistry.
+              </p>
+              <Link href="/art-gallery" prefetch={true} className="mt-6">
                 <Button
                   size="lg"
                   className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
                 >
-                  <span className="relative z-10">View Full Art Gallery</span>
+                  <span className="relative z-10">Visit Art Gallery Page</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
+            </div>
+          </div>
+        </section>
+      </SectionTransition>
+
+      {/* Merchandise Section - New Section */}
+      <SectionTransition>
+        <section
+          id="merchandise"
+          className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">Exclusive Merchandise</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Wear the vibe! Get your hands on exclusive Shangatatu merchandise, including t-shirts, croptops, tops,
+                and artistic denims featuring unique art.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center justify-center p-8 rounded-2xl shadow-xl glass">
+              <Shirt className="h-24 w-24 text-secondary mb-6" />
+              <h3 className="text-3xl font-bold text-gray-300 mb-4 text-center">Ready to rock Shangatatu's style?</h3>
+              <p className="text-lg text-gray-400 text-center max-w-2xl mb-8">
+                For inquiries and purchases, please reach out directly via WhatsApp.
+              </p>
+              <Button
+                size="lg"
+                className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                onClick={() => window.open("https://wa.me/254715781364", "_blank")}
+              >
+                <Phone className="mr-2 h-5 w-5" />
+                WhatsApp for Merchandise
+                <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
+              </Button>
             </div>
           </div>
         </section>

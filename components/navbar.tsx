@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, Home, Calendar, Music, ImageIcon, Palette, User, Mail } from "lucide-react" // Import necessary icons
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
@@ -25,12 +25,13 @@ export default function Navbar() {
   }, [])
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Events", href: "/events" },
-    { name: "Mixes", href: "/mixes" },
-    { name: "Artistry", href: "/art-gallery" },
-    { name: "Wira", href: "/wira" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Home", href: "/", icon: Home },
+    { name: "Events", href: "/events", icon: Calendar },
+    { name: "Mixes", href: "/mixes", icon: Music },
+    { name: "Art Gallery", href: "/art-gallery", icon: ImageIcon }, // Changed name to match content
+    { name: "Artistry", href: "/artistry", icon: Palette },
+    { name: "Wira", href: "/wira", icon: User },
+    { name: "Contact", href: "/#contact", icon: Mail },
   ]
 
   return (
@@ -52,9 +53,9 @@ export default function Navbar() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-300 hover:text-secondary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                    className="text-gray-300 hover:text-secondary px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
                   >
-                    {link.name}
+                    <link.icon className="h-4 w-4" /> {link.name}
                   </Link>
                 </li>
               ))}
@@ -79,9 +80,9 @@ export default function Navbar() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="text-lg font-medium text-gray-300 hover:text-secondary w-full py-2 transition-colors"
+                      className="text-lg font-medium text-gray-300 hover:text-secondary w-full py-2 transition-colors flex items-center gap-2"
                     >
-                      {link.name}
+                      <link.icon className="h-5 w-5" /> {link.name}
                     </Link>
                   ))}
                 </div>

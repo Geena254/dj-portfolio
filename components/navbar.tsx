@@ -25,13 +25,10 @@ export default function Navbar() {
   }, [])
 
   const navLinks = [
-    { name: "Home", href: "/", icon: Home },
     { name: "Events", href: "/events", icon: Calendar },
-    { name: "Mixes", href: "/mixes", icon: Music },
-    { name: "Art Gallery", href: "/art-gallery", icon: ImageIcon }, // Changed name to match content
-    { name: "Artistry", href: "/artistry", icon: Palette },
     { name: "Wira", href: "/wira", icon: User },
-    { name: "Contact", href: "/#contact", icon: Mail },
+    { name: "Mixes", href: "/mixes", icon: Music },
+    { name: "Artistry", href: "/art-gallery", icon: ImageIcon },
   ]
 
   return (

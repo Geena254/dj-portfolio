@@ -1,79 +1,95 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Play, ExternalLink, ArrowLeft, Youtube, Radio, Cloud, AirplayIcon as Spotify } from "lucide-react"
-import ImageWithLoading from "@/components/image-with-loading"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowLeft, Youtube, Radio, Cloud, ExternalLink } from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
+import ImageWithLoading from "@/components/image-with-loading"
+import SectionTransition from "@/components/section-transition"
 
 export default function MixesPage() {
-  const mixes = [
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const slides = [
+    { src: "/images/mixes.jpg", alt: "DJ Mixes Hero" },
+    { src: "/images/dj-mix.jpg", alt: "Live Mix" },
+    { src: "/images/ravecave.jpg", alt: "Rave Cave Mix" },
+  ]
+
+  // Auto-advance slides
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [slides.length])
+
+  const latestMixes = [
     {
       id: "pKNEODiRdEk",
       title: "Shangatatu Live at Salty's Kite Village",
       views: "0.8K",
-      duration: "00:49:23",
-      genre: "Afro House",
-    },
-    {
-      id: "gSHBFFL5zYE",
-      title: "RaveCave Extended Mix",
-      views: "1.0K",
-      duration: "2:43:30",
-      genre: "Afro House",
+      platform: "YouTube",
+      description: "An energetic set from the beautiful Salty's Kite Village.",
     },
     {
       id: "moaLC_1fAFU",
       title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
       views: "2.5K",
-      duration: "1:45:30",
-      genre: "Afro House",
+      platform: "YouTube",
+      description: "A special sunrise mix recorded live at Beneath The Baobab Festival.",
     },
     {
       id: "Yg3FI1IIfZg",
       title: "Shangatatu Live at Kilifi New Year 2024",
       views: "1.8K",
-      duration: "2:15:45",
-      genre: "Deep House",
-    },
-    {
-      id: "rPILNx29pVA",
-      title: "Shangatatu - Deep House Mix",
-      views: "3.2K",
-      duration: "1:30:20",
-      genre: "Deep House",
-    },
-    {
-      id: "yAoKY0mttR0",
-      title: "Sunset Sessions with Shangatatu",
-      views: "2.1K",
-      duration: "1:20:15",
-      genre: "Melodic House",
-    },
-    {
-      id: "Wa9pYvHimc0",
-      title: "Shangatatu Beach House Mix",
-      views: "4.5K",
-      duration: "2:00:30",
-      genre: "Progressive House",
+      platform: "YouTube",
+      description: "Relive the magic of Kilifi New Year with this live recording.",
     },
   ]
 
-  const platforms = [
-    { name: "YouTube", icon: Youtube, href: "http://www.youtube.com/@shangatatu", color: "text-red-500" },
-    { name: "Mixcloud", icon: Radio, href: "https://www.mixcloud.com/shangatatu/", color: "text-blue-400" },
-    { name: "SoundCloud", icon: Cloud, href: "https://www.soundcloud.com/shangatatu", color: "text-orange-500" },
+  const mixSeries = [
     {
-      name: "Spotify",
-      icon: Spotify,
-      href: "https://open.spotify.com/user/31dqga7isotqip5czn5j4e3vd7li?si=6e8c0096cee14bdb",
-      color: "text-green-500",
+      title: "Deep House Sessions Vol. 1",
+      platform: "Mixcloud",
+      href: "https://www.mixcloud.com/shangatatu/deep-house-sessions-vol-1/",
+      image: "/placeholder.svg?height=400&width=600",
+      description: "A journey into soulful and melodic deep house.",
+    },
+    {
+      title: "Afro Tech Rhythms",
+      platform: "SoundCloud",
+      href: "https://www.soundcloud.com/shangatatu/afro-tech-rhythms",
+      image: "/placeholder.svg?height=400&width=600",
+      description: "Driving beats and tribal sounds from the heart of Africa.",
+    },
+    {
+      title: "Chillout Sunset Vibes",
+      platform: "Mixcloud",
+      href: "https://www.mixcloud.com/shangatatu/chillout-sunset-vibes/",
+      image: "/placeholder.svg?height=400&width=600",
+      description: "Perfect for winding down and enjoying the golden hour.",
     },
   ]
+
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case "YouTube":
+        return <Youtube className="h-5 w-5 text-secondary" />
+      case "Mixcloud":
+        return <Radio className="h-5 w-5 text-secondary" />
+      case "SoundCloud":
+        return <Cloud className="h-5 w-5 text-secondary" />
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -83,15 +99,28 @@ export default function MixesPage() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <ImageWithLoading
-            src="/images/mixes.jpg"
-            alt="Wira Afrika Event"
-            width={1920}
-            height={1080}
-            className="object-cover h-full w-full"
-            priority
-          />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <ImageWithLoading
+                  src={slides[currentSlide].src || "/placeholder.svg"}
+                  alt={slides[currentSlide].alt}
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
         <motion.div
@@ -106,7 +135,7 @@ export default function MixesPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 text-6xl md:text-8xl font-bold tracking-tighter gradient-text"
           >
-            MY MIXES
+            MIXES
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -114,18 +143,17 @@ export default function MixesPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8 text-xl md:text-2xl font-light text-gray-300 max-w-3xl"
           >
-            Explore my latest DJ sets, live performances, and curated mixes across multiple platforms
+            Dive into my world of sound with live sets, studio mixes, and exclusive tracks.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4"
           >
             <Button
               size="lg"
               variant="outline"
-              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8"
+              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
               asChild
             >
               <Link href="/">
@@ -137,122 +165,178 @@ export default function MixesPage() {
         </motion.div>
       </section>
 
-      {/* Platforms Section */}
-      <section className="relative px-4 py-14 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl font-bold gradient-text mb-4">Listen on Your Favorite Platform</h2>
-            <p className="text-gray-400">Find my mixes across all major streaming platforms</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {platforms.map((platform, index) => (
-              <motion.div
-                key={platform.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="glass hover:border-secondary/30 transition-colors cursor-pointer">
-                  <CardContent className="p-6 text-center">
-                    <a
-                      href={platform.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-3 hover:text-secondary transition-colors"
-                    >
-                      <platform.icon className={`h-12 w-12 ${platform.color}`} />
-                      <span className="font-medium">{platform.name}</span>
-                      <ExternalLink className="h-4 w-4 opacity-60" />
-                    </a>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Latest Mixes Section */}
-      <section className="relative px-4 py-20 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
-              <h2 className="text-4xl font-bold gradient-text">Latest Mixes</h2>
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
+      <SectionTransition>
+        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">Latest Mixes</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Catch up on my most recent live performances and studio sessions.
+              </p>
             </div>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              From festival sets to intimate sessions, explore my musical journey
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mixes.map((mix, index) => (
-              <motion.div
-                key={mix.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors group">
-                  <div className="relative aspect-video">
-                    <ImageWithLoading
-                      src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
-                      alt={mix.title}
-                      width={1280}
-                      height={720}
-                      className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
-                        onClick={() => window.open(`https://youtu.be/${mix.id}`, "_blank")}
-                      >
-                        <Play className="h-8 w-8" />
-                      </Button>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {latestMixes.map((mix, index) => (
+                <div key={mix.id} className="group">
+                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full flex flex-col">
+                    <div className="relative aspect-video">
+                      <iframe
+                        className="w-full h-full"
+                        src={`https://www.youtube.com/embed/${mix.id}?autoplay=0&modestbranding=1&rel=0`}
+                        title={mix.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
                     </div>
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-black/70 text-white text-xs px-2 py-1 rounded">{mix.duration}</span>
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="mb-2">
-                      <span className="text-xs text-secondary font-medium bg-secondary/20 px-2 py-1 rounded">
-                        {mix.genre}
-                      </span>
-                    </div>
-                    <h3 className="mb-3 text-lg font-semibold text-white line-clamp-2">{mix.title}</h3>
-                    <div className="flex items-center justify-between text-sm text-gray-400">
-                      <span>{mix.views} views</span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-secondary hover:text-secondary-400"
-                        onClick={() => window.open(`https://youtu.be/${mix.id}`, "_blank")}
-                      >
-                        Watch <ExternalLink className="ml-1 h-3 w-3" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    <CardContent className="p-6 flex-1 flex flex-col">
+                      <h3 className="mb-2 text-xl font-semibold text-white">{mix.title}</h3>
+                      <p className="text-gray-400 mb-4 flex-1">{mix.description}</p>
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          {getPlatformIcon(mix.platform)}
+                          <span>{mix.platform}</span>
+                        </div>
+                        <a
+                          href={`https://youtu.be/${mix.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-secondary hover:text-secondary-400 transition-colors flex items-center gap-1"
+                        >
+                          Watch on YouTube
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
           </div>
+        </section>
+      </SectionTransition>
+
+      {/* Mix Series & Archives Section */}
+      <SectionTransition>
+        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">Mix Series & Archives</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Explore curated mix series and delve into the archives of my sound.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {mixSeries.map((series, index) => (
+                <div key={index} className="group">
+                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full flex flex-col">
+                    <div className="relative aspect-video">
+                      <ImageWithLoading
+                        src={series.image || "/placeholder.svg"}
+                        alt={series.title}
+                        width={600}
+                        height={400}
+                        className="object-cover h-full w-full"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    </div>
+                    <CardContent className="p-6 flex-1 flex flex-col">
+                      <h3 className="mb-2 text-xl font-semibold text-white">{series.title}</h3>
+                      <p className="text-gray-400 mb-4 flex-1">{series.description}</p>
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          {getPlatformIcon(series.platform)}
+                          <span>{series.platform}</span>
+                        </div>
+                        <a
+                          href={series.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-secondary hover:text-secondary-400 transition-colors flex items-center gap-1"
+                        >
+                          Listen Now
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </SectionTransition>
+
+      {/* Call to Action */}
+      <section className="py-16 px-4 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <h2 className="text-4xl font-bold gradient-text">Explore More Music</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Discover my full discography and stay updated with new releases on all major platforms.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-secondary hover:bg-secondary-700 text-white text-lg px-8"
+                onClick={() => window.open("https://www.mixcloud.com/shangatatu/", "_blank")}
+              >
+                <Radio className="mr-2 h-4 w-4" />
+                Mixcloud
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
+                onClick={() => window.open("https://www.soundcloud.com/shangatatu", "_blank")}
+              >
+                <Cloud className="mr-2 h-4 w-4" />
+                SoundCloud
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative border-t border-white/10 px-4 py-12 bg-black">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU THE DJ. All rights reserved.</p>
+              <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU MUSIC</h3>
+              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
+            </div>
+            <div className="flex gap-6">
+              <Link
+                href="https://www.mixcloud.com/shangatatu/"
+                target="_blank"
+                className="p-2 hover:text-secondary transition-colors duration-300"
+                title="Mixcloud"
+              >
+                <Radio className="h-6 w-6" />
+              </Link>
+              <Link
+                href="https://www.soundcloud.com/shangatatu"
+                target="_blank"
+                className="p-2 hover:text-secondary transition-colors duration-300"
+                title="SoundCloud"
+              >
+                <Cloud className="h-6 w-6" />
+              </Link>
             </div>
           </div>
         </div>

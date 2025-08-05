@@ -143,6 +143,70 @@ body {
   }
 }
 
+/* Glassmorphism effect */
+.glass {
+  background-color: rgba(255, 255, 255, 0.05); /* Slightly visible white */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.glass-dark {
+  background-color: rgba(0, 0, 0, 0.3); /* Darker, more opaque */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Warm gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(90deg, #6a11cb, #2575fc); /* Blue/purple gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Button Hover Slide Effect */
+.btn-hover-slide {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-hover-slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1); /* Light overlay */
+  transition: left 0.3s ease-in-out;
+  z-index: -1;
+}
+
+.btn-hover-slide:hover::before {
+  left: 0;
+}
+
+/* Image Hover Zoom Effect */
+.img-hover-zoom {
+  overflow: hidden; /* Ensures the zoom effect stays within bounds */
+}
+
+.img-hover-zoom img {
+  transition: transform 0.5s ease; /* Smooth transition for zoom */
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.1); /* Zoom in effect */
+}
+
 @layer base {
   * {
     @apply border-border;

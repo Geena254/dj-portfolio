@@ -1,22 +1,20 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Pencil, Music, Calendar, Home, Headphones, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Menu, Home, Calendar, Music, ImageIcon, Palette, User, Mail } from "lucide-react" // Import necessary icons
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY
-      if (offset > 50) {
-        setScrolled(true)
+      if (window.scrollY > 50) {
+        setIsScrolled(true)
       } else {
-        setScrolled(false)
+        setIsScrolled(false)
       }
     }
 
@@ -26,79 +24,73 @@ export default function Navbar() {
     }
   }, [])
 
-  const navItems = [
-    { name: "Home", icon: Home, href: "/" },
-    { name: "Wira", icon: Users, href: "/wira" },
-    { name: "Mixes", icon: Headphones, href: "/mixes" },
-    { name: "Events", icon: Calendar, href: "/events" },
-    { name: "Artistry", icon: Pencil, href: "/art-gallery" }
+  const navLinks = [
+    { name: "Home", href: "/", icon: Home },
+    { name: "Events", href: "/events", icon: Calendar },
+    { name: "Mixes", href: "/mixes", icon: Music },
+    { name: "Art Gallery", href: "/art-gallery", icon: ImageIcon }, // Changed name to match content
+    { name: "Artistry", href: "/artistry", icon: Palette },
+    { name: "Wira", href: "/wira", icon: User },
+    { name: "Contact", href: "/#contact", icon: Mail },
   ]
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`navbar fixed top-0 left-0 right-0 z-50 px-4 py-4 ${scrolled ? "navbar-scrolled" : "bg-transparent"}`}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-black/80 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Music className="h-6 w-6 text-secondary" />
-          <span className="text-xl font-bold text-white">SHANGATATU</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="group flex items-center gap-1 text-gray-300 transition-colors hover:text-secondary"
-            >
-              <item.icon className="h-4 w-4" />
-              <span>{item.name}</span>
-              <span className="block h-0.5 max-w-0 bg-secondary transition-all duration-300 group-hover:max-w-full" />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0 text-2xl font-bold gradient-text">
+              SHANGATATU
             </Link>
-          ))}
-        </div>
-
-        {/* Mobile Navigation Toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden text-white hover:bg-white/10"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </Button>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden glass-dark mt-4 rounded-lg overflow-hidden"
-          >
-            <div className="flex flex-col p-4 space-y-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="flex items-center gap-2 p-2 text-gray-300 hover:text-secondary hover:bg-white/5 rounded-md transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <item.icon className="h-5 w-5" />
-                  <span>{item.name}</span>
-                </Link>
+          </div>
+          <nav className="hidden md:block">
+            <ul className="ml-10 flex items-baseline space-x-8">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-300 hover:text-secondary px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2"
+                  >
+                    <link.icon className="h-4 w-4" /> {link.name}
+                  </Link>
+                </li>
               ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            </ul>
+          </nav>
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[250px] sm:w-[300px] bg-black/90 border-l border-secondary/20 text-white"
+              >
+                <div className="flex flex-col items-start gap-4 p-4">
+                  <Link href="/" className="text-2xl font-bold gradient-text mb-4">
+                    SHANGATATU
+                  </Link>
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className="text-lg font-medium text-gray-300 hover:text-secondary w-full py-2 transition-colors flex items-center gap-2"
+                    >
+                      <link.icon className="h-5 w-5" /> {link.name}
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }

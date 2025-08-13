@@ -28,26 +28,6 @@ import ImageWithLoading from "@/components/image-with-loading"
 import SectionTransition from "@/components/section-transition"
 
 export default function WiraPage() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const slides = [
-    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi" },
-    { src: "/images/wira-face.jpg", alt: "Wira Face" },
-    { src: "/images/wira-hello.jpg", alt: "Wira Hello" },
-    { src: "/images/wira-post.jpg", alt: "Wira Post" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0" },
-    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibe" },
-  ]
-
-  // Auto-advance slides
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [slides.length])
-
   const wiraEvents = [
     {
       name: "Wira Kilifi 9.0",
@@ -127,7 +107,7 @@ export default function WiraPage() {
           <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentSlide}
+                key={"Wira Kilifi"}
                 initial={{ x: "100%" }}
                 animate={{ x: "0%" }}
                 exit={{ x: "-100%" }}
@@ -135,8 +115,8 @@ export default function WiraPage() {
                 className="absolute inset-0"
               >
                 <ImageWithLoading
-                  src={slides[currentSlide].src || "/placeholder.svg"}
-                  alt={slides[currentSlide].alt}
+                  src={"/images/dj-mix.jpg"}
+                  alt={"Wira Kilifi"}
                   width={1920}
                   height={1080}
                   className="w-full h-full object-cover"
@@ -187,59 +167,6 @@ export default function WiraPage() {
             </Button>
           </motion.div>
         </motion.div>
-      </section>
-
-      {/* Wira Event Gallery - Scrolling Images */}
-      <section className="relative py-16 overflow-hidden bg-gradient-to-b from-black to-primary-900/10">
-        <div className="mb-12 text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="h-1 w-10 bg-secondary rounded-full"></div>
-            <h2 className="text-4xl font-bold gradient-text">Wira Moments</h2>
-            <div className="h-1 w-10 bg-secondary rounded-full"></div>
-          </div>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Capturing the energy and spirit of Wira International events
-          </p>
-        </div>
-
-        <div className="relative">
-          <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [0, -100 * wiraGalleryImages.length],
-            }}
-            transition={{
-              x: {
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "loop",
-                duration: 25,
-                ease: "linear",
-              },
-            }}
-            style={{ width: `${wiraGalleryImages.length * 2 * 320}px` }}
-          >
-            {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
-              <motion.div
-                key={index}
-                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ImageWithLoading
-                  src={image.src || "/placeholder.svg"}
-                  alt={image.alt}
-                  width={320}
-                  height={240}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <p className="text-white font-semibold text-sm">{image.alt}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
       </section>
 
       {/* About Wira Section */}
@@ -300,6 +227,59 @@ export default function WiraPage() {
           </div>
         </section>
       </SectionTransition>
+      
+      {/* Wira Event Gallery - Scrolling Images */}
+      <section className="relative py-16 overflow-hidden bg-gradient-to-b from-black to-primary-900/10">
+        <div className="mb-12 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="h-1 w-10 bg-secondary rounded-full"></div>
+            <h2 className="text-4xl font-bold gradient-text">Wira Moments</h2>
+            <div className="h-1 w-10 bg-secondary rounded-full"></div>
+          </div>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Capturing the energy and spirit of Wira International events
+          </p>
+        </div>
+
+        <div className="relative">
+          <motion.div
+            className="flex gap-6"
+            animate={{
+              x: [0, -100 * wiraGalleryImages.length],
+            }}
+            transition={{
+              x: {
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+                duration: 25,
+                ease: "linear",
+              },
+            }}
+            style={{ width: `${wiraGalleryImages.length * 2 * 320}px` }}
+          >
+            {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
+              <motion.div
+                key={index}
+                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ImageWithLoading
+                  src={image.src || "/placeholder.svg"}
+                  alt={image.alt}
+                  width={320}
+                  height={240}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white font-semibold text-sm">{image.alt}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
       {/* Wira Philosophy Section */}
       <SectionTransition>

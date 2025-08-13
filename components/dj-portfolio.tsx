@@ -83,6 +83,18 @@ export default function DJPortfolio() {
     { name: "SoundCloud", icon: Cloud, href: "https://www.soundcloud.com/shangatatu" },
   ]
 
+  const djGalleryImages = [
+    { src: "/images/shangatatu-beach.jpg", alt: "Wira Kilifi Festival" },
+    { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
+    { src: "/images/dj-mix.jpg", alt: "Wira Beach Vibe" },
+    { src: "/images/BK 9.jpg", alt: "Wira Performance" },
+    { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
+    { src: "/images/mixes.jpg", alt: "Wira Post Event" },
+    { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
+    { src: "/images/dj-back.jpg", alt: "Wira Kilifi Crowd" },
+    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
+  ]
+
   return (
     <div ref={containerRef} className="relative min-h-screen bg-black text-white">
       <CustomCursor />
@@ -221,7 +233,7 @@ export default function DJPortfolio() {
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
-                    src="/images/BK 9.jpg"
+                    src="/images/shangatatu-beach.jpg"
                     alt="SHANGATATU at the beach"
                     width={1000}
                     height={1200}
@@ -293,6 +305,60 @@ export default function DJPortfolio() {
           </div>
         </section>
       </SectionTransition>
+
+      {/* DJ Gallery Section */}
+      <SectionTransition>
+        <section id="gallery" className="relative px-4 py-20 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">DJ Gallery</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+            </div>
+            <div className="relative">
+              <motion.div
+                className="flex gap-6"
+                animate={{
+                  x: [0, -100 * djGalleryImages.length],
+                }}
+                transition={{
+                  x: {
+                    repeat: Number.POSITIVE_INFINITY,
+                    repeatType: "loop",
+                    duration: 25,
+                    ease: "linear",
+                  },
+                }}
+                style={{ width: `${djGalleryImages.length * 2 * 320}px` }}
+              >
+                {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ImageWithLoading
+                      src={image.src || "/placeholder.svg"}
+                      alt={image.alt}
+                      width={320}
+                      height={240}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-white font-semibold text-sm">{image.alt}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </SectionTransition>
+
 
       {/* Stats Section */}
       <SectionTransition>

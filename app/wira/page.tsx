@@ -1,7 +1,22 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Calendar, MapPin, ExternalLink, Instagram, Facebook, Users, Lightbulb, Music } from "lucide-react"
+import {
+  ArrowLeft,
+  Calendar,
+  MapPin,
+  ExternalLink,
+  Instagram,
+  Facebook,
+  Users,
+  Lightbulb,
+  Music,
+  Youtube,
+  Twitter,
+  Radio,
+  Cloud,
+  AirplayIcon as Spotify,
+} from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -73,6 +88,18 @@ export default function WiraPage() {
       description: "Creating spaces where individuals can freely express themselves through dance and creativity.",
       icon: "Music",
     },
+  ]
+
+  const wiraGalleryImages = [
+    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi Festival" },
+    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Event" },
+    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibe" },
+    { src: "/images/wira-face.jpg", alt: "Wira Performance" },
+    { src: "/images/wira-hello.jpg", alt: "Wira Hello Moment" },
+    { src: "/images/wira-post.jpg", alt: "Wira Post Event" },
+    { src: "/images/wira 8.0.jpeg", alt: "Wira 8.0 Edition" },
+    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi Crowd" },
+    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
   ]
 
   const getIconComponent = (iconName: string) => {
@@ -160,6 +187,59 @@ export default function WiraPage() {
             </Button>
           </motion.div>
         </motion.div>
+      </section>
+
+      {/* Wira Event Gallery - Scrolling Images */}
+      <section className="relative py-16 overflow-hidden bg-gradient-to-b from-black to-primary-900/10">
+        <div className="mb-12 text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="h-1 w-10 bg-secondary rounded-full"></div>
+            <h2 className="text-4xl font-bold gradient-text">Wira Moments</h2>
+            <div className="h-1 w-10 bg-secondary rounded-full"></div>
+          </div>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Capturing the energy and spirit of Wira International events
+          </p>
+        </div>
+
+        <div className="relative">
+          <motion.div
+            className="flex gap-6"
+            animate={{
+              x: [0, -100 * wiraGalleryImages.length],
+            }}
+            transition={{
+              x: {
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+                duration: 25,
+                ease: "linear",
+              },
+            }}
+            style={{ width: `${wiraGalleryImages.length * 2 * 320}px` }}
+          >
+            {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
+              <motion.div
+                key={index}
+                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ImageWithLoading
+                  src={image.src || "/placeholder.svg"}
+                  alt={image.alt}
+                  width={320}
+                  height={240}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white font-semibold text-sm">{image.alt}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* About Wira Section */}
@@ -358,33 +438,65 @@ export default function WiraPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
-        <div className="mx-auto max-w-6xl">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-primary-900/20 to-blue-950">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-6xl"
+        >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">WIRA INTERNATIONAL</h3>
               <p className="text-gray-400">© 2025 WIRA. All rights reserved.</p>
             </div>
-            <div className="flex gap-6">
-              <Link
-                href="https://www.instagram.com/wirainternational/"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Instagram"
-              >
-                <Instagram className="h-6 w-6" />
-              </Link>
-              <Link
-                href="https://www.facebook.com/wirainternational"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Facebook"
-              >
-                <Facebook className="h-6 w-6" />
-              </Link>
+            <div className="space-y-4 text-center md:text-right">
+              <h3 className="text-lg font-medium text-white">Connect with me</h3>
+              <div className="flex flex-wrap justify-center md:justify-end gap-6">
+                {[
+                  { icon: Instagram, href: "https://www.instagram.com/shangatatu/", label: "Instagram" },
+                  { icon: Youtube, href: "http://www.youtube.com/@shangatatu", label: "YouTube" },
+                  { icon: Facebook, href: "https://www.facebook.com/shangatatu3", label: "Facebook" },
+                  { icon: Twitter, href: "https://x.com/shangatatu", label: "Twitter/X" },
+                  { icon: Radio, href: "https://www.mixcloud.com/shangatatu/", label: "Mixcloud" },
+                  { icon: Cloud, href: "https://www.soundcloud.com/shangatatu", label: "SoundCloud" },
+                  {
+                    icon: Spotify,
+                    href: "https://open.spotify.com/user/31dqga7isotqip5czn5j4e3vd7li?si=6e8c0096cee14bdb",
+                    label: "Spotify",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2 hover:text-secondary transition-colors duration-300"
+                    title={social.label}
+                  >
+                    <social.icon className="h-6 w-6" />
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {social.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+          <div className="mt-8 text-center text-sm text-gray-500">
+            <p>
+              Website designed by{" "}
+              <a
+                href="https://georginadev.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary hover:underline inline-flex items-center"
+              >
+                Georgina <ExternalLink className="h-3 w-3 ml-1" />
+              </a>
+            </p>
+          </div>
+        </motion.div>
       </footer>
     </div>
   )

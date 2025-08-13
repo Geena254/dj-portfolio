@@ -1,11 +1,23 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Palette, Lightbulb, Play, Instagram } from "lucide-react"
+import {
+  ArrowLeft,
+  Palette,
+  Lightbulb,
+  Play,
+  Instagram,
+  Youtube,
+  Facebook,
+  Twitter,
+  Radio,
+  Cloud,
+  AirplayIcon as Spotify,
+  ExternalLink,
+} from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
@@ -29,45 +41,6 @@ export default function ArtGalleryPage() {
 
     return () => clearInterval(interval)
   }, [slides.length])
-
-  const artworks = [
-    {
-      title: "Ancestral Visions",
-      description: "Digital collage exploring spiritual connections and heritage.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2023",
-    },
-    {
-      title: "Coastal Rhythms",
-      description: "Mixed media on canvas inspired by Swahili culture and ocean sounds.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2022",
-    },
-    {
-      title: "Techno Tribal",
-      description: "Digital illustration fusing traditional African motifs with futurism.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2024",
-    },
-    {
-      title: "Desert Bloom",
-      description: "Vibrant abstract piece depicting life in arid landscapes.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2023",
-    },
-    {
-      title: "Urban Echoes",
-      description: "A dynamic piece reflecting the energy of city life.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2024",
-    },
-    {
-      title: "Cosmic Dance",
-      description: "An ethereal artwork exploring the harmony of the universe.",
-      image: "/placeholder.svg?height=600&width=600",
-      year: "2024",
-    },
-  ]
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -143,51 +116,24 @@ export default function ArtGalleryPage() {
         </motion.div>
       </section>
 
-      {/* Video Section */}
-      <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl text-center">
-            <div className="mb-16">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="h-1 w-10 bg-secondary rounded-full"></div>
-                <h2 className="text-4xl font-bold gradient-text">Artistic Journey</h2>
-                <div className="h-1 w-10 bg-secondary rounded-full"></div>
-              </div>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                A glimpse into the creative process and inspiration behind the art.
-              </p>
-            </div>
-            <div className="relative aspect-[9/16] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
-              <video controls className="w-full h-full object-cover" poster="/placeholder.svg?height=1280&width=720">
-                <source src="/placeholder.svg?height=1280&width=720" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center pointer-events-none">
-                <Play className="h-16 w-16 text-white opacity-70" />
-              </div>
-            </div>
-            <p className="text-sm text-gray-500 mt-4">
-              Note: This is a placeholder video. Please replace the source with your actual video.
-            </p>
-          </div>
-        </section>
-      </SectionTransition>
-
-      {/* Artistic Vision Section (Text Only) */}
+      {/* Combined Artistic Journey & Vision Section */}
       <SectionTransition>
         <section className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="space-y-6 text-center">
-              <div className="flex items-center justify-center gap-2">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
-                <h2 className="text-4xl font-bold tracking-tighter gradient-text">My Artistic Vision</h2>
+                <h2 className="text-4xl font-bold gradient-text">My Artistic Journey & Vision</h2>
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="prose prose-invert max-w-none mx-auto"
+                className="space-y-6"
               >
                 <p className="text-xl text-gray-300 leading-relaxed">
                   My visual art is an extension of my musical journey, exploring themes of identity, spirituality, and
@@ -199,23 +145,52 @@ export default function ArtGalleryPage() {
                   heritage and its contemporary interpretations. It's a dialogue between the past and the future,
                   expressed through color, form, and texture.
                 </p>
+                <p className="text-xl text-gray-300 leading-relaxed">
+                  Through my art, I aim to bridge cultures and create visual experiences that resonate with the same
+                  energy and emotion found in my music. It's about creating a complete sensory journey that speaks to
+                  the soul.
+                </p>
+                <div className="flex flex-wrap gap-4 pt-6">
+                  <div className="flex items-center gap-2 text-secondary">
+                    <Palette className="h-5 w-5" />
+                    <span className="font-medium">Digital & Mixed Media</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-secondary">
+                    <Lightbulb className="h-5 w-5" />
+                    <span className="font-medium">Cultural Storytelling</span>
+                  </div>
+                </div>
               </motion.div>
-              <div className="flex flex-wrap gap-4 pt-6 justify-center">
-                <div className="flex items-center gap-2 text-secondary">
-                  <Palette className="h-5 w-5" />
-                  <span className="font-medium">Digital & Mixed Media</span>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="relative aspect-[9/16] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
+                  <video
+                    controls
+                    className="w-full h-full object-cover"
+                    poster="/placeholder.svg?height=1280&width=720"
+                  >
+                    <source src="/placeholder.svg?height=1280&width=720" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center pointer-events-none">
+                    <Play className="h-16 w-16 text-white opacity-70" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-secondary">
-                  <Lightbulb className="h-5 w-5" />
-                  <span className="font-medium">Cultural Storytelling</span>
-                </div>
-              </div>
+                <p className="text-sm text-gray-500 mt-4 text-center">
+                  Note: This is a placeholder video. Please replace the source with your actual video.
+                </p>
+              </motion.div>
             </div>
           </div>
         </section>
       </SectionTransition>
 
-      {/* Featured Artworks Section */}
+      {/* Featured Artworks Section - Coming Soon */}
       <SectionTransition>
         <section className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
@@ -225,78 +200,80 @@ export default function ArtGalleryPage() {
                 <h2 className="text-4xl font-bold gradient-text">Featured Artworks</h2>
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                A selection of my most recent and impactful visual creations.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {artworks.map((artwork, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.03 }}
-                  className="group cursor-pointer"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="overflow-hidden glass shadow-lg border-white/10 hover:border-secondary/30 transition-colors h-full">
-                    <div className="relative aspect-square">
-                      <div className="img-hover-zoom h-full">
-                        <ImageWithLoading
-                          src={artwork.image || "/placeholder.svg"}
-                          alt={artwork.title}
-                          width={600}
-                          height={600}
-                          className="object-cover h-full w-full"
-                        />
-                      </div>
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </div>
-                    <CardContent className="p-6">
-                      <h3 className="mb-2 text-xl font-semibold text-white group-hover:text-secondary transition-colors">
-                        {artwork.title}
-                      </h3>
-                      <p className="text-gray-400 mb-2">{artwork.description}</p>
-                      <div className="flex items-center gap-2 text-sm text-secondary">
-                        <Lightbulb className="h-4 w-4" />
-                        {artwork.year}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+            <div className="flex flex-col items-center justify-center h-64 bg-white/5 rounded-2xl border border-white/10 shadow-lg">
+              <Palette className="h-24 w-24 text-secondary mb-6" />
+              <h3 className="text-3xl font-bold text-gray-300 mb-4 text-center">Featured Artworks Coming Soon!</h3>
+              <p className="text-lg text-gray-400 text-center max-w-2xl">
+                Stay tuned for an exclusive showcase of Shangatatu's most impactful visual creations, where traditional
+                African artistry meets contemporary digital expression.
+              </p>
             </div>
           </div>
         </section>
       </SectionTransition>
 
       {/* Footer */}
-      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
-        <div className="mx-auto max-w-6xl">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-primary-900/20 to-blue-950">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-6xl"
+        >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU ART</h3>
               <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
             </div>
-            <div className="flex gap-6">
-              <Link
-                href="https://www.instagram.com/shangatatu/"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Instagram"
-              >
-                <Instagram className="h-6 w-6" />
-              </Link>
+            <div className="space-y-4 text-center md:text-right">
+              <h3 className="text-lg font-medium text-white">Connect with me</h3>
+              <div className="flex flex-wrap justify-center md:justify-end gap-6">
+                {[
+                  { icon: Instagram, href: "https://www.instagram.com/shangatatu/", label: "Instagram" },
+                  { icon: Youtube, href: "http://www.youtube.com/@shangatatu", label: "YouTube" },
+                  { icon: Facebook, href: "https://www.facebook.com/shangatatu3", label: "Facebook" },
+                  { icon: Twitter, href: "https://x.com/shangatatu", label: "Twitter/X" },
+                  { icon: Radio, href: "https://www.mixcloud.com/shangatatu/", label: "Mixcloud" },
+                  { icon: Cloud, href: "https://www.soundcloud.com/shangatatu", label: "SoundCloud" },
+                  {
+                    icon: Spotify,
+                    href: "https://open.spotify.com/user/31dqga7isotqip5czn5j4e3vd7li?si=6e8c0096cee14bdb",
+                    label: "Spotify",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2 hover:text-secondary transition-colors duration-300"
+                    title={social.label}
+                  >
+                    <social.icon className="h-6 w-6" />
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {social.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+          <div className="mt-8 text-center text-sm text-gray-500">
+            <p>
+              Website designed by{" "}
+              <a
+                href="https://georginadev.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary hover:underline inline-flex items-center"
+              >
+                Georgina <ExternalLink className="h-3 w-3 ml-1" />
+              </a>
+            </p>
+          </div>
+        </motion.div>
       </footer>
     </div>
   )

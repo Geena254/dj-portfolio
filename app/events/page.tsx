@@ -1,7 +1,19 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Calendar, MapPin, Instagram, Facebook } from "lucide-react"
+import {
+  ArrowLeft,
+  Calendar,
+  MapPin,
+  Instagram,
+  Facebook,
+  Youtube,
+  Twitter,
+  Radio,
+  Cloud,
+  AirplayIcon as Spotify,
+  ExternalLink,
+} from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -91,6 +103,22 @@ export default function EventsPage() {
       date: "July 2023",
       image: "/images/tomorrowland.jpg",
     },
+  ]
+
+  // Event gallery images for the scrolling section
+  const eventGalleryImages = [
+    { src: "/images/dj-event.jpg", alt: "DJ Performance" },
+    { src: "/images/tomorrowland.jpg", alt: "Tomorrowland Festival" },
+    { src: "/images/boogie.jpg", alt: "Boogie Festival" },
+    { src: "/images/wira 8.0.jpeg", alt: "Wira Kilifi 8.0" },
+    { src: "/images/beneath-the-baobab.jpg", alt: "Beneath The Baobab" },
+    { src: "/images/the-afters-ke.jpg", alt: "The Afters KE" },
+    { src: "/images/klub-house-experience.jpg", alt: "Klub House Experience" },
+    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0" },
+    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibe" },
+    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi" },
+    { src: "/images/shangatatu-beach-dj.jpg", alt: "Beach DJ Set" },
+    { src: "/images/shangatatu-beach.jpg", alt: "Beach Performance" },
   ]
 
   return (
@@ -232,6 +260,83 @@ export default function EventsPage() {
         </section>
       </SectionTransition>
 
+      {/* Event Gallery Scrolling Section */}
+      <SectionTransition>
+        <section className="relative py-16 overflow-hidden bg-gradient-to-r from-black via-primary-900/10 to-black">
+          <div className="mb-12 text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              <h2 className="text-3xl font-bold gradient-text">Event Highlights</h2>
+              <div className="h-1 w-10 bg-secondary rounded-full"></div>
+            </div>
+            <p className="text-lg text-gray-400">Moments captured from unforgettable performances</p>
+          </div>
+
+          <div className="relative">
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: [0, -100 * eventGalleryImages.length],
+              }}
+              transition={{
+                x: {
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "loop",
+                  duration: 30,
+                  ease: "linear",
+                },
+              }}
+              style={{
+                width: `${eventGalleryImages.length * 2 * 320}px`,
+              }}
+            >
+              {/* First set of images */}
+              {eventGalleryImages.map((image, index) => (
+                <motion.div
+                  key={`first-${index}`}
+                  className="flex-shrink-0 w-80 h-60 relative rounded-lg overflow-hidden"
+                  whileHover={{ scale: 1.05, zIndex: 10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ImageWithLoading
+                    src={image.src || "/placeholder.svg"}
+                    alt={image.alt}
+                    width={320}
+                    height={240}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-medium text-sm">{image.alt}</p>
+                  </div>
+                </motion.div>
+              ))}
+              {/* Duplicate set for seamless loop */}
+              {eventGalleryImages.map((image, index) => (
+                <motion.div
+                  key={`second-${index}`}
+                  className="flex-shrink-0 w-80 h-60 relative rounded-lg overflow-hidden"
+                  whileHover={{ scale: 1.05, zIndex: 10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ImageWithLoading
+                    src={image.src || "/placeholder.svg"}
+                    alt={image.alt}
+                    width={320}
+                    height={240}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white font-medium text-sm">{image.alt}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      </SectionTransition>
+
       {/* Past Events Section */}
       <SectionTransition>
         <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
@@ -330,33 +435,65 @@ export default function EventsPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
-        <div className="mx-auto max-w-6xl">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-primary-900/20 to-blue-950">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-6xl"
+        >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU EVENTS</h3>
               <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
             </div>
-            <div className="flex gap-6">
-              <Link
-                href="https://www.instagram.com/shangatatu/"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Instagram"
-              >
-                <Instagram className="h-6 w-6" />
-              </Link>
-              <Link
-                href="https://www.facebook.com/shangatatu3"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Facebook"
-              >
-                <Facebook className="h-6 w-6" />
-              </Link>
+            <div className="space-y-4 text-center md:text-right">
+              <h3 className="text-lg font-medium text-white">Connect with me</h3>
+              <div className="flex flex-wrap justify-center md:justify-end gap-6">
+                {[
+                  { icon: Instagram, href: "https://www.instagram.com/shangatatu/", label: "Instagram" },
+                  { icon: Youtube, href: "http://www.youtube.com/@shangatatu", label: "YouTube" },
+                  { icon: Facebook, href: "https://www.facebook.com/shangatatu3", label: "Facebook" },
+                  { icon: Twitter, href: "https://x.com/shangatatu", label: "Twitter/X" },
+                  { icon: Radio, href: "https://www.mixcloud.com/shangatatu/", label: "Mixcloud" },
+                  { icon: Cloud, href: "https://www.soundcloud.com/shangatatu", label: "SoundCloud" },
+                  {
+                    icon: Spotify,
+                    href: "https://open.spotify.com/user/31dqga7isotqip5czn5j4e3vd7li?si=6e8c0096cee14bdb",
+                    label: "Spotify",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2 hover:text-secondary transition-colors duration-300"
+                    title={social.label}
+                  >
+                    <social.icon className="h-6 w-6" />
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {social.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+          <div className="mt-8 text-center text-sm text-gray-500">
+            <p>
+              Website designed by{" "}
+              <a
+                href="https://georginadev.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary hover:underline inline-flex items-center"
+              >
+                Georgina <ExternalLink className="h-3 w-3 ml-1" />
+              </a>
+            </p>
+          </div>
+        </motion.div>
       </footer>
     </div>
   )

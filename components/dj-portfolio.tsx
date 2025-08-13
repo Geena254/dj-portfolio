@@ -169,7 +169,7 @@ export default function DJPortfolio() {
               </Button>
 
               {isDropdownOpen && (
-                <div className="fixed sm:absolute top-full left-0 mt-2 w-56 p-2 bg-black/90 border-2 border-secondary rounded-md shadow-lg shadow-secondary/50 z-[999] backdrop-blur-md">
+                <div className="fixed sm:absolute bottom-full left-0 mb-2 w-56 p-2 bg-black/90 border-2 border-secondary rounded-md shadow-lg shadow-secondary/50 z-[999] backdrop-blur-md">
                   <div className="grid gap-1">
                     {musicPlatforms.map((platform) => (
                       <a
@@ -247,9 +247,9 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                    Shangatatu is a vibrant creative born and rooted on Kenya’s coast channeling positive frequencies
+                    Shangatatu is a vibrant creative born and rooted on Kenya's coast channeling positive frequencies
                     through African dance music, merchandise and art into hypnotic, tribal soundscapes that speak to
-                    both ancient rhythm and modern freedom. With now 13 years behind the decks, Shangatatu’s energy is
+                    both ancient rhythm and modern freedom. With now 13 years behind the decks, Shangatatu's energy is
                     raw, spiritual and deeply connected to nature. He is a three-in-one artist: DJ/Producer, visual
                     Artist and human experience.
                   </p>

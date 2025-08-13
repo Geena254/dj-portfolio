@@ -1,11 +1,21 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Youtube, Radio, Cloud, ExternalLink } from "lucide-react"
+import {
+  ArrowLeft,
+  Play,
+  ExternalLink,
+  Youtube,
+  Radio,
+  Cloud,
+  Instagram,
+  Facebook,
+  Twitter,
+  AirplayIcon as Spotify,
+} from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import CustomCursor from "@/components/custom-cursor"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
@@ -17,8 +27,8 @@ export default function MixesPage() {
 
   const slides = [
     { src: "/images/mixes.jpg", alt: "DJ Mixes Hero" },
-    { src: "/images/dj-mix.jpg", alt: "Live Mix" },
-    { src: "/images/ravecave.jpg", alt: "Rave Cave Mix" },
+    { src: "/images/dj-mix.jpg", alt: "Live Performance" },
+    { src: "/images/dj-event.jpg", alt: "Event Performance" },
   ]
 
   // Auto-advance slides
@@ -30,66 +40,71 @@ export default function MixesPage() {
     return () => clearInterval(interval)
   }, [slides.length])
 
-  const latestMixes = [
+  const allMixes = [
     {
       id: "pKNEODiRdEk",
       title: "Shangatatu Live at Salty's Kite Village",
       views: "0.8K",
       platform: "YouTube",
-      description: "An energetic set from the beautiful Salty's Kite Village.",
+      icon: Youtube,
     },
     {
       id: "moaLC_1fAFU",
       title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
       views: "2.5K",
       platform: "YouTube",
-      description: "A special sunrise mix recorded live at Beneath The Baobab Festival.",
+      icon: Youtube,
     },
     {
       id: "Yg3FI1IIfZg",
       title: "Shangatatu Live at Kilifi New Year 2024",
       views: "1.8K",
       platform: "YouTube",
-      description: "Relive the magic of Kilifi New Year with this live recording.",
+      icon: Youtube,
     },
-  ]
-
-  const mixSeries = [
     {
+      id: "pKNEODiRdEk",
       title: "Deep House Sessions Vol. 1",
-      platform: "Mixcloud",
-      href: "https://www.mixcloud.com/shangatatu/deep-house-sessions-vol-1/",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "A journey into soulful and melodic deep house.",
+      views: "3.2K",
+      platform: "YouTube",
+      icon: Youtube,
     },
     {
-      title: "Afro Tech Rhythms",
-      platform: "SoundCloud",
-      href: "https://www.soundcloud.com/shangatatu/afro-tech-rhythms",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "Driving beats and tribal sounds from the heart of Africa.",
+      id: "moaLC_1fAFU",
+      title: "Wira Festival 2023 Closing Set",
+      views: "4.1K",
+      platform: "YouTube",
+      icon: Youtube,
     },
     {
-      title: "Chillout Sunset Vibes",
-      platform: "Mixcloud",
-      href: "https://www.mixcloud.com/shangatatu/chillout-sunset-vibes/",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "Perfect for winding down and enjoying the golden hour.",
+      id: "Yg3FI1IIfZg",
+      title: "Afro Tech Rhythms Mix",
+      views: "2.8K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
+    {
+      id: "pKNEODiRdEk",
+      title: "Sunset Sessions at Diani Beach",
+      views: "1.9K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
+    {
+      id: "moaLC_1fAFU",
+      title: "Underground Warehouse Mix",
+      views: "3.5K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
+    {
+      id: "Yg3FI1IIfZg",
+      title: "Boogie Festival Tanzania 2024",
+      views: "2.3K",
+      platform: "YouTube",
+      icon: Youtube,
     },
   ]
-
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case "YouTube":
-        return <Youtube className="h-5 w-5 text-secondary" />
-      case "Mixcloud":
-        return <Radio className="h-5 w-5 text-secondary" />
-      case "SoundCloud":
-        return <Cloud className="h-5 w-5 text-secondary" />
-      default:
-        return null
-    }
-  }
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -143,7 +158,8 @@ export default function MixesPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8 text-xl md:text-2xl font-light text-gray-300 max-w-3xl"
           >
-            Dive into my world of sound with live sets, studio mixes, and exclusive tracks.
+            Dive into the sonic journey with curated mixes from festivals, clubs, and exclusive sessions around the
+            world.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -176,170 +192,162 @@ export default function MixesPage() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Catch up on my most recent live performances and studio sessions.
+                Experience the energy and rhythm through these carefully crafted mixes from live performances and studio
+                sessions.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {latestMixes.map((mix, index) => (
-                <div key={mix.id} className="group">
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full flex flex-col">
-                    <div className="relative aspect-video">
-                      <iframe
-                        className="w-full h-full"
-                        src={`https://www.youtube.com/embed/${mix.id}?autoplay=0&modestbranding=1&rel=0`}
-                        title={mix.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                    <CardContent className="p-6 flex-1 flex flex-col">
-                      <h3 className="mb-2 text-xl font-semibold text-white">{mix.title}</h3>
-                      <p className="text-gray-400 mb-4 flex-1">{mix.description}</p>
-                      <div className="flex items-center justify-between mt-auto">
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          {getPlatformIcon(mix.platform)}
-                          <span>{mix.platform}</span>
-                        </div>
-                        <a
-                          href={`https://youtu.be/${mix.id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-secondary hover:text-secondary-400 transition-colors flex items-center gap-1"
-                        >
-                          Watch on YouTube
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
+              {allMixes.map((mix, index) => (
+                <motion.div
+                  key={`${mix.id}-${index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group"
+                >
+                  <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      className="relative aspect-video overflow-hidden rounded-2xl glass shadow-lg"
+                    >
+                      <div className="img-hover-zoom h-full">
+                        <ImageWithLoading
+                          src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
+                          alt={mix.title}
+                          width={1280}
+                          height={720}
+                          className="object-cover h-full w-full"
+                        />
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
+                          >
+                            <Play className="h-8 w-8" />
+                          </Button>
+                        </div>
+                      </motion.div>
+                      <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <h3 className="text-lg font-semibold text-white mb-2">{mix.title}</h3>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <mix.icon className="h-4 w-4 text-secondary" />
+                            <p className="text-sm text-secondary">{mix.views} views</p>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-secondary" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </a>
+                </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-      </SectionTransition>
 
-      {/* Mix Series & Archives Section */}
-      <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-16 text-center">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="h-1 w-10 bg-secondary rounded-full"></div>
-                <h2 className="text-4xl font-bold gradient-text">Mix Series & Archives</h2>
-                <div className="h-1 w-10 bg-secondary rounded-full"></div>
-              </div>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Explore curated mix series and delve into the archives of my sound.
+            <div className="text-center">
+              <p className="text-gray-400 mb-6">
+                Want to hear more? Follow me on my music platforms for the latest releases and exclusive content.
               </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {mixSeries.map((series, index) => (
-                <div key={index} className="group">
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full flex flex-col">
-                    <div className="relative aspect-video">
-                      <ImageWithLoading
-                        src={series.image || "/placeholder.svg"}
-                        alt={series.title}
-                        width={600}
-                        height={400}
-                        className="object-cover h-full w-full"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    </div>
-                    <CardContent className="p-6 flex-1 flex flex-col">
-                      <h3 className="mb-2 text-xl font-semibold text-white">{series.title}</h3>
-                      <p className="text-gray-400 mb-4 flex-1">{series.description}</p>
-                      <div className="flex items-center justify-between mt-auto">
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          {getPlatformIcon(series.platform)}
-                          <span>{series.platform}</span>
-                        </div>
-                        <a
-                          href={series.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-secondary hover:text-secondary-400 transition-colors flex items-center gap-1"
-                        >
-                          Listen Now
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button
+                  variant="outline"
+                  className="border-secondary text-secondary hover:bg-secondary/10 bg-transparent"
+                  onClick={() => window.open("http://www.youtube.com/@shangatatu", "_blank")}
+                >
+                  <Youtube className="mr-2 h-4 w-4" />
+                  YouTube
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-secondary text-secondary hover:bg-secondary/10 bg-transparent"
+                  onClick={() => window.open("https://www.mixcloud.com/shangatatu/", "_blank")}
+                >
+                  <Radio className="mr-2 h-4 w-4" />
+                  Mixcloud
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-secondary text-secondary hover:bg-secondary/10 bg-transparent"
+                  onClick={() => window.open("https://www.soundcloud.com/shangatatu", "_blank")}
+                >
+                  <Cloud className="mr-2 h-4 w-4" />
+                  SoundCloud
+                </Button>
+              </div>
             </div>
           </div>
         </section>
       </SectionTransition>
-
-      {/* Call to Action */}
-      <section className="py-16 px-4 md:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <h2 className="text-4xl font-bold gradient-text">Explore More Music</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Discover my full discography and stay updated with new releases on all major platforms.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-secondary hover:bg-secondary-700 text-white text-lg px-8"
-                onClick={() => window.open("https://www.mixcloud.com/shangatatu/", "_blank")}
-              >
-                <Radio className="mr-2 h-4 w-4" />
-                Mixcloud
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
-                onClick={() => window.open("https://www.soundcloud.com/shangatatu", "_blank")}
-              >
-                <Cloud className="mr-2 h-4 w-4" />
-                SoundCloud
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Footer */}
-      <footer className="relative px-4 py-12 bg-gradient-to-b from-black to-blue-950">
-        <div className="mx-auto max-w-6xl">
+      <footer className="relative px-4 py-12 bg-gradient-to-b from-primary-900/20 to-blue-950">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-6xl"
+        >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU MUSIC</h3>
               <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
             </div>
-            <div className="flex gap-6">
-              <Link
-                href="https://www.mixcloud.com/shangatatu/"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="Mixcloud"
-              >
-                <Radio className="h-6 w-6" />
-              </Link>
-              <Link
-                href="https://www.soundcloud.com/shangatatu"
-                target="_blank"
-                className="p-2 hover:text-secondary transition-colors duration-300"
-                title="SoundCloud"
-              >
-                <Cloud className="h-6 w-6" />
-              </Link>
+            <div className="space-y-4 text-center md:text-right">
+              <h3 className="text-lg font-medium text-white">Connect with me</h3>
+              <div className="flex flex-wrap justify-center md:justify-end gap-6">
+                {[
+                  { icon: Instagram, href: "https://www.instagram.com/shangatatu/", label: "Instagram" },
+                  { icon: Youtube, href: "http://www.youtube.com/@shangatatu", label: "YouTube" },
+                  { icon: Facebook, href: "https://www.facebook.com/shangatatu3", label: "Facebook" },
+                  { icon: Twitter, href: "https://x.com/shangatatu", label: "Twitter/X" },
+                  { icon: Radio, href: "https://www.mixcloud.com/shangatatu/", label: "Mixcloud" },
+                  { icon: Cloud, href: "https://www.soundcloud.com/shangatatu", label: "SoundCloud" },
+                  {
+                    icon: Spotify,
+                    href: "https://open.spotify.com/user/31dqga7isotqip5czn5j4e3vd7li?si=6e8c0096cee14bdb",
+                    label: "Spotify",
+                  },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2 hover:text-secondary transition-colors duration-300"
+                    title={social.label}
+                  >
+                    <social.icon className="h-6 w-6" />
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {social.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+          <div className="mt-8 text-center text-sm text-gray-500">
+            <p>
+              Website designed by{" "}
+              <a
+                href="https://georginadev.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary hover:underline inline-flex items-center"
+              >
+                Georgina <ExternalLink className="h-3 w-3 ml-1" />
+              </a>
+            </p>
+          </div>
+        </motion.div>
       </footer>
     </div>
   )

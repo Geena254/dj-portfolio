@@ -176,7 +176,7 @@ export default function ArtGalleryPage() {
                     className="w-full h-full object-cover"
                     poster="/images/Document from Shangatatu©️.mp4"
                   >
-                    <source src="/images/Document from Shangatatu©️.mp4" type="video/mp4" />
+                    <source src="https://drive.google.com/file/d/186pSArYxHBvz0hex4INjeLCFOdAv7pMy/view?usp=sharing" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>

@@ -68,6 +68,24 @@ export default function EventsPage() {
 
   const pastEvents = [
     {
+      name: "Journey To The Baobab",
+      location: "Beneath The Baobab, Kilifi",
+      date: "16th & 17th August 2025",
+      image: "/images/jtb dj.jpg",
+    },
+    {
+      name: "Wira 9.0",
+      location: "Distant Relatives Lodge, Kilifi",
+      date: "2nd August 2025",
+      image: "/images/wira-9.0.jpg",
+    },
+    {
+      name: "Wira Beach Vibe",
+      location: "Fishermans Creek Shanzu",
+      date: "27th July 2025",
+      image: "/images/wirabeach.jpg",
+    },
+    {
       name: "Boogie Festival",
       location: "Arusha, Tanzania",
       date: "23rd - 25th March 2025",
@@ -103,22 +121,6 @@ export default function EventsPage() {
       date: "July 2023",
       image: "/images/tomorrowland.jpg",
     },
-  ]
-
-  // Event gallery images for the scrolling section
-  const eventGalleryImages = [
-    { src: "/images/dj-event.jpg", alt: "DJ Performance" },
-    { src: "/images/tomorrowland.jpg", alt: "Tomorrowland Festival" },
-    { src: "/images/boogie.jpg", alt: "Boogie Festival" },
-    { src: "/images/wira 8.0.jpeg", alt: "Wira Kilifi 8.0" },
-    { src: "/images/beneath-the-baobab.jpg", alt: "Beneath The Baobab" },
-    { src: "/images/the-afters-ke.jpg", alt: "The Afters KE" },
-    { src: "/images/klub-house-experience.jpg", alt: "Klub House Experience" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0" },
-    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibe" },
-    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi" },
-    { src: "/images/shangatatu-beach-dj.jpg", alt: "Beach DJ Set" },
-    { src: "/images/shangatatu-beach.jpg", alt: "Beach Performance" },
   ]
 
   return (
@@ -256,83 +258,6 @@ export default function EventsPage() {
                 </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-      </SectionTransition>
-
-      {/* Event Gallery Scrolling Section */}
-      <SectionTransition>
-        <section className="relative py-16 overflow-hidden bg-gradient-to-r from-black via-primary-900/10 to-black">
-          <div className="mb-12 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
-              <h2 className="text-3xl font-bold gradient-text">Event Highlights</h2>
-              <div className="h-1 w-10 bg-secondary rounded-full"></div>
-            </div>
-            <p className="text-lg text-gray-400">Moments captured from unforgettable performances</p>
-          </div>
-
-          <div className="relative">
-            <motion.div
-              className="flex gap-6"
-              animate={{
-                x: [0, -100 * eventGalleryImages.length],
-              }}
-              transition={{
-                x: {
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "loop",
-                  duration: 30,
-                  ease: "linear",
-                },
-              }}
-              style={{
-                width: `${eventGalleryImages.length * 2 * 320}px`,
-              }}
-            >
-              {/* First set of images */}
-              {eventGalleryImages.map((image, index) => (
-                <motion.div
-                  key={`first-${index}`}
-                  className="flex-shrink-0 w-80 h-60 relative rounded-lg overflow-hidden"
-                  whileHover={{ scale: 1.05, zIndex: 10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ImageWithLoading
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
-                    width={320}
-                    height={240}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-medium text-sm">{image.alt}</p>
-                  </div>
-                </motion.div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {eventGalleryImages.map((image, index) => (
-                <motion.div
-                  key={`second-${index}`}
-                  className="flex-shrink-0 w-80 h-60 relative rounded-lg overflow-hidden"
-                  whileHover={{ scale: 1.05, zIndex: 10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ImageWithLoading
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
-                    width={320}
-                    height={240}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-white font-medium text-sm">{image.alt}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </section>
       </SectionTransition>

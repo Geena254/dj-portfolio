@@ -84,10 +84,19 @@ export default function DJPortfolio() {
   ]
 
   const djGalleryImages = [
-    { src: "/images/shangatatu-beach.jpg", alt: "Wira Kilifi Festival" },
+    { src: "/images/IMG_8094.JPEG.jpg", alt: "Wira 9.0" },
+    { src: "/images/get.webp", alt: "Spin sesh" },
+    { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
+    { src: "/images/079A3034.jpg", alt: "Wira 9.0" },
+    { src: "/images/faces6.jpg", alt: "PapaRemo Moment" },
+    { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
+    { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
-    { src: "/images/dj-mix.jpg", alt: "Wira Beach Vibe" },
+    { src: "/images/079A3031.jpg", alt: "Wira 9.0" },
     { src: "/images/BK 9.jpg", alt: "Wira Performance" },
+    { src: "/images/079A3006.jpg", alt: "Wira 9.0" },
+    { src: "/images/IMG_8088.JPEG.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3004.jpg", alt: "Wira 9.0" },
     { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
     { src: "/images/mixes.jpg", alt: "Wira Post Event" },
     { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
@@ -327,7 +336,7 @@ export default function DJPortfolio() {
                   x: {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
-                    duration: 25,
+                    duration: 30,
                     ease: "linear",
                   },
                 }}
@@ -344,7 +353,7 @@ export default function DJPortfolio() {
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
                       width={320}
-                      height={240}
+                      height={260}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -496,22 +505,22 @@ export default function DJPortfolio() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
-                  name: "Boogie Festival",
-                  location: "Arusha, Tanzania",
-                  date: "23rd - 25th March 2025",
-                  image: "/images/boogie.jpg",
+                  name: "Journey To The Baobab",
+                  location: "Beneath The Baobab, Kilifi",
+                  date: "16th & 17th August 2025",
+                  image: "/images/jtb dj.jpg",
                 },
                 {
-                  name: "Wira Kilifi 8.0",
-                  location: "The Terrace, Kilifi, Kenya",
-                  date: "11th December 2023",
-                  image: "/images/wira 8.0.jpeg",
+                  name: "Wira 9.0",
+                  location: "Distant Relatives Lodge, Kilifi",
+                  date: "2nd August 2025",
+                  image: "/images/wira-9.0.jpg",
                 },
                 {
-                  name: "Beneath The Baobab Festival",
-                  location: "Kilifi, Kenya",
-                  date: "December 2023",
-                  image: "/images/beneath-the-baobab.jpg",
+                  name: "Wira Beach Vibe",
+                  location: "Fishermans Creek Shanzu",
+                  date: "27th July 2025",
+                  image: "/images/wirabeach.jpg",
                 },
               ].map((event, index) => (
                 <div key={index} className="group">

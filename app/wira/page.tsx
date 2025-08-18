@@ -71,15 +71,21 @@ export default function WiraPage() {
   ]
 
   const wiraGalleryImages = [
-    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi Festival" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Event" },
-    { src: "/images/wira beach vibe.jpg", alt: "Wira Beach Vibe" },
-    { src: "/images/wira-face.jpg", alt: "Wira Performance" },
-    { src: "/images/wira-hello.jpg", alt: "Wira Hello Moment" },
-    { src: "/images/wira-post.jpg", alt: "Wira Post Event" },
-    { src: "/images/wira 8.0.jpeg", alt: "Wira 8.0 Edition" },
-    { src: "/images/wira-kilifi.jpg", alt: "Wira Kilifi Crowd" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
+    { src: "/images/079A2965.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A2980.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A2985.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3040.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3046.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3021.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3023.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3039.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3032.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3051.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3052.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3056.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3057.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3060.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3061.jpg", alt: "Wira 9.0" },
   ]
 
   const getIconComponent = (iconName: string) => {

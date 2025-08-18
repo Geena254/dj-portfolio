@@ -28,8 +28,8 @@ export default function ArtGalleryPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const slides = [
-    { src: "/images/arthead.jpg", alt: "Art Gallery Hero" },
-    { src: "/images/BK 7.jpg", alt: "Abstract Art" },
+    { src: "/images/artistdj.jpg", alt: "Art Gallery Hero" },
+    { src: "/images/djartist.jpg", alt: "Abstract Art" },
     { src: "/images/dj-mix.jpg", alt: "Digital Art" },
   ]
 
@@ -168,22 +168,18 @@ export default function ArtGalleryPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="relative aspect-[9/16] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
+                <div className="relative aspect-[10/14] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
                   <video
-                    controls
+                    controls={true}
+                    autoPlay
+                    loop
                     className="w-full h-full object-cover"
-                    poster="/placeholder.svg?height=1280&width=720"
+                    poster="/images/Document from Shangatatu©️.mp4"
                   >
-                    <source src="/placeholder.svg?height=1280&width=720" type="video/mp4" />
+                    <source src="/images/Document from Shangatatu©️.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center pointer-events-none">
-                    <Play className="h-16 w-16 text-white opacity-70" />
-                  </div>
                 </div>
-                <p className="text-sm text-gray-500 mt-4 text-center">
-                  Note: This is a placeholder video. Please replace the source with your actual video.
-                </p>
               </motion.div>
             </div>
           </div>

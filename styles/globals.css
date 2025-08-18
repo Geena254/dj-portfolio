@@ -30,13 +30,27 @@ html {
   scroll-padding-top: 80px;
 }
 
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 60px;
+    scroll-padding-bottom: 80px;
+  }
+}
+
 body {
   background: #000;
   cursor: none;
   overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Custom Cursor */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Custom Cursor - Hide on mobile */
 .cursor {
   width: 20px;
   height: 20px;
@@ -61,6 +75,17 @@ body {
   mix-blend-mode: difference;
 }
 
+@media (max-width: 768px) {
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+
+  body {
+    cursor: auto;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -70,6 +95,12 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #00b4d8;
   border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
 }
 
 /* Gradient Text */
@@ -123,6 +154,12 @@ body {
 .hover-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 180, 216, 0.2);
+}
+
+@media (max-width: 768px) {
+  .hover-card:hover {
+    transform: none;
+  }
 }
 
 /* Loading animation */
@@ -203,6 +240,12 @@ body {
   transform: scale(1.1);
 }
 
+@media (max-width: 768px) {
+  .img-hover-zoom:hover img {
+    transform: none;
+  }
+}
+
 /* Button hover effects */
 .btn-hover-slide {
   position: relative;
@@ -224,4 +267,78 @@ body {
 
 .btn-hover-slide:hover::before {
   left: 100%;
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+  .text-6xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .text-8xl {
+    font-size: 4rem;
+    line-height: 1;
+  }
+
+  .text-4xl {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .text-xl {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+/* Responsive spacing */
+@media (max-width: 640px) {
+  .py-20 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .py-16 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .py-12 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .mb-16 {
+    margin-bottom: 2rem;
+  }
+
+  .mb-12 {
+    margin-bottom: 1.5rem;
+  }
+
+  .gap-8 {
+    gap: 1rem;
+  }
+
+  .gap-6 {
+    gap: 0.75rem;
+  }
+}
+
+/* Safe area for mobile devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-bottom: max(70px, env(safe-area-inset-bottom));
+  }
 }

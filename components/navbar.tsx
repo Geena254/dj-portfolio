@@ -36,7 +36,7 @@ export default function Navbar() {
     <>
       {/* Top Header - Desktop Only */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden lg:block ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden md:block ${
           isScrolled ? "bg-black/80 backdrop-blur-md shadow-lg" : "bg-transparent"
         }`}
       >
@@ -68,7 +68,7 @@ export default function Navbar() {
       </header>
 
       {/* Bottom Navigation - Mobile and Tablet */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-black/90 backdrop-blur-md border-t border-secondary/20">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-black/90 backdrop-blur-md border-t border-secondary/20">
         <div className="flex justify-around items-center py-2 px-4">
           {navLinks.map((link) => (
             <Link
@@ -86,7 +86,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Header - Shows brand name */}
-      <header className="fixed top-0 left-0 right-0 z-40 lg:hidden bg-black/80 backdrop-blur-md">
+      <header className="fixed top-0 left-0 right-0 z-40 md:hidden bg-black/80 backdrop-blur-md">
         <div className="flex h-14 items-center justify-center px-4">
           <Link href="/" className="text-xl font-bold gradient-text">
             SHANGATATU

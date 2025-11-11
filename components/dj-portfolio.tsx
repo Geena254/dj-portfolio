@@ -84,6 +84,7 @@ export default function DJPortfolio() {
   ]
 
   const djGalleryImages = [
+    { src: "/images/shang.jpg", alt: "Shangatatu at BTB" },
     { src: "/images/IMG_8094.JPEG.jpg", alt: "Wira 9.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
@@ -132,7 +133,7 @@ export default function DJPortfolio() {
                   alt={slides[currentSlide].alt}
                   width={1920}
                   height={1080}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover (x-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -149,7 +150,7 @@ export default function DJPortfolio() {
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 text-6xl md:text-8xl font-bold tracking-tighter gradient-text"
+            className="mb-6 text-5xl sm:text-6xl md:text-8xl font-bold tracking-tighter gradient-text"
           >
             SHANGATATU
           </motion.h1>
@@ -190,7 +191,7 @@ export default function DJPortfolio() {
               </Button>
 
               {isDropdownOpen && (
-                <div className="fixed sm:absolute bottom-full left-0 mb-2 w-56 p-2 bg-black/90 border-2 border-secondary rounded-md shadow-lg shadow-secondary/50 z-[999] backdrop-blur-md">
+                <div className="fixed sm:absolute bottom-full left-0 mb-2 w-full sm:w-56 p-2 bg-black/90 border-2 border-secondary rounded-md shadow-lg shadow-secondary/50 z-[999] backdrop-blur-md">
                   <div className="grid gap-1">
                     {musicPlatforms.map((platform) => (
                       <a
@@ -235,14 +236,14 @@ export default function DJPortfolio() {
       <SectionTransition>
         <section id="about" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start">
+            <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start items-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative h-[500px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
-                    src="/images/shangatatu-beach.jpg"
+                    src="/images/shang1.jpg"
                     alt="SHANGATATU at the beach"
                     width={1000}
                     height={1200}
@@ -268,6 +269,9 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
+                    What is Shangatatu?<br />
+                    Shangatatu is a multi-hyphenate brand featuring the pioneer- Ian Luganje Ziro, his art and merchandise creations,lastly,
+                    Ian’s musical interpretation in Dj format and music production.<br />
                     Shangatatu is a vibrant creative born and rooted on Kenya's coast channeling positive frequencies
                     through African dance music, merchandise and art into hypnotic, tribal soundscapes that speak to
                     both ancient rhythm and modern freedom. With now 13 years behind the decks, Shangatatu's energy is
@@ -354,7 +358,7 @@ export default function DJPortfolio() {
                       alt={image.alt}
                       width={320}
                       height={260}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover max-w-[100vw] md:max-w-[50vw] xl:max-w-[33vw]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

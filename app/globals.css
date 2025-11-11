@@ -203,8 +203,10 @@ body {
   transition: transform 0.5s ease; /* Smooth transition for zoom */
 }
 
-.img-hover-zoom:hover img {
-  transform: scale(1.1); /* Zoom in effect */
+@media (min-width: 768px) {
+  .img-hover-zoom:hover img {
+    transform: scale(1.1); /* Zoom in effect */
+  }
 }
 
 @layer base {

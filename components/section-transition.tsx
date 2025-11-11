@@ -11,10 +11,10 @@ interface SectionTransitionProps {
 export default function SectionTransition({ children, delay = 0 }: SectionTransitionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
+      transition={{ duration: 0.4, delay }}
     >
       {children}
     </motion.div>

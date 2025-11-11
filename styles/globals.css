@@ -30,7 +30,7 @@ html {
   scroll-padding-top: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   html {
     scroll-padding-top: 60px;
     scroll-padding-bottom: 80px;
@@ -44,7 +44,7 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   body {
     padding-bottom: calc(70px + env(safe-area-inset-bottom));
   }

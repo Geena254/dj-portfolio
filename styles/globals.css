@@ -30,7 +30,7 @@ html {
   scroll-padding-top: 80px;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 240px) {
   html {
     scroll-padding-top: 60px;
     scroll-padding-bottom: 80px;
@@ -44,7 +44,7 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 240px) {
   body {
     padding-bottom: calc(70px + env(safe-area-inset-bottom));
   }
@@ -75,7 +75,7 @@ body {
   mix-blend-mode: difference;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 240px) {
   .cursor,
   .cursor-dot {
     display: none;
@@ -97,7 +97,7 @@ body {
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 240px) {
   ::-webkit-scrollbar {
     width: 3px;
   }
@@ -156,7 +156,7 @@ body {
   box-shadow: 0 20px 40px rgba(0, 180, 216, 0.2);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 240px) {
   .hover-card:hover {
     transform: none;
   }

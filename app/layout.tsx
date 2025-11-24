@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* You can add additional meta tags here if needed */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${inter.variable} font-sans`}>
         <Suspense fallback={<PageLoading />}>{children}</Suspense>

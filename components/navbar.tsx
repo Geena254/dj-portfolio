@@ -1,98 +1,92 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Home, Calendar, Music, ImageIcon, User } from "lucide-react"
+import { Home, Calendar, Music, GalleryVertical, Menu, X, Users } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-
-  const navLinks = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Events", href: "/events", icon: Calendar },
-    { name: "Wira", href: "/wira", icon: User },
-    { name: "Mixes", href: "/mixes", icon: Music },
-    { name: "Artistry", href: "/art-gallery", icon: ImageIcon },
+  const routes = [
+    { href: "/", label: "Home", icon: Home },
+    { href: "/events", label: "Events", icon: Calendar },
+    { href: "/wira", label: "Wira", icon: Users },
+    { href: "/mixes", label: "Mixes", icon: Music },
+    { href: "/artistry", label: "Artistry", icon: GalleryVertical },
   ]
 
   return (
-    <>
-      {/* Top Header - Desktop Only */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 hidden md:block ${
-          isScrolled ? "bg-black/80 backdrop-blur-md shadow-lg" : "bg-transparent"
-        }`}
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0 text-2xl font-bold gradient-text">
-                SHANGATATU
-              </Link>
-            </div>
-            <nav>
-              <ul className="ml-10 flex items-baseline space-x-8">
-                {navLinks.slice(1).map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 ${
-                        pathname === link.href ? "text-secondary bg-secondary/10" : "text-gray-300 hover:text-secondary"
-                      }`}
-                    >
-                      <link.icon className="h-4 w-4" /> {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Bottom Navigation - Mobile and Tablet */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-black/90 backdrop-blur-md border-t border-secondary/20">
-        <div className="flex justify-around items-center py-2 px-4">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`flex flex-col items-center justify-center p-2 rounded-lg transition-colors min-w-[60px] ${
-                pathname === link.href ? "text-secondary bg-secondary/10" : "text-gray-400 hover:text-secondary"
-              }`}
-            >
-              <link.icon className="h-5 w-5 mb-1" />
-              <span className="text-xs font-medium">{link.name}</span>
-            </Link>
-          ))}
-        </div>
-      </nav>
-
-      {/* Mobile Header - Shows brand name */}
-      <header className="fixed top-0 left-0 right-0 z-40 md:hidden bg-black/80 backdrop-blur-md">
-        <div className="flex h-14 items-center justify-center px-4">
-          <Link href="/" className="text-xl font-bold gradient-text">
-            SHANGATATU
+    <header className="sticky top-0 z-50 w-full bg-blur backdrop-blur-lg">
+      <div className="container flex h-14 items-center justify-between">
+        <div className="flex items-center space-x-2 px-6">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image src="/images/favicon.ico" alt="Shangatatu Logo" width={28} height={28} />
+            <span className="font-bold">SHANGATATU</span>
           </Link>
         </div>
-      </header>
-    </>
+
+        <div className="hidden md:flex items-center space-x-6 px-6">
+            <nav className="flex items-center space-x-6 text-sm font-medium">
+                {routes.map(({ href, label, icon: Icon }) => (
+                <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                    "flex items-center space-x-2 transition-colors hover:text-foreground/80",
+                    pathname === href ? "text-foreground" : "text-foreground/60"
+                    )}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span>{label}</span>
+                </Link>
+                ))}
+            </nav>
+        </div>
+
+        <div className="md:hidden py-6">
+            <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2"
+            >
+                {isMenuOpen ? <X /> : <Menu />}
+            </button>
+        </div>
+      </div>
+      {isMenuOpen && (
+        <div className="md:hidden py-6">
+            <div className="fixed inset-0 z-40 bg-blur" onClick={() => setIsMenuOpen(false)} />
+            <div className="fixed top-0 right-0 z-50 h-full w-3/4 max-w-sm bg-black/80 p-6 animate-in slide-in-from-right-80">
+                <div className="flex items-center justify-between">
+                    <Link href="/" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
+                        <Image src="/images/favicon.ico" alt="Shangatatu Logo" width={28} height={28} />
+                        <span className="font-bold">SHANGATATU</span>
+                    </Link>
+                    <button onClick={() => setIsMenuOpen(false)}><X /></button>
+                </div>
+                <nav className="mt-8 flex flex-col space-y-4">
+                    {routes.map(({ href, label, icon: Icon }) => (
+                        <Link
+                            key={href}
+                            href={href}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={cn(
+                                "flex items-center space-x-2 rounded-md p-2 transition-colors hover:bg-accent",
+                                pathname === href ? "bg-accent" : ""
+                            )}
+                        >
+                            <Icon className="h-5 w-5" />
+                            <span>{label}</span>
+                        </Link>
+                    ))}
+                </nav>
+            </div>
+        </div>
+      )}
+    </header>
   )
 }
+

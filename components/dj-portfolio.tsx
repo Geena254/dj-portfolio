@@ -106,7 +106,7 @@ export default function DJPortfolio() {
   ]
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-black text-white">
+    <div ref={containerRef} className="relative bg-black text-white">
       <CustomCursor />
       <Navbar />
       <BackToTop />
@@ -330,7 +330,7 @@ export default function DJPortfolio() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <motion.div
                 className="flex gap-6"
                 animate={{
@@ -344,7 +344,7 @@ export default function DJPortfolio() {
                     ease: "linear",
                   },
                 }}
-                style={{ width: `${djGalleryImages.length * 2 * 320}px` }}
+                style={{ width: `${djGalleryImages.length * 2 * 100}%` }}
               >
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
@@ -358,7 +358,7 @@ export default function DJPortfolio() {
                       alt={image.alt}
                       width={320}
                       height={260}
-                      className="w-full h-full object-cover max-w-[100vw] md:max-w-[50vw] xl:max-w-[33vw]"
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

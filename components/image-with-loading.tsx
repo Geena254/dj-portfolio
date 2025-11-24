@@ -2,8 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import LoadingSpinner from "./loading-spinner"
+import { cn } from "@/lib/utils"
 
 interface ImageWithLoadingProps {
   src: string
@@ -25,28 +24,25 @@ export default function ImageWithLoading({
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
-  return (
-    <div className={`relative ${className}`}>
-      <AnimatePresence>
-        {isLoading && !hasError && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm z-10"
-          >
-            <LoadingSpinner size="lg" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+  // Base64 encoded transparent pixel
+  const blurDataURL = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
 
+  return (
+    <div className={cn("relative overflow-hidden", className)}>
       <Image
         src={src || "/placeholder.svg"}
         alt={alt}
         width={width}
         height={height}
-        className={`${className} transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}
+        className={cn(
+          "transition-all duration-500 ease-in-out",
+          isLoading ? "scale-110 blur-xl grayscale" : "scale-100 blur-0 grayscale-0",
+          hasError ? "hidden" : "block"
+        )}
         priority={priority}
-        onLoad={() => setIsLoading(false)}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        onLoadingComplete={() => setIsLoading(false)}
         onError={() => {
           setIsLoading(false)
           setHasError(true)

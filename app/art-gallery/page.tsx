@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   Palette,
   Lightbulb,
-  Play,
   Instagram,
   Youtube,
   Facebook,

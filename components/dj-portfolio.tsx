@@ -86,6 +86,7 @@ export default function DJPortfolio() {
   const djGalleryImages = [
     { src: "/images/shang.jpg", alt: "Shangatatu at BTB" },
     { src: "/images/IMG_8094.JPEG.jpg", alt: "Wira 9.0" },
+    { src: "/images/s7.jpg", alt: "Wira 10.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
     { src: "/images/079A3034.jpg", alt: "Wira 9.0" },

@@ -16,7 +16,7 @@ export default function Navbar() {
     { href: "/events", label: "Events", icon: Calendar },
     { href: "/wira", label: "Wira", icon: Users },
     { href: "/mixes", label: "Mixes", icon: Music },
-    { href: "/artistry", label: "Artistry", icon: GalleryVertical },
+    { href: "/art-gallery", label: "Artistry", icon: GalleryVertical },
   ]
 
   return (

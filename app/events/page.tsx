@@ -44,26 +44,12 @@ export default function EventsPage() {
 
   const upcomingEvents = [
     {
-      name: "Future Beats Showcase",
-      location: "The Warehouse, Nairobi, Kenya",
-      date: "15th August 2025",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "An exclusive night of cutting-edge electronic music.",
-    },
-    {
-      name: "Coastal Groove Festival",
-      location: "Diani Beach, Kenya",
-      date: "22nd - 24th November 2025",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "Three days of sun, sand, and soulful house music.",
-    },
-    {
-      name: "Urban Rhythms Night",
-      location: "The Loft, Mombasa, Kenya",
-      date: "10th October 2025",
-      image: "/placeholder.svg?height=400&width=600",
-      description: "Bringing the city's vibrant underground sound to life.",
-    },
+      name: "Wira Goes To The Beach",
+      location: "Fisherman's Creek Shanzu, Kenya",
+      date: "Sun 28th Dec 2025",
+      image: "/images/wira event latest.jpg",
+      url: "https://turnapp.events/ff2591d0-e104-11f0-bb90-c1f1cf66cf9c",
+    }
   ]
 
   const pastEvents = [
@@ -252,6 +238,19 @@ export default function EventsPage() {
                           <Calendar className="h-4 w-4 text-secondary" />
                           {event.date}
                         </div>
+                        {event.url && (
+                          <div className="flex items-center gap-2 text-sm text-secondary">
+                            <ExternalLink className="h-4 w-4" />
+                            <a
+                              href={event.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:underline break-all"
+                            >
+                              {event.url}
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -315,6 +314,7 @@ export default function EventsPage() {
                           <Calendar className="h-4 w-4 text-secondary" />
                           {event.date}
                         </div>
+                        
                       </div>
                     </CardContent>
                   </Card>
@@ -326,7 +326,7 @@ export default function EventsPage() {
       </SectionTransition>
 
       {/* Call to Action */}
-      <section className="py-16 px-4 md:px-6 lg:px-8">
+      <section className="py-16 px-4 md:px-6 lg:px-8 bg-primary-900/20">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

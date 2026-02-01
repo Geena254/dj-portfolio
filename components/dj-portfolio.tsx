@@ -1,24 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import {
-  Cloud,
-  Facebook,
-  Instagram,
-  Radio,
-  AirplayIcon as Spotify,
-  Twitter,
-  Youtube,
-  Play,
-  ArrowRight,
-  ChevronDown,
-  Calendar,
-  MapPin,
-  ExternalLink,
-  Mail,
-  Phone,
-  Shirt,
-} from "lucide-react"
+import { Cloud, Facebook, Instagram, Radio, SproutIcon as Spotify, Twitter, Youtube, Play, ArrowRight, ChevronDown, Calendar, MapPin, ExternalLink, Mail, Phone, Shirt } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -741,10 +724,10 @@ export default function DJPortfolio() {
           className="mx-auto max-w-6xl"
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
-            </div>
+  <div className="text-center md:text-left">
+  <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
+  <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
+  </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>
               <div className="flex flex-wrap justify-center md:justify-end gap-6">

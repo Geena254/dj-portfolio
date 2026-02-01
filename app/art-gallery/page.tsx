@@ -1,19 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  ArrowLeft,
-  Palette,
-  Lightbulb,
-  Instagram,
-  Youtube,
-  Facebook,
-  Twitter,
-  Radio,
-  Cloud,
-  AirplayIcon as Spotify,
-  ExternalLink,
-} from "lucide-react"
+import { ArrowLeft, Palette, Lightbulb, Instagram, Youtube, Facebook, Twitter, Radio, Cloud, SproutIcon as Spotify, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -220,7 +208,7 @@ export default function ArtGalleryPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU ART</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
+              <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
             </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>

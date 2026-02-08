@@ -28,7 +28,7 @@ export default function ImageWithLoading({
   const blurDataURL = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
 
   return (
-    <div className={cn("relative overflow-hidden", className)}>
+    <div className={cn("relative", className)}>
       <Image
         src={src || "/placeholder.svg"}
         alt={alt}

@@ -50,6 +50,13 @@ export default function WiraPage() {
       image: "/images/wira beach vibe.jpg",
       description: "A special daytime session with deep house and afro beats by the ocean.",
     },
+    {
+      name: "Wira Kilifi 9.0",
+      location: "The Terrace, Kilifi, Kenya",
+      date: "10th December 2024",
+      image: "/images/wira-9.0.jpg",
+      description: "The latest edition of Wira, celebrating African dance music by the coast.",
+    },
   ]
 
   const wiraPhilosophy = [
@@ -108,7 +115,7 @@ export default function WiraPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen">
+      <section className="relative max-h-screen overflow-hidden lg:h-screen">
         <div className="absolute inset-0">
           <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
@@ -338,7 +345,7 @@ export default function WiraPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
               {wiraEvents.map((event, index) => (
                 <motion.div
                   key={index}
@@ -350,18 +357,18 @@ export default function WiraPage() {
                   transition={{ delay: index * 0.1 }}
                 >
                   <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <div className="relative aspect-video">
+                    <div className="relative aspect-[4/3] z-0 overflow-hidden rounded-t-2xl">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
                           src={event.image || "/placeholder.svg"}
                           alt={event.name}
-                          width={600}
-                          height={400}
+                          width={263}
+                          height={143}
                           className="object-cover h-full w-full"
                         />
                       </div>
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}

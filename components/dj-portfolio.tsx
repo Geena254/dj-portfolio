@@ -28,6 +28,8 @@ import SectionTransition from "@/components/section-transition"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
+import { X } from "lucide-react"
+import { createClient } from "@/lib/supabase/client"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
@@ -41,9 +43,45 @@ export default function DJPortfolio() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-
+  const [isRateCardModalOpen, setIsRateCardModalOpen] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const slides = [
+  const [heroSlides, setHeroSlides] = useState<Array<{
+    id: string
+    image_url: string
+    alt: string
+    page: string
+    order_index: number
+  }>>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
+
+  // Fetch hero slides from database
+  useEffect(() => {
+    const fetchHeroSlides = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("hero_slides")
+          .select("*")
+          .eq("page", "home")
+          .order("order_index", { ascending: true })
+
+        if (error) throw error
+        setHeroSlides(data || [])
+      } catch (error) {
+        console.error("Error fetching hero slides:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchHeroSlides()
+  }, [])
+
+  // Fallback slides if no database slides
+  const slides = heroSlides.length > 0 ? heroSlides.map(slide => ({
+    src: slide.image_url,
+    alt: slide.alt
+  })) : [
     { src: "/images/dj-mix.jpg", alt: "" },
     { src: "/images/_DSF4970.jpg", alt: "" },
     { src: "/images/_DSF4984.jpg", alt: "" },
@@ -111,7 +149,7 @@ export default function DJPortfolio() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section id="home" className="relative h-[70vh] md:h-[85vh] lg:min-h-screen">
+      <section id="home" className="relative h-[70vh] md:h-[85vh] lg:h-screen max-h-screen overflow-hidden">
         <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
@@ -130,8 +168,8 @@ export default function DJPortfolio() {
                 <ImageWithLoading
                   src={slides[currentSlide].src || "/placeholder.svg"}
                   alt={slides[currentSlide].alt}
-                  width={1920}
-                  height={1080}
+                  width={1700}
+                  height={980}
                   className="w-full h-full object-cover object-center"
                 />
               </motion.div>
@@ -170,9 +208,7 @@ export default function DJPortfolio() {
             <Button
               size="lg"
               className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
-              onClick={() =>
-                window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
-              }
+              onClick={() => setIsRateCardModalOpen(true)}
             >
               <span className="relative z-10">View Rate Card</span>
               <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -295,9 +331,7 @@ export default function DJPortfolio() {
                   <Button
                     variant="outline"
                     className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 bg-transparent"
-                    onClick={() =>
-                      window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
-                    }
+                    onClick={() => setIsRateCardModalOpen(true)}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     VIEW RATE CARD
@@ -321,7 +355,7 @@ export default function DJPortfolio() {
       {/* DJ Gallery Section */}
       <SectionTransition>
         <section id="gallery" className="relative px-4 py-20 md:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-4xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
@@ -329,7 +363,7 @@ export default function DJPortfolio() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <motion.div
                 className="flex gap-6"
                 animate={{
@@ -348,7 +382,7 @@ export default function DJPortfolio() {
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
                     key={`${image.src}-${index}`}
-                    className="relative flex-shrink-0 w-72 h-96 rounded-2xl group cursor-pointer"
+                    className="relative flex-shrink-0 w-72 h-72 rounded-2xl group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -356,7 +390,7 @@ export default function DJPortfolio() {
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
                       width={288}
-                      height={384}
+                      height={270}
                       className="w-full h-full object-contain"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -413,7 +447,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
               {[
                 {
                   id: "pKNEODiRdEk",
@@ -424,6 +458,11 @@ export default function DJPortfolio() {
                   id: "moaLC_1fAFU",
                   title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
                   views: "2.5K",
+                },
+                {
+                  id: "Yg3FI1IIfZg",
+                  title: "Shangatatu Live at Kilifi New Year 2024",
+                  views: "1.8K",
                 },
                 {
                   id: "Yg3FI1IIfZg",
@@ -441,9 +480,9 @@ export default function DJPortfolio() {
                         <ImageWithLoading
                           src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
                           alt={mix.title}
-                          width={1280}
-                          height={720}
-                          className="object-cover h-full w-full"
+                          width={287}
+                          height={320}
+                          className="object-contain h-full w-full"
                         />
                       </div>
                       <motion.div
@@ -505,7 +544,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mb-12">
               {[
                 {
                   name: "Journey To The Baobab",
@@ -525,16 +564,22 @@ export default function DJPortfolio() {
                   date: "27th July 2025",
                   image: "/images/wirabeach.jpg",
                 },
+                {
+                  name: "Journey To The Baobab",
+                  location: "Beneath the Baobab",
+                  date: "29th November 2025",
+                  image: "/images/wira-9.0.jpg",
+                },
               ].map((event, index) => (
                 <div key={index} className="group">
                   <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-video">
+                    <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-4/3">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
                           src={event.image || "/placeholder.svg"}
                           alt={event.name}
-                          width={600}
-                          height={400}
+                          width={256}
+                          height={200}
                           className="object-cover h-full w-full"
                         />
                       </div>
@@ -545,7 +590,7 @@ export default function DJPortfolio() {
                         transition={{ duration: 0.3 }}
                       />
                     </motion.div>
-                    <CardContent className="p-6">
+                    <CardContent className="p-4">
                       <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
                       <div className="flex flex-col space-y-2">
                         <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -580,7 +625,7 @@ export default function DJPortfolio() {
 
       {/* Visual Art Gallery Section - Updated to Coming Soon */}
       <SectionTransition>
-        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-primary-900/20 to-black">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -791,6 +836,50 @@ export default function DJPortfolio() {
           </div>
         </motion.div>
       </footer>
+
+      {/* Rate Card Modal */}
+      <AnimatePresence>
+        {isRateCardModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsRateCardModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 20, stiffness: 300 }}
+              className="relative w-full h-full max-w-6xl max-h-[90vh] m-4 bg-white rounded-2xl shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+                <h3 className="text-xl font-semibold text-gray-800">Shangatatu - Rate Card</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
+                  onClick={() => setIsRateCardModalOpen(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              
+              {/* PDF Content */}
+              <div className="w-full h-[calc(100%-80px)] overflow-auto bg-gray-100">
+                <iframe
+                  src="/Shangatatu intro & rates.pdf"
+                  className="w-full h-full border-0"
+                  title="Shangatatu Rate Card"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

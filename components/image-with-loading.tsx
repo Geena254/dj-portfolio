@@ -42,7 +42,7 @@ export default function ImageWithLoading({
         priority={priority}
         placeholder="blur"
         blurDataURL={blurDataURL}
-        onLoadingComplete={() => setIsLoading(false)}
+        onLoad={() => setIsLoading(false)}
         onError={() => {
           setIsLoading(false)
           setHasError(true)

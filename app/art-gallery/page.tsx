@@ -22,15 +22,48 @@ import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
 import SectionTransition from "@/components/section-transition"
+import { createClient } from "@/lib/supabase/client"
 
 export default function ArtGalleryPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [galleryImages, setGalleryImages] = useState<Array<{
+    id: string
+    image_url: string
+    alt: string
+    section: string | null
+    order_index: number
+  }>>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
 
   const slides = [
     { src: "/images/artistdj.jpg", alt: "Art Gallery Hero" },
     { src: "/images/djartist.jpg", alt: "Abstract Art" },
     { src: "/images/dj-mix.jpg", alt: "Digital Art" },
   ]
+
+  // Fetch gallery images from database
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("gallery_images")
+          .select("*")
+          .order("order_index", { ascending: true })
+
+        if (error) throw error
+        setGalleryImages(data || [])
+      } catch (error) {
+        console.error("Error fetching gallery images:", error)
+        // Set fallback data on error
+        setGalleryImages([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchGalleryImages()
+  }, [])
 
   // Auto-advance slides
   useEffect(() => {
@@ -48,7 +81,7 @@ export default function ArtGalleryPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen">
+      <section className="relative max-h-screen overflow-hidden lg:h-screen">
         <div className="absolute inset-0">
           <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
@@ -167,15 +200,17 @@ export default function ArtGalleryPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="relative aspect-[10/14] w-full max-w-md mx-auto rounded-2xl glass shadow-xl">
+                <div className="relative aspect-[14/12] w-full max-w-md mx-auto rounded-2xl glass shadow-xl">
                   <video
                     controls={true}
                     autoPlay
+                    muted
                     loop
-                    className="w-full h-full object-cover"
-                    poster="/images/Document from Shangatatu©️.mp4"
+                    playsInline
+                    className="w-full h-full object-cover rounded-2xl"
+                    poster="/images/placeholder.jpg"
                   >
-                    <source src="https://drive.google.com/file/d/186pSArYxHBvz0hex4INjeLCFOdAv7pMy/view?usp=sharing" type="video/mp4" />
+                    <source src="/art gallery.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -185,7 +220,7 @@ export default function ArtGalleryPage() {
         </section>
       </SectionTransition>
 
-      {/* Featured Artworks Section - Coming Soon */}
+      {/* Featured Artworks Section */}
       <SectionTransition>
         <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
           <div className="mx-auto max-w-6xl">
@@ -195,16 +230,61 @@ export default function ArtGalleryPage() {
                 <h2 className="text-4xl font-bold gradient-text">Featured Artworks</h2>
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center h-64 bg-white/5 rounded-2xl border border-white/10 shadow-lg">
-              <Palette className="h-24 w-24 text-secondary mb-6" />
-              <h3 className="text-3xl font-bold text-gray-300 mb-4 text-center">Featured Artworks Coming Soon!</h3>
-              <p className="text-lg text-gray-400 text-center max-w-2xl">
-                Stay tuned for an exclusive showcase of Shangatatu's most impactful visual creations, where traditional
-                African artistry meets contemporary digital expression.
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Explore the visual art creations that blend traditional African motifs with contemporary digital expression.
               </p>
             </div>
+
+            {isLoading ? (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-secondary"></div>
+                <p className="mt-4 text-white/60">Loading gallery...</p>
+              </div>
+            ) : galleryImages.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {galleryImages.map((image, index) => (
+                  <motion.div
+                    key={image.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group"
+                  >
+                    <div className="relative aspect-[4/3] rounded-2xl glass shadow-lg overflow-hidden">
+                      <div className="img-hover-zoom h-full">
+                        <ImageWithLoading
+                          src={image.image_url}
+                          alt={image.alt}
+                          width={400}
+                          height={300}
+                          className="object-cover h-full w-full"
+                        />
+                      </div>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      >
+                        <div className="absolute bottom-0 w-full p-6">
+                          <h3 className="text-lg font-semibold text-white mb-2">{image.alt}</h3>
+                          {image.section && (
+                            <p className="text-sm text-secondary">Collection: {image.section}</p>
+                          )}
+                        </div>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-64 bg-white/5 rounded-2xl border border-white/10 shadow-lg">
+                <Palette className="h-24 w-24 text-secondary mb-6" />
+                <h3 className="text-3xl font-bold text-gray-300 mb-4 text-center">Featured Artworks Coming Soon!</h3>
+                <p className="text-lg text-gray-400 text-center max-w-2xl">
+                  Stay tuned for an exclusive showcase of Shangatatu's most impactful visual creations, where traditional
+                  African artistry meets contemporary digital expression.
+                </p>
+              </div>
+            )}
           </div>
         </section>
       </SectionTransition>

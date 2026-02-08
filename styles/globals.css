@@ -39,7 +39,6 @@ html {
 body {
   background: #000;
   cursor: none;
-  overflow-x: hidden;
 }
 
 /* Custom Cursor - Hide on mobile */
@@ -221,7 +220,6 @@ body {
 
 /* Image hover effects */
 .img-hover-zoom {
-  overflow: hidden;
 }
 
 .img-hover-zoom img {
@@ -241,7 +239,6 @@ body {
 /* Button hover effects */
 .btn-hover-slide {
   position: relative;
-  overflow: hidden;
   z-index: 1;
 }
 

@@ -108,9 +108,9 @@ export default function WiraPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+      <section className="relative min-h-screen">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={"Wira Kilifi"}
@@ -184,7 +184,7 @@ export default function WiraPage() {
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="relative aspect-video overflow-hidden rounded-2xl glass"
+                className="relative aspect-video rounded-2xl glass"
               >
                 <ImageWithLoading
                   src="/images/wira-kilifi.jpg"
@@ -235,7 +235,7 @@ export default function WiraPage() {
       </SectionTransition>
       
       {/* Wira Event Gallery - Scrolling Images */}
-      <section className="relative py-16 overflow-hidden bg-gradient-to-b from-black to-primary-900/10">
+      <section className="relative py-16 bg-gradient-to-b from-black to-primary-900/10">
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="h-1 w-10 bg-secondary rounded-full"></div>
@@ -266,7 +266,7 @@ export default function WiraPage() {
             {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
               <motion.div
                 key={index}
-                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                className="relative flex-shrink-0 w-80 h-90 rounded-2xl group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -274,7 +274,7 @@ export default function WiraPage() {
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
                   width={320}
-                  height={240}
+                  height={360}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -325,7 +325,7 @@ export default function WiraPage() {
 
       {/* Wira Events Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-black to-primary-900/20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -349,7 +349,7 @@ export default function WiraPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
                     <div className="relative aspect-video">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
@@ -390,7 +390,7 @@ export default function WiraPage() {
       </SectionTransition>
 
       {/* Call to Action */}
-      <section className="py-16 px-4 md:px-6 lg:px-8">
+      <section className="py-16 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -434,7 +434,7 @@ export default function WiraPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">WIRA INTERNATIONAL</h3>
-              <p className="text-gray-400">© 2025 WIRA. All rights reserved.</p>
+              <p className="text-gray-400">© 2026 WIRA. All rights reserved.</p>
             </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>

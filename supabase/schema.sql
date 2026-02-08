@@ -126,19 +126,19 @@ CREATE POLICY "Admins can manage site_content" ON site_content
   FOR ALL USING (auth.role() = 'authenticated');
 
 -- Create storage bucket for images (run this in Supabase Storage section or via SQL)
-INSERT INTO storage.buckets (id, name, public) VALUES ('images', 'images', true);
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('images', 'images', true);
 
 -- Create storage policy for public read access
-CREATE POLICY "Public can view images" ON storage.objects
-  FOR SELECT USING (bucket_id = 'images');
+-- CREATE POLICY "Public can view images" ON storage.objects
+--   FOR SELECT USING (bucket_id = 'images');
 
 -- Create storage policy for authenticated upload
-CREATE POLICY "Admins can upload images" ON storage.objects
-  FOR INSERT WITH CHECK (bucket_id = 'images' AND auth.role() = 'authenticated');
+-- CREATE POLICY "Admins can upload images" ON storage.objects
+--   FOR INSERT WITH CHECK (bucket_id = 'images' AND auth.role() = 'authenticated');
 
 -- Create storage policy for authenticated update/delete
-CREATE POLICY "Admins can update images" ON storage.objects
-  FOR UPDATE USING (bucket_id = 'images' AND auth.role() = 'authenticated');
+-- CREATE POLICY "Admins can update images" ON storage.objects
+--   FOR UPDATE USING (bucket_id = 'images' AND auth.role() = 'authenticated');
 
-CREATE POLICY "Admins can delete images" ON storage.objects
-  FOR DELETE USING (bucket_id = 'images' AND auth.role() = 'authenticated');
+-- CREATE POLICY "Admins can delete images" ON storage.objects
+--   FOR DELETE USING (bucket_id = 'images' AND auth.role() = 'authenticated');

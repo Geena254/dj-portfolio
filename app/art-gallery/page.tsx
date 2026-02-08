@@ -48,9 +48,9 @@ export default function ArtGalleryPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+      <section className="relative min-h-screen">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -167,7 +167,7 @@ export default function ArtGalleryPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="relative aspect-[10/14] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
+                <div className="relative aspect-[10/14] w-full max-w-md mx-auto rounded-2xl glass shadow-xl">
                   <video
                     controls={true}
                     autoPlay
@@ -187,7 +187,7 @@ export default function ArtGalleryPage() {
 
       {/* Featured Artworks Section - Coming Soon */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -220,7 +220,7 @@ export default function ArtGalleryPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU ART</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
+              <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
             </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>

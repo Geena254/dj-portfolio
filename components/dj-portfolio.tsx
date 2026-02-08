@@ -89,37 +89,35 @@ export default function DJPortfolio() {
     { src: "/images/s7.jpg", alt: "Wira 10.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
-    { src: "/images/079A3034.jpg", alt: "Wira 9.0" },
-    { src: "/images/faces6.jpg", alt: "PapaRemo Moment" },
     { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
     { src: "/images/079A3031.jpg", alt: "Wira 9.0" },
     { src: "/images/BK 9.jpg", alt: "Wira Performance" },
-    { src: "/images/079A3006.jpg", alt: "Wira 9.0" },
     { src: "/images/IMG_8088.JPEG.jpg", alt: "Wira 9.0" },
-    { src: "/images/079A3004.jpg", alt: "Wira 9.0" },
     { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
     { src: "/images/mixes.jpg", alt: "Wira Post Event" },
-    { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
-    { src: "/images/dj-back.jpg", alt: "Wira Kilifi Crowd" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
   ]
 
+  // Calculate scroll distance for infinite loop (image width + gap)
+  const imageWidth = 288 // w-72 = 288px
+  const gap = 24 // gap-6 = 24px
+  const scrollDistance = (imageWidth + gap) * djGalleryImages.length
+
   return (
-    <div ref={containerRef} className="relative bg-black text-white">
+    <div ref={containerRef} className="relative bg-black text-white w-full">
       <CustomCursor />
       <Navbar />
       <BackToTop />
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen overflow-hidden">
+      <section id="home" className="relative h-[70vh] md:h-[85vh] lg:min-h-screen">
         <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
         />
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -134,7 +132,7 @@ export default function DJPortfolio() {
                   alt={slides[currentSlide].alt}
                   width={1920}
                   height={1080}
-                  className="w-full h-full object-cover (x-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="w-full h-full object-cover object-center"
                 />
               </motion.div>
             </AnimatePresence>
@@ -145,7 +143,7 @@ export default function DJPortfolio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-full flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -171,7 +169,7 @@ export default function DJPortfolio() {
           >
             <Button
               size="lg"
-              className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+              className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
               onClick={() =>
                 window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
               }
@@ -240,14 +238,14 @@ export default function DJPortfolio() {
             <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start items-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="relative h-[500px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
+                className="relative h-[390px] rounded-2xl w-full max-w-[400px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
                     src="/images/shang1.jpg"
                     alt="SHANGATATU at the beach"
                     width={1000}
-                    height={1200}
+                    height={800}
                     className="object-cover h-full w-full"
                   />
                 </div>
@@ -270,7 +268,7 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                    What is Shangatatu?<br />
+                    Who is Shangatatu?<br />
                     Shangatatu is a multi-hyphenate brand featuring the pioneer- Ian Luganje Ziro, his art and merchandise creations,lastly,
                     Ian’s musical interpretation in Dj format and music production.<br />
                     Shangatatu is a vibrant creative born and rooted on Kenya's coast channeling positive frequencies
@@ -331,35 +329,35 @@ export default function DJPortfolio() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
             </div>
-            <div className="relative overflow-hidden">
+            <div className="relative">
               <motion.div
                 className="flex gap-6"
                 animate={{
-                  x: [0, -100 * djGalleryImages.length],
+                  x: [0, `-${scrollDistance}px`],
                 }}
                 transition={{
                   x: {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
-                    duration: 30,
+                    duration: 50,
                     ease: "linear",
                   },
                 }}
-                style={{ width: `${djGalleryImages.length * 2 * 100}%` }}
+                style={{ width: "fit-content" }}
               >
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
-                    key={index}
-                    className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                    key={`${image.src}-${index}`}
+                    className="relative flex-shrink-0 w-72 h-96 rounded-2xl group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
                     <ImageWithLoading
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
-                      width={320}
-                      height={260}
-                      className="w-full h-full object-cover"
+                      width={288}
+                      height={384}
+                      className="w-full h-full object-contain"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -437,7 +435,7 @@ export default function DJPortfolio() {
                   <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
                     <motion.div
                       whileHover={{ scale: 1.03 }}
-                      className="relative aspect-video overflow-hidden rounded-2xl glass shadow-lg"
+                      className="relative aspect-video rounded-2xl glass shadow-lg"
                     >
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
@@ -481,7 +479,7 @@ export default function DJPortfolio() {
               <Link href="/mixes">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
                 >
                   <span className="relative z-10">Explore More Mixes</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -529,7 +527,7 @@ export default function DJPortfolio() {
                 },
               ].map((event, index) => (
                 <div key={index} className="group">
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
                     <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-video">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
@@ -569,7 +567,7 @@ export default function DJPortfolio() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
                 >
                   <span className="relative z-10">Explore More Events</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -600,7 +598,7 @@ export default function DJPortfolio() {
               <Link href="/art-gallery" prefetch={true} className="mt-6">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
                 >
                   <span className="relative z-10">Visit Artistry Page</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -638,7 +636,7 @@ export default function DJPortfolio() {
               </p>
               <Button
                 size="lg"
-                className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+                className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
                 onClick={() => window.open("https://wa.me/254715781364", "_blank")}
               >
                 <Phone className="mr-2 h-5 w-5" />
@@ -743,7 +741,7 @@ export default function DJPortfolio() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
+              <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
             </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>

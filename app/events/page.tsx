@@ -116,9 +116,9 @@ export default function EventsPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+      <section className="relative min-h-screen">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -209,7 +209,7 @@ export default function EventsPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full"
                     <div className="relative aspect-video">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
@@ -285,7 +285,7 @@ export default function EventsPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full"
                     <div className="relative aspect-video">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
@@ -370,7 +370,7 @@ export default function EventsPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU EVENTS</h3>
-              <p className="text-gray-400">© 2025 SHANGATATU. All rights reserved.</p>
+              <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
             </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>

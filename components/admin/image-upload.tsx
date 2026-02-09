@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Upload, Loader2, Link } from "lucide-react"
@@ -14,7 +14,13 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
   const [uploadProgress, setUploadProgress] = useState(0)
   const [urlInput, setUrlInput] = useState("")
   const [processingUrl, setProcessingUrl] = useState(false)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
   const supabase = createClient()
+
+  const handleButtonClick = () => {
+    console.log("Button clicked")
+    fileInputRef.current?.click()
+  }
 
   // Convert Google Drive URL to direct download URL
   const convertGoogleDriveUrl = (url: string): string => {
@@ -46,8 +52,14 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
   }
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("File upload triggered")
     const file = e.target.files?.[0]
-    if (!file) return
+    if (!file) {
+      console.log("No file selected")
+      return
+    }
+
+    console.log("File selected:", file.name, file.type, file.size)
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
@@ -66,8 +78,18 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
 
     try {
       const fileExt = file.name.split(".").pop()
-      const fileName = `${Math.random()}.${fileExt}`
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`
       const filePath = `uploads/${fileName}`
+
+      console.log("Uploading to:", filePath)
+
+      // Check if bucket exists first
+      const { data: buckets } = await supabase.storage.listBuckets()
+      const imagesBucket = buckets?.find(b => b.name === 'images')
+      
+      if (!imagesBucket) {
+        throw new Error("Images storage bucket not found. Please configure Supabase storage.")
+      }
 
       // Upload file to Supabase Storage
       const { data, error } = await supabase.storage
@@ -77,18 +99,33 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
           upsert: false,
         })
 
-      if (error) throw error
+      if (error) {
+        console.error("Supabase upload error:", error)
+        throw error
+      }
+
+      console.log("Upload successful:", data)
 
       // Get public URL
       const {
         data: { publicUrl },
       } = supabase.storage.from("images").getPublicUrl(filePath)
 
+      console.log("Public URL:", publicUrl)
+
       onUploadComplete(publicUrl)
       setUploadProgress(100)
     } catch (error: any) {
       console.error("Error uploading image:", error)
-      alert(`Failed to upload image: ${error.message}`)
+      
+      // Fallback: create object URL for local preview
+      if (error.message?.includes('bucket') || error.message?.includes('storage')) {
+        const localUrl = URL.createObjectURL(file)
+        onUploadComplete(localUrl)
+        alert("Storage unavailable. Using local preview. Image will not be saved permanently.")
+      } else {
+        alert(`Failed to upload image: ${error.message || error}`)
+      }
     } finally {
       setUploading(false)
       setUploadProgress(0)
@@ -135,33 +172,32 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
       <div>
         <label className="block text-sm font-medium mb-2 text-white/80">Upload Image</label>
         <div className="flex items-center space-x-4">
-          <label className="cursor-pointer">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileUpload}
-              disabled={uploading}
-              className="hidden"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              disabled={uploading}
-              className="border-secondary/30 hover:bg-secondary/10 hover:border-secondary/50 text-secondary"
-            >
-              {uploading ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <Upload className="h-4 w-4 mr-2" />
-                  Choose File
-                </>
-              )}
-            </Button>
-          </label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            disabled={uploading}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            onClick={handleButtonClick}
+            disabled={uploading}
+            className="border-secondary/30 hover:bg-secondary/10 hover:border-secondary/50 text-secondary"
+          >
+            {uploading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="h-4 w-4 mr-2" />
+                Choose File
+              </>
+            )}
+          </Button>
           {uploading && (
             <div className="flex-1 bg-white/5 rounded-full h-2 border border-white/10">
               <div

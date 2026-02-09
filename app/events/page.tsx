@@ -194,7 +194,7 @@ export default function EventsPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-screen md:min-h-screen lg:min-h-screen overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
@@ -223,7 +223,7 @@ export default function EventsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-[75vh] md:h-[75vh] lg:h-screen flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -263,7 +263,7 @@ export default function EventsPage() {
 
       {/* Upcoming Events Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-4 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -351,7 +351,7 @@ export default function EventsPage() {
 
       {/* Past Events Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
+        <section className="relative px-4 py-8 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
           <div className="mx-auto max-w-4xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">

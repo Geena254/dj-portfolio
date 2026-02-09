@@ -107,15 +107,39 @@ export default function Navbar() {
             )}
           </div>
         </div>
+
+        <div className="md:hidden px-6">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 rounded-md hover:bg-secondary/10 transition-colors"
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
-      <div className="md:hidden py-6">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2"
-        >
-          {isMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden border-t border-secondary/20 bg-background/95 backdrop-blur-lg">
+          <nav className="container px-6 py-4 space-y-2">
+            {routes.map(({ href, label, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setIsMenuOpen(false)}
+                className={cn(
+                  "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
+                  pathname === href 
+                    ? "bg-secondary/20 text-foreground" 
+                    : "text-foreground/60 hover:text-foreground hover:bg-secondary/10"
+                )}
+              >
+                <Icon className="h-5 w-5" />
+                <span>{label}</span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

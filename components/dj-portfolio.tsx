@@ -74,7 +74,6 @@ export default function DJPortfolio() {
     { src: "/images/s7.jpg", alt: "Wira 10.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
-    { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
     { src: "/images/079A3031.jpg", alt: "Wira 9.0" },
@@ -83,6 +82,7 @@ export default function DJPortfolio() {
     { src: "/images/IMG_8088.JPEG.jpg", alt: "Wira 9.0" },
     { src: "/images/079A3004.jpg", alt: "Wira 9.0" },
     { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
+    { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/mixes.jpg", alt: "Wira Post Event" },
     { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
     { src: "/images/dj-back.jpg", alt: "Wira Kilifi Crowd" },
@@ -96,7 +96,7 @@ export default function DJPortfolio() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen overflow-hidden">
+      <section id="home" className="relative min-h-screen md:min-h-screen lg:min-h-screen overflow-hidden">
         <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
@@ -128,7 +128,7 @@ export default function DJPortfolio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-[75vh] md:h-[75vh] lg:h-screen flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -320,7 +320,7 @@ export default function DJPortfolio() {
                   x: {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
-                    duration: 30,
+                    duration: 50,
                     ease: "linear",
                   },
                 }}

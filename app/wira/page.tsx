@@ -93,7 +93,7 @@ export default function WiraPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-screen md:min-h-screen lg:min-h-screen overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
@@ -122,7 +122,7 @@ export default function WiraPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
+          className="relative flex h-[75vh] md:h-[75vh] lg:h-[75vh] flex-col items-center justify-center text-center px-2"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -148,7 +148,7 @@ export default function WiraPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-8 bg-transparent"
+              className="border-secondary text-secondary hover:bg-secondary/10 text-lg px-6 bg-transparent"
               asChild
             >
               <Link href="/">
@@ -162,7 +162,7 @@ export default function WiraPage() {
 
       {/* About Wira Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-12 lg:grid-cols-2 items-center">
               <motion.div
@@ -251,7 +251,7 @@ export default function WiraPage() {
             {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
               <motion.div
                 key={index}
-                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                className="relative flex-shrink-0 w-75 h-60 rounded-2xl overflow-hidden group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -259,7 +259,7 @@ export default function WiraPage() {
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
                   width={320}
-                  height={240}
+                  height={250}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -287,7 +287,7 @@ export default function WiraPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {wiraPhilosophy.map((item, index) => (
                 <motion.div
                   key={index}
@@ -310,7 +310,7 @@ export default function WiraPage() {
 
       {/* Wira Events Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-12 md:px-6 lg:px-8 bg-gradient-to-b from-primary-900/20 to-black">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -323,7 +323,7 @@ export default function WiraPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
               {wiraEvents.map((event, index) => (
                 <motion.div
                   key={index}
@@ -375,7 +375,7 @@ export default function WiraPage() {
       </SectionTransition>
 
       {/* Call to Action */}
-      <section className="py-16 px-4 md:px-6 lg:px-8">
+      <section className="py-8 px-4 md:px-6 lg:px-8 bg-gradient-to-t from-primary-900/20 to-black">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

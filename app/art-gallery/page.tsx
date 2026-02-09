@@ -36,7 +36,7 @@ export default function ArtGalleryPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-screen md:min-h-screen lg:min-h-screen overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
@@ -65,7 +65,7 @@ export default function ArtGalleryPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-[75vh] md:h-[75vh] lg:h-screen flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -105,7 +105,7 @@ export default function ArtGalleryPage() {
 
       {/* Combined Artistic Journey & Vision Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-16 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -122,17 +122,17 @@ export default function ArtGalleryPage() {
                 viewport={{ once: true }}
                 className="space-y-6"
               >
-                <p className="text-xl text-gray-300 leading-relaxed">
+                <p className="text-l text-gray-300 leading-relaxed">
                   My visual art is an extension of my musical journey, exploring themes of identity, spirituality, and
                   the human connection to nature. I blend traditional African patterns and symbolism with modern digital
                   techniques to create vibrant, thought-provoking pieces.
                 </p>
-                <p className="text-xl text-gray-300 leading-relaxed">
+                <p className="text-l text-gray-300 leading-relaxed">
                   Each artwork tells a story, inviting viewers to delve deeper into the rich tapestry of African
                   heritage and its contemporary interpretations. It's a dialogue between the past and the future,
                   expressed through color, form, and texture.
                 </p>
-                <p className="text-xl text-gray-300 leading-relaxed">
+                <p className="text-l text-gray-300 leading-relaxed">
                   Through my art, I aim to bridge cultures and create visual experiences that resonate with the same
                   energy and emotion found in my music. It's about creating a complete sensory journey that speaks to
                   the soul.
@@ -155,15 +155,17 @@ export default function ArtGalleryPage() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="relative aspect-[10/14] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
+                <div className="relative aspect-[12/12] w-full max-w-md mx-auto rounded-2xl overflow-hidden glass shadow-xl">
                   <video
-                    controls={true}
+                    muted
                     autoPlay
                     loop
+                    playsInline
+                    controls={false}
                     className="w-full h-full object-cover"
-                    poster="/images/Document from Shangatatu©️.mp4"
+                    poster="/images/artistdj.jpg"
                   >
-                    <source src="https://drive.google.com/file/d/186pSArYxHBvz0hex4INjeLCFOdAv7pMy/view?usp=sharing" type="video/mp4" />
+                    <source src="/art gallery.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -175,7 +177,7 @@ export default function ArtGalleryPage() {
 
       {/* Featured Artworks Section - Coming Soon */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-primary-900/20 to-black">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">

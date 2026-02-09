@@ -1,11 +1,13 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Home, Calendar, Music, GalleryVertical, Menu, X, Users, Settings, Upload, Link2, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AdminModal } from "./admin-portal-modals"
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -15,6 +17,8 @@ export default function Navbar() {
   const [loading, setLoading] = useState(false)
   const adminHoverRef = useRef<NodeJS.Timeout | null>(null)
   const adminRef = useRef<HTMLDivElement>(null)
+  const [showAdminLink, setShowAdminLink] = useState(false)
+
 
   const routes = [
     { href: "/", label: "Home", icon: Home },
@@ -93,6 +97,14 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  function handleLogoMouseEnter(event: React.MouseEvent<HTMLAnchorElement>): void {
+    setShowAdminLink(true)
+  }
+
+  function handleLogoMouseLeave(event: React.MouseEvent<HTMLAnchorElement>): void {
+    setShowAdminLink(false)
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full bg-blur backdrop-blur-lg">
       <div className="container flex h-14 items-center justify-between">
@@ -153,8 +165,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
-      <div className="md:hidden py-6">
+      <div>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2"

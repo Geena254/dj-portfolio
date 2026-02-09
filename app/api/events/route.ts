@@ -6,7 +6,7 @@ export async function GET() {
     const { data, error } = await supabase
       .from("events")
       .select("*")
-      .order("event_date", { ascending: false })
+      .order("created_at", { ascending: false })
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -24,18 +24,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, description, event_date, location, image_url, link_url } = body
+    const { name, location, date, image_url, url, is_upcoming } = body
 
-    if (!title || !event_date) {
+    if (!name || !location || !date) {
       return NextResponse.json(
-        { error: "Title and event_date are required" },
+        { error: "Name, location, and date are required" },
         { status: 400 }
       )
     }
 
     const { data, error } = await supabase
       .from("events")
-      .insert([{ title, description, event_date, location, image_url, link_url }])
+      .insert([{ name, location, date, image_url, url, is_upcoming }])
       .select()
 
     if (error) {
@@ -46,6 +46,34 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to create event" },
+      { status: 500 }
+    )
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { id, name, location, date, image_url, url, is_upcoming } = body
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 })
+    }
+
+    const { data, error } = await supabase
+      .from("events")
+      .update({ name, location, date, image_url, url, is_upcoming })
+      .eq("id", id)
+      .select()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json(data[0])
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to update event" },
       { status: 500 }
     )
   }

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 export async function GET() {
   try {
     const { data, error } = await supabase
-      .from("gallery_images")
+      .from("hero_slides")
       .select("*")
       .order("order_index", { ascending: true })
 
@@ -15,7 +15,7 @@ export async function GET() {
     return NextResponse.json(data)
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch gallery images" },
+      { error: "Failed to fetch hero slides" },
       { status: 500 }
     )
   }
@@ -24,18 +24,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { image_url, alt, section, order_index } = body
+    const { image_url, alt, page, order_index } = body
 
-    if (!image_url) {
+    if (!image_url || !alt || !page) {
       return NextResponse.json(
-        { error: "Image URL are required" },
+        { error: "Image URL, alt text, and page are required" },
         { status: 400 }
       )
     }
 
     const { data, error } = await supabase
-      .from("gallery_images")
-      .insert([{ image_url, alt, section, order_index: order_index || 0 }])
+      .from("hero_slides")
+      .insert([{ image_url, alt, page, order_index: order_index || 0 }])
       .select()
 
     if (error) {
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data[0], { status: 201 })
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create gallery image" },
+      { error: "Failed to create hero slide" },
       { status: 500 }
     )
   }
@@ -54,15 +54,15 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
-    const { id, image_url, alt, section, order_index } = body
+    const { id, image_url, alt, page, order_index } = body
 
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 })
     }
 
     const { data, error } = await supabase
-      .from("gallery_images")
-      .update({ image_url, alt, section, order_index: order_index || 0 })
+      .from("hero_slides")
+      .update({ image_url, alt, page, order_index: order_index || 0 })
       .eq("id", id)
       .select()
 
@@ -73,7 +73,7 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(data[0])
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to update gallery image" },
+      { error: "Failed to update hero slide" },
       { status: 500 }
     )
   }
@@ -88,7 +88,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 })
     }
 
-    const { error } = await supabase.from("gallery_images").delete().eq("id", id)
+    const { error } = await supabase.from("hero_slides").delete().eq("id", id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -97,7 +97,7 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete gallery image" },
+      { error: "Failed to delete hero slide" },
       { status: 500 }
     )
   }

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 export async function GET() {
   try {
     const { data, error } = await supabase
-      .from("mix_links")
+      .from("mixes")
       .select("*")
       .order("created_at", { ascending: false })
 
@@ -21,18 +21,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { title, description, link_url, platform } = body
+    const { title, platform, platform_id, views } = body
 
-    if (!title || !link_url) {
+    if (!title || !platform || !platform_id) {
       return NextResponse.json(
-        { error: "Title and link_url are required" },
+        { error: "Title, platform, and platform_id are required" },
         { status: 400 }
       )
     }
 
     const { data, error } = await supabase
-      .from("mix_links")
-      .insert([{ title, description, link_url, platform }])
+      .from("mixes")
+      .insert([{ title, platform, platform_id, views }])
       .select()
 
     if (error) {
@@ -42,7 +42,35 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data[0], { status: 201 })
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create mix link" },
+      { error: "Failed to create mix" },
+      { status: 500 }
+    )
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { id, title, platform, platform_id, views } = body
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 })
+    }
+
+    const { data, error } = await supabase
+      .from("mixes")
+      .update({ title, platform, platform_id, views })
+      .eq("id", id)
+      .select()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json(data[0])
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to update mix" },
       { status: 500 }
     )
   }
@@ -57,7 +85,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 })
     }
 
-    const { error } = await supabase.from("mix_links").delete().eq("id", id)
+    const { error } = await supabase.from("mixes").delete().eq("id", id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -66,7 +94,7 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to delete mix link" },
+      { error: "Failed to delete mix" },
       { status: 500 }
     )
   }

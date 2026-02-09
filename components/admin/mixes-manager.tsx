@@ -27,12 +27,9 @@ export default function MixesManager() {
 
   const loadMixes = async () => {
     try {
-      const { data, error } = await supabase
-        .from("mixes")
-        .select("*")
-        .order("created_at", { ascending: false })
-
-      if (error) throw error
+      const response = await fetch('/api/mixes')
+      if (!response.ok) throw new Error('Failed to fetch mixes')
+      const data = await response.json()
       setMixes(data || [])
     } catch (error) {
       console.error("Error loading mixes:", error)
@@ -45,8 +42,10 @@ export default function MixesManager() {
     if (!confirm("Are you sure you want to delete this mix?")) return
 
     try {
-      const { error } = await supabase.from("mixes").delete().eq("id", id)
-      if (error) throw error
+      const response = await fetch(`/api/mixes?id=${id}`, {
+        method: 'DELETE'
+      })
+      if (!response.ok) throw new Error('Failed to delete mix')
       loadMixes()
     } catch (error) {
       console.error("Error deleting mix:", error)
@@ -71,18 +70,23 @@ export default function MixesManager() {
     }
 
     try {
-      if (editingMix) {
-        const { error } = await supabase
-          .from("mixes")
-          .update({ ...mixData, updated_at: new Date().toISOString() })
-          .eq("id", editingMix.id)
-        if (error) throw error
-        alert("Mix updated successfully!")
-      } else {
-        const { error } = await supabase.from("mixes").insert([mixData])
-        if (error) throw error
-        alert("Mix created successfully!")
+      const response = await fetch(
+        editingMix ? '/api/mixes' : '/api/mixes',
+        {
+          method: editingMix ? 'PUT' : 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editingMix ? { ...mixData, id: editingMix.id } : mixData)
+        }
+      )
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to save mix")
       }
+      
+      alert(`Mix ${editingMix ? "updated" : "created"} successfully!`)
       setIsFormOpen(false)
       setEditingMix(null)
       loadMixes()

@@ -28,12 +28,9 @@ export default function GalleryManager() {
 
   const loadImages = async () => {
     try {
-      const { data, error } = await supabase
-        .from("gallery_images")
-        .select("*")
-        .order("order_index", { ascending: true })
-
-      if (error) throw error
+      const response = await fetch('/api/gallery')
+      if (!response.ok) throw new Error('Failed to fetch gallery images')
+      const data = await response.json()
       setImages(data || [])
     } catch (error) {
       console.error("Error loading images:", error)
@@ -46,8 +43,10 @@ export default function GalleryManager() {
     if (!confirm("Are you sure you want to delete this image?")) return
 
     try {
-      const { error } = await supabase.from("gallery_images").delete().eq("id", id)
-      if (error) throw error
+      const response = await fetch(`/api/gallery?id=${id}`, {
+        method: 'DELETE'
+      })
+      if (!response.ok) throw new Error('Failed to delete image')
       loadImages()
     } catch (error) {
       console.error("Error deleting image:", error)
@@ -60,14 +59,8 @@ export default function GalleryManager() {
     const form = e.currentTarget
     const formData = new FormData(form)
     
-    // Get image_url from hidden input (updated by ImageUpload or manual input)
-    const imageUrlInput = form.querySelector('input[name="image_url"]') as HTMLInputElement
-    const visibleImageInput = form.querySelector('input[name="image_url_visible"]') as HTMLInputElement
-    // Use visible input if hidden input is empty (for manual paste)
-    const imageUrl = (imageUrlInput?.value?.trim() || visibleImageInput?.value?.trim()) || ""
-    
     const imageData = {
-      image_url: imageUrl,
+      image_url: (formData.get("image_url") as string)?.trim() || "",
       alt: (formData.get("alt") as string)?.trim() || "",
       section: (formData.get("section") as string)?.trim() || null,
       order_index: parseInt((formData.get("order_index") as string) || "0") || 0,
@@ -80,18 +73,23 @@ export default function GalleryManager() {
     }
 
     try {
-      if (editingImage) {
-        const { error } = await supabase
-          .from("gallery_images")
-          .update({ ...imageData, updated_at: new Date().toISOString() })
-          .eq("id", editingImage.id)
-        if (error) throw error
-        alert("Image updated successfully!")
-      } else {
-        const { error } = await supabase.from("gallery_images").insert([imageData])
-        if (error) throw error
-        alert("Image created successfully!")
+      const response = await fetch(
+        editingImage ? '/api/gallery' : '/api/gallery',
+        {
+          method: editingImage ? 'PUT' : 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editingImage ? { ...imageData, id: editingImage.id } : imageData)
+        }
+      )
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to save image")
       }
+      
+      alert(`Image ${editingImage ? "updated" : "created"} successfully!`)
       setIsFormOpen(false)
       setEditingImage(null)
       loadImages()
@@ -134,33 +132,18 @@ export default function GalleryManager() {
             </h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/80">Image URL</label>
                 <ImageUpload
                   onUploadComplete={(url) => {
                     const form = document.querySelector("form") as HTMLFormElement
                     const hiddenInput = form?.querySelector('input[name="image_url"]') as HTMLInputElement
-                    const visibleInput = form?.querySelector('input[name="image_url_visible"]') as HTMLInputElement
                     if (hiddenInput) hiddenInput.value = url
-                    if (visibleInput) visibleInput.value = url
                   }}
                 />
                 <input
                   name="image_url"
                   type="hidden"
                   defaultValue={editingImage?.image_url || ""}
-                />
-                <input
-                  type="text"
-                  name="image_url_visible"
-                  defaultValue={editingImage?.image_url || ""}
-                  onChange={(e) => {
-                    const form = e.currentTarget.closest("form")
-                    const hiddenInput = form?.querySelector('input[name="image_url"]') as HTMLInputElement
-                    if (hiddenInput) hiddenInput.value = e.target.value.trim()
-                  }}
-                  placeholder="Or paste image URL"
                   required
-                  className="w-full mt-2 px-4 py-2.5 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all"
                 />
               </div>
               <div>

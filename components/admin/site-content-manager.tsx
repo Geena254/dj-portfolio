@@ -26,12 +26,9 @@ export default function SiteContentManager() {
 
   const loadContents = async () => {
     try {
-      const { data, error } = await supabase
-        .from("site_content")
-        .select("*")
-        .order("section", { ascending: true })
-
-      if (error) throw error
+      const response = await fetch('/api/site-content')
+      if (!response.ok) throw new Error('Failed to fetch site content')
+      const data = await response.json()
       setContents(data || [])
     } catch (error) {
       console.error("Error loading content:", error)
@@ -44,8 +41,10 @@ export default function SiteContentManager() {
     if (!confirm("Are you sure you want to delete this content?")) return
 
     try {
-      const { error } = await supabase.from("site_content").delete().eq("id", id)
-      if (error) throw error
+      const response = await fetch(`/api/site-content?id=${id}`, {
+        method: 'DELETE'
+      })
+      if (!response.ok) throw new Error('Failed to delete content')
       loadContents()
     } catch (error) {
       console.error("Error deleting content:", error)
@@ -80,18 +79,23 @@ export default function SiteContentManager() {
     }
 
     try {
-      if (editingContent) {
-        const { error } = await supabase
-          .from("site_content")
-          .update({ ...contentData, updated_at: new Date().toISOString() })
-          .eq("id", editingContent.id)
-        if (error) throw error
-        alert("Content updated successfully!")
-      } else {
-        const { error } = await supabase.from("site_content").insert([contentData])
-        if (error) throw error
-        alert("Content created successfully!")
+      const response = await fetch(
+        editingContent ? '/api/site-content' : '/api/site-content',
+        {
+          method: editingContent ? 'PUT' : 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editingContent ? { ...contentData, id: editingContent.id } : contentData)
+        }
+      )
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to save content")
       }
+      
+      alert(`Content ${editingContent ? "updated" : "created"} successfully!`)
       setIsFormOpen(false)
       setEditingContent(null)
       loadContents()

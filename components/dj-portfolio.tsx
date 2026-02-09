@@ -11,6 +11,7 @@ import SectionTransition from "@/components/section-transition"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
+import PdfViewerModal from "@/components/pdf-viewer-modal"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
@@ -24,6 +25,7 @@ export default function DJPortfolio() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [showPdfModal, setShowPdfModal] = useState(false)
 
   const [currentSlide, setCurrentSlide] = useState(0)
   const slides = [
@@ -72,8 +74,6 @@ export default function DJPortfolio() {
     { src: "/images/s7.jpg", alt: "Wira 10.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
-    { src: "/images/079A3034.jpg", alt: "Wira 9.0" },
-    { src: "/images/faces6.jpg", alt: "PapaRemo Moment" },
     { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
@@ -155,9 +155,7 @@ export default function DJPortfolio() {
             <Button
               size="lg"
               className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
-              onClick={() =>
-                window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
-              }
+              onClick={() => setShowPdfModal(true)}
             >
               <span className="relative z-10">View Rate Card</span>
               <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -223,14 +221,14 @@ export default function DJPortfolio() {
             <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start items-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="relative h-[500px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
+                className="relative h-[380px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
                     src="/images/shang1.jpg"
                     alt="SHANGATATU at the beach"
                     width={1000}
-                    height={1200}
+                    height={800}
                     className="object-cover h-full w-full"
                   />
                 </div>
@@ -253,7 +251,7 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                    What is Shangatatu?<br />
+                    Who is Shangatatu?<br />
                     Shangatatu is a multi-hyphenate brand featuring the pioneer- Ian Luganje Ziro, his art and merchandise creations,lastly,
                     Ian’s musical interpretation in Dj format and music production.<br />
                     Shangatatu is a vibrant creative born and rooted on Kenya's coast channeling positive frequencies
@@ -280,9 +278,7 @@ export default function DJPortfolio() {
                   <Button
                     variant="outline"
                     className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 bg-transparent"
-                    onClick={() =>
-                      window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
-                    }
+                    onClick={() => setShowPdfModal(true)}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     VIEW RATE CARD
@@ -333,7 +329,7 @@ export default function DJPortfolio() {
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
                     key={index}
-                    className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                    className="relative flex-shrink-0 w-60 h-64 rounded-2xl overflow-hidden group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -341,7 +337,7 @@ export default function DJPortfolio() {
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
                       width={320}
-                      height={260}
+                      height={250}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -398,7 +394,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
               {[
                 {
                   id: "pKNEODiRdEk",
@@ -414,6 +410,11 @@ export default function DJPortfolio() {
                   id: "Yg3FI1IIfZg",
                   title: "Shangatatu Live at Kilifi New Year 2024",
                   views: "1.8K",
+                },
+                {
+                  id: "pKNEODiRdEk",
+                  title: "Shangatatu Live at Salty's Kite Village",
+                  views: "0.8K",
                 },
               ].map((mix) => (
                 <div key={mix.id} className="group">
@@ -490,7 +491,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
               {[
                 {
                   name: "Journey To The Baobab",
@@ -509,6 +510,12 @@ export default function DJPortfolio() {
                   location: "Fishermans Creek Shanzu",
                   date: "27th July 2025",
                   image: "/images/wirabeach.jpg",
+                },
+                {
+                  name: "Wira 9.0",
+                  location: "Distant Relatives Lodge, Kilifi",
+                  date: "2nd August 2025",
+                  image: "/images/wira-9.0.jpg",
                 },
               ].map((event, index) => (
                 <div key={index} className="group">
@@ -565,7 +572,7 @@ export default function DJPortfolio() {
 
       {/* Visual Art Gallery Section - Updated to Coming Soon */}
       <SectionTransition>
-        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-primary-900/20 to-black">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -776,6 +783,13 @@ export default function DJPortfolio() {
           </div>
         </motion.div>
       </footer>
+      
+      {/* PDF Modal */}
+      <PdfViewerModal
+        isOpen={showPdfModal}
+        onClose={() => setShowPdfModal(false)}
+        pdfUrl="/Shangatatu intro & rates.pdf"
+      />
     </div>
   )
 }

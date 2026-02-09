@@ -352,7 +352,7 @@ export default function EventsPage() {
       {/* Past Events Section */}
       <SectionTransition>
         <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-4xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
@@ -360,60 +360,51 @@ export default function EventsPage() {
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
               </div>
               <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Relive the moments from memorable festivals and venues.
+                A journey through memorable performances and festivals.
               </p>
             </div>
 
-            {pastEvents.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-lg text-gray-400">No past events to display.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {pastEvents.map((event, index) => (
+            <div className="glass p-8 rounded-2xl border border-secondary/20">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { name: "Tamarind Dhow Sunset Cruises", years: "2019-2024" },
+                  { name: "Muze Open Air (Lost Malindi)", years: "2023-2024" },
+                  { name: "TurnApp Parties & Festivals", years: "2022-2024" },
+                  { name: "Lantana Galu Diani hotel N.Y.E galas", years: "2020-2024" },
+                  { name: "The Backyard Soiree Eldoret", years: "2023-2024" },
+                  { name: "Salty's Kilifi", years: "2022-2024" },
+                  { name: "Distant Relatives Kilifi", years: "2021-2024" },
+                  { name: "Trace FM, H.B.R, Capital FM guest mixes", years: "2020-2024" },
+                  { name: "Destination weddings", years: "2019-2024" },
+                  { name: "Boogie in the Bush festival - Arusha", years: "2023-2024" },
+                  { name: "Terminal 2 - Diani", years: "2023-2024" },
+                  { name: "Beneath the Baobabs Festivals and programs", years: "2021-2024" },
+                  { name: "Kaleidoscope Festival 2024", years: "2024" },
+                  { name: "Jubilation Africa (Addis Ababa)", years: "2024" },
+                  { name: "6 Degrees South (Zanzibar)", years: "2023-2024" },
+                  { name: "Blankets & Wine Festival (UG 2023)", years: "2023" },
+                  { name: "Mekatilili Dhow Sunset Cruises", years: "2022-2024" },
+                  { name: "WIRA Festivals", years: "2018-2024" },
+                  { name: "Moonshine beach bar Mombasa", years: "2020-2024" },
+                  { name: "Cosmic Currents", years: "2023-2024" }
+                ].map((event, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center justify-between p-4 rounded-lg border border-secondary/10 hover:border-secondary/30 hover:bg-secondary/5 transition-all duration-300"
                   >
-                    <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                      <div className="relative aspect-video">
-                        <div className="img-hover-zoom h-full">
-                          <ImageWithLoading
-                            src={event.image || "/placeholder.svg"}
-                            alt={event.name || event.title || "Event image"}
-                            width={600}
-                            height={400}
-                            className="object-cover h-full w-full"
-                          />
-                        </div>
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      </div>
-                      <CardContent className="p-6">
-                        <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
-                        <div className="flex flex-col space-y-2">
-                          <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <MapPin className="h-4 w-4 text-secondary" />
-                            {event.location}
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-400">
-                            <Calendar className="h-4 w-4 text-secondary" />
-                            {event.date}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                      <span className="text-white font-medium">{event.name}</span>
+                    </div>
+                    <span className="text-secondary text-sm">{event.years}</span>
                   </motion.div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
         </section>
       </SectionTransition>

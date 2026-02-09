@@ -1,22 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  ArrowLeft,
-  Calendar,
-  MapPin,
-  ExternalLink,
-  Instagram,
-  Facebook,
-  Users,
-  Lightbulb,
-  Music,
-  Youtube,
-  Twitter,
-  Radio,
-  Cloud,
-  AirplayIcon as Spotify,
-} from "lucide-react"
+import { ArrowLeft, Calendar, MapPin, ExternalLink, Instagram, Facebook, Users, Lightbulb, Music, Youtube, Twitter, Radio, Cloud, SproutIcon as Spotify } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"

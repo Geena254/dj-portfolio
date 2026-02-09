@@ -28,7 +28,7 @@ export default function ImageWithLoading({
   const blurDataURL = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative overflow-hidden", className)}>
       <Image
         src={src || "/placeholder.svg"}
         alt={alt}
@@ -42,7 +42,9 @@ export default function ImageWithLoading({
         priority={priority}
         placeholder="blur"
         blurDataURL={blurDataURL}
-        onLoad={() => setIsLoading(false)}
+        quality={75}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        onLoadingComplete={() => setIsLoading(false)}
         onError={() => {
           setIsLoading(false)
           setHasError(true)

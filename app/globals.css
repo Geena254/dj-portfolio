@@ -8,6 +8,7 @@ body {
 
 /* Embla Carousel Styles */
 .embla {
+  overflow: hidden;
   position: relative;
   height: 100%;
   width: 100%;
@@ -173,6 +174,7 @@ body {
 /* Button Hover Slide Effect */
 .btn-hover-slide {
   position: relative;
+  overflow: hidden;
   z-index: 1;
 }
 
@@ -194,6 +196,7 @@ body {
 
 /* Image Hover Zoom Effect */
 .img-hover-zoom {
+  overflow: hidden; /* Ensures the zoom effect stays within bounds */
 }
 
 .img-hover-zoom img {

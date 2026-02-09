@@ -1,18 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import {
-  ArrowLeft,
-  Play,
-  ExternalLink,
-  Youtube,
-  Radio,
-  Cloud,
-  Instagram,
-  Facebook,
-  Twitter,
-  AirplayIcon as Spotify,
-} from "lucide-react"
+import { ArrowLeft, Play, ExternalLink, Youtube, Radio, Cloud, Instagram, Facebook, Twitter, SproutIcon as Spotify } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -21,46 +10,15 @@ import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
 import SectionTransition from "@/components/section-transition"
-import { createClient } from "@/lib/supabase/client"
 
 export default function MixesPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [mixes, setMixes] = useState<Array<{
-    id: string
-    title: string
-    platform: string
-    platform_id: string
-    views: string | null
-  }>>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const supabase = createClient()
 
   const slides = [
     { src: "/images/mixes.jpg", alt: "DJ Mixes Hero" },
     { src: "/images/dj-mix.jpg", alt: "Live Performance" },
     { src: "/images/dj-event.jpg", alt: "Event Performance" },
   ]
-
-  // Fetch mixes from database
-  useEffect(() => {
-    const fetchMixes = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("mixes")
-          .select("*")
-          .order("created_at", { ascending: false })
-
-        if (error) throw error
-        setMixes(data || [])
-      } catch (error) {
-        console.error("Error fetching mixes:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchMixes()
-  }, [])
 
   // Auto-advance slides
   useEffect(() => {
@@ -71,86 +29,71 @@ export default function MixesPage() {
     return () => clearInterval(interval)
   }, [slides.length])
 
-  // Function to get platform icon
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case "YouTube":
-        return Youtube
-      case "Spotify":
-        return Spotify
-      case "Mixcloud":
-        return Radio
-      case "SoundCloud":
-        return Cloud
-      default:
-        return Youtube
-    }
-  }
-
-  // Function to get platform URL
-  const getPlatformUrl = (platform: string, platformId: string) => {
-    switch (platform) {
-      case "YouTube":
-        return `https://youtu.be/${platformId}`
-      case "Spotify":
-        return `https://open.spotify.com/track/${platformId}`
-      case "Mixcloud":
-        return `https://www.mixcloud.com/shangatatu/${platformId}`
-      case "SoundCloud":
-        return `https://soundcloud.com/shangatatu/${platformId}`
-      default:
-        return `https://youtu.be/${platformId}`
-    }
-  }
-
-  // Static fallback mixes
-  const staticMixes = [
+  const allMixes = [
     {
-      id: "static-1",
+      id: "pKNEODiRdEk",
       title: "Shangatatu Live at Salty's Kite Village",
       views: "0.8K",
       platform: "YouTube",
-      platform_id: "pKNEODiRdEk"
+      icon: Youtube,
     },
     {
-      id: "static-2",
+      id: "moaLC_1fAFU",
       title: "Shangatatu's BENEATH THE BAOBAB's N.Y.E Sunrise Mix",
       views: "2.5K",
       platform: "YouTube",
-      platform_id: "moaLC_1fAFU"
+      icon: Youtube,
     },
     {
-      id: "static-3",
+      id: "Yg3FI1IIfZg",
       title: "Shangatatu Live at Kilifi New Year 2024",
       views: "1.8K",
       platform: "YouTube",
-      platform_id: "Yg3FI1IIfZg"
+      icon: Youtube,
     },
     {
-      id: "static-4",
+      id: "pKNEODiRdEk",
       title: "Deep House Sessions Vol. 1",
       views: "3.2K",
       platform: "YouTube",
-      platform_id: "pKNEODiRdEk"
+      icon: Youtube,
     },
     {
-      id: "static-5",
+      id: "moaLC_1fAFU",
       title: "Wira Festival 2023 Closing Set",
       views: "4.1K",
       platform: "YouTube",
-      platform_id: "moaLC_1fAFU"
+      icon: Youtube,
     },
     {
-      id: "static-6",
+      id: "Yg3FI1IIfZg",
       title: "Afro Tech Rhythms Mix",
       views: "2.8K",
       platform: "YouTube",
-      platform_id: "Yg3FI1IIfZg"
-    }
+      icon: Youtube,
+    },
+    {
+      id: "pKNEODiRdEk",
+      title: "Sunset Sessions at Diani Beach",
+      views: "1.9K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
+    {
+      id: "moaLC_1fAFU",
+      title: "Underground Warehouse Mix",
+      views: "3.5K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
+    {
+      id: "Yg3FI1IIfZg",
+      title: "Boogie Festival Tanzania 2024",
+      views: "2.3K",
+      platform: "YouTube",
+      icon: Youtube,
+    },
   ]
-
-  // Use database data if available, otherwise use static fallback
-  const displayMixes = mixes.length > 0 ? mixes : staticMixes
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -159,9 +102,9 @@ export default function MixesPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative max-h-screen overflow-hidden lg:h-screen">
-        <div className="absolute inset-0">
-          <div className="relative h-full w-full">
+      <section className="relative min-h-screen overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -229,7 +172,7 @@ export default function MixesPage() {
 
       {/* Latest Mixes Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
+        <section className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -244,74 +187,59 @@ export default function MixesPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {displayMixes.map((mix, index) => {
-                const PlatformIcon = getPlatformIcon(mix.platform)
-                return (
-                  <motion.div
-                    key={mix.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group"
-                  >
-                    <a href={getPlatformUrl(mix.platform, mix.platform_id)} target="_blank" rel="noopener noreferrer" className="block">
+              {allMixes.map((mix, index) => (
+                <motion.div
+                  key={`${mix.id}-${index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group"
+                >
+                  <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      className="relative aspect-video overflow-hidden rounded-2xl glass shadow-lg"
+                    >
+                      <div className="img-hover-zoom h-full">
+                        <ImageWithLoading
+                          src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
+                          alt={mix.title}
+                          width={1280}
+                          height={720}
+                          className="object-cover h-full w-full"
+                        />
+                      </div>
                       <motion.div
-                        whileHover={{ scale: 1.03 }}
-                        className="relative aspect-video rounded-2xl glass shadow-lg"
+                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="img-hover-zoom h-full">
-                          <ImageWithLoading
-                            src={
-                              mix.platform === "YouTube"
-                                ? `https://img.youtube.com/vi/${mix.platform_id}/maxresdefault.jpg`
-                                : "/images/mix-placeholder.jpg"
-                            }
-                            alt={mix.title}
-                            width={1280}
-                            height={720}
-                            className="object-cover h-full w-full"
-                          />
-                        </div>
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
-                            >
-                              <Play className="h-8 w-8" />
-                            </Button>
-                          </div>
-                        </motion.div>
-                        <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
-                          <h3 className="text-lg font-semibold text-white mb-2">{mix.title}</h3>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <PlatformIcon className="h-4 w-4 text-secondary" />
-                              <p className="text-sm text-secondary">{mix.platform}</p>
-                            </div>
-                            {mix.views && (
-                              <p className="text-sm text-secondary">{mix.views} views</p>
-                            )}
-                            <ExternalLink className="h-4 w-4 text-secondary" />
-                          </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-16 w-16 rounded-full border-2 bg-black/50 backdrop-blur-sm"
+                          >
+                            <Play className="h-8 w-8" />
+                          </Button>
                         </div>
                       </motion.div>
-                    </a>
-                  </motion.div>
-                )
-              })}
-              {displayMixes.length === 0 && !isLoading && (
-                <div className="col-span-full text-center py-12">
-                  <p className="text-gray-400">No mixes available yet.</p>
-                </div>
-              )}
+                      <div className="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
+                        <h3 className="text-lg font-semibold text-white mb-2">{mix.title}</h3>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <mix.icon className="h-4 w-4 text-secondary" />
+                            <p className="text-sm text-secondary">{mix.views} views</p>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-secondary" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </a>
+                </motion.div>
+              ))}
             </div>
 
             <div className="text-center">

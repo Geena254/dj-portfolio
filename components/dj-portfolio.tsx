@@ -1,24 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import {
-  Cloud,
-  Facebook,
-  Instagram,
-  Radio,
-  AirplayIcon as Spotify,
-  Twitter,
-  Youtube,
-  Play,
-  ArrowRight,
-  ChevronDown,
-  Calendar,
-  MapPin,
-  ExternalLink,
-  Mail,
-  Phone,
-  Shirt,
-} from "lucide-react"
+import { Cloud, Facebook, Instagram, Radio, SproutIcon as Spotify, Twitter, Youtube, Play, ArrowRight, ChevronDown, Calendar, MapPin, ExternalLink, Mail, Phone, Shirt } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -28,8 +11,6 @@ import SectionTransition from "@/components/section-transition"
 import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
-import { X } from "lucide-react"
-import { createClient } from "@/lib/supabase/client"
 
 export default function DJPortfolio() {
   const containerRef = useRef(null)
@@ -43,45 +24,9 @@ export default function DJPortfolio() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [isRateCardModalOpen, setIsRateCardModalOpen] = useState(false)
+
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [heroSlides, setHeroSlides] = useState<Array<{
-    id: string
-    image_url: string
-    alt: string
-    page: string
-    order_index: number
-  }>>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const supabase = createClient()
-
-  // Fetch hero slides from database
-  useEffect(() => {
-    const fetchHeroSlides = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("hero_slides")
-          .select("*")
-          .eq("page", "home")
-          .order("order_index", { ascending: true })
-
-        if (error) throw error
-        setHeroSlides(data || [])
-      } catch (error) {
-        console.error("Error fetching hero slides:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchHeroSlides()
-  }, [])
-
-  // Fallback slides if no database slides
-  const slides = heroSlides.length > 0 ? heroSlides.map(slide => ({
-    src: slide.image_url,
-    alt: slide.alt
-  })) : [
+  const slides = [
     { src: "/images/dj-mix.jpg", alt: "" },
     { src: "/images/_DSF4970.jpg", alt: "" },
     { src: "/images/_DSF4984.jpg", alt: "" },
@@ -127,35 +72,37 @@ export default function DJPortfolio() {
     { src: "/images/s7.jpg", alt: "Wira 10.0" },
     { src: "/images/get.webp", alt: "Spin sesh" },
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
+    { src: "/images/079A3034.jpg", alt: "Wira 9.0" },
+    { src: "/images/faces6.jpg", alt: "PapaRemo Moment" },
     { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
     { src: "/images/079A3031.jpg", alt: "Wira 9.0" },
     { src: "/images/BK 9.jpg", alt: "Wira Performance" },
+    { src: "/images/079A3006.jpg", alt: "Wira 9.0" },
     { src: "/images/IMG_8088.JPEG.jpg", alt: "Wira 9.0" },
+    { src: "/images/079A3004.jpg", alt: "Wira 9.0" },
     { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
     { src: "/images/mixes.jpg", alt: "Wira Post Event" },
+    { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
+    { src: "/images/dj-back.jpg", alt: "Wira Kilifi Crowd" },
+    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
   ]
 
-  // Calculate scroll distance for infinite loop (image width + gap)
-  const imageWidth = 288 // w-72 = 288px
-  const gap = 24 // gap-6 = 24px
-  const scrollDistance = (imageWidth + gap) * djGalleryImages.length
-
   return (
-    <div ref={containerRef} className="relative bg-black text-white w-full">
+    <div ref={containerRef} className="relative bg-black text-white">
       <CustomCursor />
       <Navbar />
       <BackToTop />
 
       {/* Hero Section */}
-      <section id="home" className="relative h-[70vh] md:h-[85vh] lg:h-screen max-h-screen overflow-hidden">
+      <section id="home" className="relative min-h-screen overflow-hidden">
         <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 bg-gradient-to-b from-orange-600/20 via-purple-600/40 to-black"
         />
-        <div className="absolute inset-0">
-          <div className="relative h-full w-full">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="relative h-full w-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -168,9 +115,9 @@ export default function DJPortfolio() {
                 <ImageWithLoading
                   src={slides[currentSlide].src || "/placeholder.svg"}
                   alt={slides[currentSlide].alt}
-                  width={1700}
-                  height={980}
-                  className="w-full h-full object-cover object-center"
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover (x-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </motion.div>
             </AnimatePresence>
@@ -181,7 +128,7 @@ export default function DJPortfolio() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 flex h-full flex-col items-center justify-center text-center px-4"
+          className="relative z-10 flex h-screen flex-col items-center justify-center text-center px-4"
         >
           <motion.h1
             initial={{ scale: 0.5, opacity: 0 }}
@@ -207,8 +154,10 @@ export default function DJPortfolio() {
           >
             <Button
               size="lg"
-              className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
-              onClick={() => setIsRateCardModalOpen(true)}
+              className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
+              onClick={() =>
+                window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
+              }
             >
               <span className="relative z-10">View Rate Card</span>
               <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -274,14 +223,14 @@ export default function DJPortfolio() {
             <div className="grid gap-12 md:grid-cols-[300px_1fr] items-start items-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="relative h-[390px] rounded-2xl w-full max-w-[400px] mx-auto glass"
+                className="relative h-[500px] overflow-hidden rounded-2xl w-full max-w-[400px] mx-auto glass"
               >
                 <div className="img-hover-zoom h-full">
                   <ImageWithLoading
                     src="/images/shang1.jpg"
                     alt="SHANGATATU at the beach"
                     width={1000}
-                    height={800}
+                    height={1200}
                     className="object-cover h-full w-full"
                   />
                 </div>
@@ -304,7 +253,7 @@ export default function DJPortfolio() {
                   className="prose prose-invert max-w-none"
                 >
                   <p className="text-xl text-gray-300 leading-relaxed">
-                    Who is Shangatatu?<br />
+                    What is Shangatatu?<br />
                     Shangatatu is a multi-hyphenate brand featuring the pioneer- Ian Luganje Ziro, his art and merchandise creations,lastly,
                     Ian’s musical interpretation in Dj format and music production.<br />
                     Shangatatu is a vibrant creative born and rooted on Kenya's coast channeling positive frequencies
@@ -331,7 +280,9 @@ export default function DJPortfolio() {
                   <Button
                     variant="outline"
                     className="group border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 bg-transparent"
-                    onClick={() => setIsRateCardModalOpen(true)}
+                    onClick={() =>
+                      window.open("https://drive.google.com/file/d/11z_7bjNUXb1b05TaNNbzIMcuVspwFEDu/view", "_blank")
+                    }
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     VIEW RATE CARD
@@ -355,7 +306,7 @@ export default function DJPortfolio() {
       {/* DJ Gallery Section */}
       <SectionTransition>
         <section id="gallery" className="relative px-4 py-20 md:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <div className="h-1 w-10 bg-secondary rounded-full"></div>
@@ -367,31 +318,31 @@ export default function DJPortfolio() {
               <motion.div
                 className="flex gap-6"
                 animate={{
-                  x: [0, `-${scrollDistance}px`],
+                  x: [0, -100 * djGalleryImages.length],
                 }}
                 transition={{
                   x: {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
-                    duration: 50,
+                    duration: 30,
                     ease: "linear",
                   },
                 }}
-                style={{ width: "fit-content" }}
+                style={{ width: `${djGalleryImages.length * 2 * 100}%` }}
               >
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
-                    key={`${image.src}-${index}`}
-                    className="relative flex-shrink-0 w-72 h-72 rounded-2xl group cursor-pointer"
+                    key={index}
+                    className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
                     <ImageWithLoading
                       src={image.src || "/placeholder.svg"}
                       alt={image.alt}
-                      width={288}
-                      height={270}
-                      className="w-full h-full object-contain"
+                      width={320}
+                      height={260}
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -447,7 +398,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
                   id: "pKNEODiRdEk",
@@ -464,25 +415,20 @@ export default function DJPortfolio() {
                   title: "Shangatatu Live at Kilifi New Year 2024",
                   views: "1.8K",
                 },
-                {
-                  id: "Yg3FI1IIfZg",
-                  title: "Shangatatu Live at Kilifi New Year 2024",
-                  views: "1.8K",
-                },
               ].map((mix) => (
                 <div key={mix.id} className="group">
                   <a href={`https://youtu.be/${mix.id}`} target="_blank" rel="noopener noreferrer" className="block">
                     <motion.div
                       whileHover={{ scale: 1.03 }}
-                      className="relative aspect-video rounded-2xl glass shadow-lg"
+                      className="relative aspect-video overflow-hidden rounded-2xl glass shadow-lg"
                     >
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
                           src={`https://img.youtube.com/vi/${mix.id}/maxresdefault.jpg`}
                           alt={mix.title}
-                          width={287}
-                          height={320}
-                          className="object-contain h-full w-full"
+                          width={1280}
+                          height={720}
+                          className="object-cover h-full w-full"
                         />
                       </div>
                       <motion.div
@@ -518,7 +464,7 @@ export default function DJPortfolio() {
               <Link href="/mixes">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
                 >
                   <span className="relative z-10">Explore More Mixes</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -544,7 +490,7 @@ export default function DJPortfolio() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {[
                 {
                   name: "Journey To The Baobab",
@@ -564,22 +510,16 @@ export default function DJPortfolio() {
                   date: "27th July 2025",
                   image: "/images/wirabeach.jpg",
                 },
-                {
-                  name: "Journey To The Baobab",
-                  location: "Beneath the Baobab",
-                  date: "29th November 2025",
-                  image: "/images/wira-9.0.jpg",
-                },
               ].map((event, index) => (
                 <div key={index} className="group">
-                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-4/3">
+                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                    <motion.div whileHover={{ scale: 1.03 }} className="relative aspect-video">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
                           src={event.image || "/placeholder.svg"}
                           alt={event.name}
-                          width={256}
-                          height={200}
+                          width={600}
+                          height={400}
                           className="object-cover h-full w-full"
                         />
                       </div>
@@ -590,7 +530,7 @@ export default function DJPortfolio() {
                         transition={{ duration: 0.3 }}
                       />
                     </motion.div>
-                    <CardContent className="p-4">
+                    <CardContent className="p-6">
                       <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
                       <div className="flex flex-col space-y-2">
                         <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -612,7 +552,7 @@ export default function DJPortfolio() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
                 >
                   <span className="relative z-10">Explore More Events</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -625,7 +565,7 @@ export default function DJPortfolio() {
 
       {/* Visual Art Gallery Section - Updated to Coming Soon */}
       <SectionTransition>
-        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-primary-900/20 to-black">
+        <section id="art" className="relative px-4 py-20 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -643,7 +583,7 @@ export default function DJPortfolio() {
               <Link href="/art-gallery" prefetch={true} className="mt-6">
                 <Button
                   size="lg"
-                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
+                  className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
                 >
                   <span className="relative z-10">Visit Artistry Page</span>
                   <ArrowRight className="ml-2 h-4 w-4 relative z-10 transition-transform group-hover:translate-x-1" />
@@ -681,7 +621,7 @@ export default function DJPortfolio() {
               </p>
               <Button
                 size="lg"
-                className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative btn-hover-slide"
+                className="group bg-secondary hover:bg-secondary-700 text-white text-lg px-8 relative overflow-hidden btn-hover-slide"
                 onClick={() => window.open("https://wa.me/254715781364", "_blank")}
               >
                 <Phone className="mr-2 h-5 w-5" />
@@ -784,10 +724,10 @@ export default function DJPortfolio() {
           className="mx-auto max-w-6xl"
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
-              <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
-            </div>
+  <div className="text-center md:text-left">
+  <h3 className="text-2xl font-bold gradient-text mb-2">SHANGATATU</h3>
+  <p className="text-gray-400">© 2026 SHANGATATU. All rights reserved.</p>
+  </div>
             <div className="space-y-4 text-center md:text-right">
               <h3 className="text-lg font-medium text-white">Connect with me</h3>
               <div className="flex flex-wrap justify-center md:justify-end gap-6">
@@ -836,50 +776,6 @@ export default function DJPortfolio() {
           </div>
         </motion.div>
       </footer>
-
-      {/* Rate Card Modal */}
-      <AnimatePresence>
-        {isRateCardModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
-            onClick={() => setIsRateCardModalOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 20, stiffness: 300 }}
-              className="relative w-full h-full max-w-6xl max-h-[90vh] m-4 bg-white rounded-2xl shadow-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-                <h3 className="text-xl font-semibold text-gray-800">Shangatatu - Rate Card</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-gray-600 hover:text-gray-800 hover:bg-gray-200"
-                  onClick={() => setIsRateCardModalOpen(false)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              
-              {/* PDF Content */}
-              <div className="w-full h-[calc(100%-80px)] overflow-auto bg-gray-100">
-                <iframe
-                  src="/Shangatatu intro & rates.pdf"
-                  className="w-full h-full border-0"
-                  title="Shangatatu Rate Card"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

@@ -11,15 +11,48 @@ import Navbar from "@/components/navbar"
 import BackToTop from "@/components/back-to-top"
 import ImageWithLoading from "@/components/image-with-loading"
 import SectionTransition from "@/components/section-transition"
+import { createClient } from "@/lib/supabase/client"
 
 export default function EventsPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [events, setEvents] = useState<Array<{
+    id: string
+    name: string
+    location: string
+    date: string
+    image_url: string | null
+    url: string | null
+    is_upcoming: boolean
+  }>>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
 
   const slides = [
     { src: "/images/dj-event.jpg", alt: "DJ Event Hero" },
     { src: "/images/tomorrowland.jpg", alt: "Tomorrowland" },
     { src: "/images/boogie.jpg", alt: "Boogie Festival" },
   ]
+
+  // Fetch events from database
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("events")
+          .select("*")
+          .order("created_at", { ascending: false })
+
+        if (error) throw error
+        setEvents(data || [])
+      } catch (error) {
+        console.error("Error fetching events:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchEvents()
+  }, [])
 
   // Auto-advance slides
   useEffect(() => {
@@ -30,72 +63,108 @@ export default function EventsPage() {
     return () => clearInterval(interval)
   }, [slides.length])
 
-  const upcomingEvents = [
+  // Function to parse date strings and compare with current date
+  const parseEventDate = (dateString: string) => {
+    // Handle various date formats
+    const cleanDate = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1') // Remove ordinal suffixes
+    
+    // Try different date formats
+    const formats = [
+      /\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})\b/i,
+      /\b(\d{4})\b/,
+      /\b(\d{1,2})\s*-\s*(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})\b/i,
+      /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})\b/i
+    ]
+    
+    for (const format of formats) {
+      const match = cleanDate.match(format)
+      if (match) {
+        if (format === formats[0]) {
+          // "28 Dec 2025" format
+          return new Date(`${match[2]} ${match[1]}, ${match[3]}`)
+        } else if (format === formats[1]) {
+          // "2025" format - assume middle of year
+          return new Date(`${match[1]}-06-15`)
+        } else if (format === formats[2]) {
+          // "23-25 March 2025" format - use start date
+          return new Date(`${match[3]} ${match[1]}, ${match[4]}`)
+        } else if (format === formats[3]) {
+          // "December 2025" format
+          return new Date(`${match[1]} 1, ${match[2]}`)
+        }
+      }
+    }
+    
+    // Fallback to current date if parsing fails
+    return new Date()
+  }
+
+  // Function to check if an event date has passed
+  const isEventPast = (dateString: string) => {
+    const eventDate = parseEventDate(dateString)
+    const currentDate = new Date()
+    return eventDate < currentDate
+  }
+
+  // Static fallback data
+  const staticPastEvents = [
     {
-      name: "Wira Goes To The Beach",
-      location: "Fisherman's Creek Shanzu, Kenya",
-      date: "Sun 28th Dec 2025",
-      image: "/images/wira event latest.jpg",
-      url: "https://turnapp.events/ff2591d0-e104-11f0-bb90-c1f1cf66cf9c",
+      id: "static-1",
+      name: "Tamarind Dhow Sunset Cruises",
+      location: "Mombasa, Kenya",
+      date: "Past Event",
+      image_url: "/images/placeholder-event.jpg"
+    },
+    {
+      id: "static-2", 
+      name: "Muze Open Air (Lost Malindi)",
+      location: "Malindi, Kenya",
+      date: "Past Event",
+      image_url: "/images/placeholder-event.jpg"
+    },
+    {
+      id: "static-3",
+      name: "TurnApp Parties & Festivals",
+      location: "Various locations",
+      date: "Past Event",
+      image_url: "/images/placeholder-event.jpg"
+    },
+    {
+      id: "static-4",
+      name: "Lantana Galu Diani hotel N.Y.E galas",
+      location: "Diani, Kenya",
+      date: "Past Event",
+      image_url: "/images/placeholder-event.jpg"
+    },
+    {
+      id: "static-5",
+      name: "The Backyard Soiree Eldoret",
+      location: "Eldoret, Kenya",
+      date: "Past Event",
+      image_url: "/images/placeholder-event.jpg"
     }
   ]
 
-  const pastEvents = [
+  const staticUpcomingEvents = [
     {
-      name: "Journey To The Baobab",
-      location: "Beneath The Baobab, Kilifi",
-      date: "16th & 17th August 2025",
-      image: "/images/jtb dj.jpg",
-    },
-    {
-      name: "Wira 9.0",
-      location: "Distant Relatives Lodge, Kilifi",
-      date: "2nd August 2025",
-      image: "/images/wira-9.0.jpg",
-    },
-    {
-      name: "Wira Beach Vibe",
-      location: "Fishermans Creek Shanzu",
-      date: "27th July 2025",
-      image: "/images/wirabeach.jpg",
-    },
-    {
-      name: "Boogie Festival",
-      location: "Arusha, Tanzania",
-      date: "23rd - 25th March 2025",
-      image: "/images/boogie.jpg",
-    },
-    {
-      name: "Wira Kilifi 8.0",
-      location: "The Terrace, Kilifi, Kenya",
-      date: "11th December 2023",
-      image: "/images/wira 8.0.jpeg",
-    },
-    {
-      name: "Beneath The Baobab Festival",
-      location: "Kilifi, Kenya",
-      date: "December 2023",
-      image: "/images/beneath-the-baobab.jpg",
-    },
-    {
-      name: "The Afters KE",
-      location: "Nairobi, Kenya",
-      date: "20th January 2024",
-      image: "/images/the-afters-ke.jpg",
-    },
-    {
-      name: "Klub House Experience",
-      location: "Mombasa, Kenya",
-      date: "10th February 2024",
-      image: "/images/klub-house-experience.jpg",
-    },
-    {
-      name: "Tomorrowland",
-      location: "Boom, Belgium",
-      date: "July 2023",
-      image: "/images/tomorrowland.jpg",
-    },
+      id: "static-upcoming-1",
+      name: "Wira Goes To The Beach",
+      location: "Fisherman's Creek Shanzu, Kenya",
+      date: "Sun 28th Dec 2025",
+      image_url: "/images/wira event latest.jpg",
+      url: "https://turnapp.events/ff2591d0-e104-11f0-bb90-c1f1cf66cf9c",
+      is_upcoming: true
+    }
   ]
+
+  // Separate events into upcoming and past with fallbacks
+  const upcomingEvents = events.length > 0 
+    ? events.filter(event => event.is_upcoming && !isEventPast(event.date))
+    : staticUpcomingEvents
+  
+  const pastEvents = events.length > 0
+    ? events.filter(event => !event.is_upcoming || isEventPast(event.date))
+    : staticPastEvents
 
   return (
     <div className="relative min-h-screen bg-black text-white">
@@ -104,9 +173,9 @@ export default function EventsPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+      <section className="relative max-h-screen overflow-hidden lg:h-screen">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -186,10 +255,10 @@ export default function EventsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 mb-6">
               {upcomingEvents.map((event, index) => (
                 <motion.div
-                  key={index}
+                  key={event.id}
                   whileHover={{ scale: 1.03 }}
                   className="group cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
@@ -197,25 +266,25 @@ export default function EventsPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <div className="relative aspect-video">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                    <div className="relative aspect-[4/3] z-0 overflow-hidden rounded-t-2xl">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
-                          src={event.image || "/placeholder.svg"}
+                          src={event.image_url || "/placeholder.svg"}
                           alt={event.name}
-                          width={600}
-                          height={400}
+                          width={263}
+                          height={143}
                           className="object-cover h-full w-full"
                         />
                       </div>
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                       />
                     </div>
-                    <CardContent className="p-6">
+                    <CardContent className="p-4">
                       <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
                       <div className="flex flex-col space-y-2">
                         <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -244,6 +313,11 @@ export default function EventsPage() {
                   </Card>
                 </motion.div>
               ))}
+              {upcomingEvents.length === 0 && !isLoading && (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-gray-400">No upcoming events scheduled.</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -264,50 +338,37 @@ export default function EventsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {pastEvents.map((event, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <div className="relative aspect-video">
-                      <div className="img-hover-zoom h-full">
-                        <ImageWithLoading
-                          src={event.image || "/placeholder.svg"}
-                          alt={event.name}
-                          width={600}
-                          height={400}
-                          className="object-cover h-full w-full"
-                        />
+            <div className="max-w-4xl mx-auto">
+              <div className="space-y-4">
+                {pastEvents.map((event, index) => (
+                  <motion.div
+                    key={event.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center gap-4 p-4 rounded-lg border border-secondary/20 hover:border-secondary/40 transition-colors bg-black/30"
+                  >
+                    <div className="flex-shrink-0 w-2 h-2 bg-secondary rounded-full"></div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-medium text-white mb-1">{event.name}</h3>
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                        <MapPin className="h-3 w-3 text-secondary" />
+                        {event.location}
                       </div>
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
+                      <div className="flex items-center gap-2 text-sm text-gray-400 mt-1">
+                        <Calendar className="h-3 w-3 text-secondary" />
+                        {event.date}
+                      </div>
                     </div>
-                    <CardContent className="p-6">
-                      <h3 className="mb-4 text-xl font-semibold text-white">{event.name}</h3>
-                      <div className="flex flex-col space-y-2">
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          <MapPin className="h-4 w-4 text-secondary" />
-                          {event.location}
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-400">
-                          <Calendar className="h-4 w-4 text-secondary" />
-                          {event.date}
-                        </div>
-                        
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+                {pastEvents.length === 0 && !isLoading && (
+                  <div className="text-center py-12">
+                    <p className="text-gray-400">No past events to display.</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </section>

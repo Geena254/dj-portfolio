@@ -35,6 +35,13 @@ export default function WiraPage() {
       image: "/images/wira beach vibe.jpg",
       description: "A special daytime session with deep house and afro beats by the ocean.",
     },
+    {
+      name: "Wira Kilifi 9.0",
+      location: "The Terrace, Kilifi, Kenya",
+      date: "10th December 2024",
+      image: "/images/wira-9.0.jpg",
+      description: "The latest edition of Wira, celebrating African dance music by the coast.",
+    },
   ]
 
   const wiraPhilosophy = [
@@ -93,9 +100,9 @@ export default function WiraPage() {
       <BackToTop />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="relative h-full w-full overflow-hidden">
+      <section className="relative max-h-screen overflow-hidden lg:h-screen">
+        <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <AnimatePresence mode="wait">
               <motion.div
                 key={"Wira Kilifi"}
@@ -169,7 +176,7 @@ export default function WiraPage() {
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="relative aspect-video overflow-hidden rounded-2xl glass"
+                className="relative aspect-video rounded-2xl glass"
               >
                 <ImageWithLoading
                   src="/images/wira-kilifi.jpg"
@@ -220,7 +227,7 @@ export default function WiraPage() {
       </SectionTransition>
       
       {/* Wira Event Gallery - Scrolling Images */}
-      <section className="relative py-16 overflow-hidden bg-gradient-to-b from-black to-primary-900/10">
+      <section className="relative py-16 bg-gradient-to-b from-black to-primary-900/10">
         <div className="mb-12 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="h-1 w-10 bg-secondary rounded-full"></div>
@@ -251,7 +258,7 @@ export default function WiraPage() {
             {[...wiraGalleryImages, ...wiraGalleryImages].map((image, index) => (
               <motion.div
                 key={index}
-                className="relative flex-shrink-0 w-80 h-60 rounded-2xl overflow-hidden group cursor-pointer"
+                className="relative flex-shrink-0 w-80 h-90 rounded-2xl group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -259,7 +266,7 @@ export default function WiraPage() {
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
                   width={320}
-                  height={240}
+                  height={360}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -310,7 +317,7 @@ export default function WiraPage() {
 
       {/* Wira Events Section */}
       <SectionTransition>
-        <section className="relative px-4 py-20 md:px-6 lg:px-8">
+        <section className="relative px-4 py-20 md:px-6 lg:px-8 bg-gradient-to-t from-black to-primary-900/20">
           <div className="mx-auto max-w-6xl">
             <div className="mb-16 text-center">
               <div className="flex items-center justify-center gap-2 mb-4">
@@ -323,7 +330,7 @@ export default function WiraPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
               {wiraEvents.map((event, index) => (
                 <motion.div
                   key={index}
@@ -334,19 +341,19 @@ export default function WiraPage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="overflow-hidden glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
-                    <div className="relative aspect-video">
+                  <Card className="glass shadow-lg border-secondary/10 hover:border-secondary/30 transition-colors h-full">
+                    <div className="relative aspect-[4/3] z-0 overflow-hidden rounded-t-2xl">
                       <div className="img-hover-zoom h-full">
                         <ImageWithLoading
                           src={event.image || "/placeholder.svg"}
                           alt={event.name}
-                          width={600}
-                          height={400}
+                          width={263}
+                          height={143}
                           className="object-cover h-full w-full"
                         />
                       </div>
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+                        className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"
                         initial={{ opacity: 0 }}
                         whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
@@ -375,7 +382,7 @@ export default function WiraPage() {
       </SectionTransition>
 
       {/* Call to Action */}
-      <section className="py-16 px-4 md:px-6 lg:px-8">
+      <section className="py-16 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-black to-primary-900/20">
         <div className="mx-auto max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

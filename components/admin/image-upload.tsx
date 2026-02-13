@@ -37,8 +37,8 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
     }
 
     // Validate file size (max 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      alert("File size must be less than 10MB")
+    if (file.size > 30 * 1024 * 1024) {
+      alert("File size must be less than 30MB")
       return
     }
 
@@ -52,15 +52,7 @@ export default function ImageUpload({ onUploadComplete }: ImageUploadProps) {
 
       console.log("Uploading to:", filePath)
 
-      // Check if bucket exists first
-      const { data: buckets } = await supabase.storage.listBuckets()
-      const imagesBucket = buckets?.find(b => b.name === 'images')
-      
-      if (!imagesBucket) {
-        throw new Error("Images storage bucket not found. Please configure Supabase storage.")
-      }
-
-      // Upload file to Supabase Storage
+      // Upload file to Supabase Storage directly
       const { data, error } = await supabase.storage
         .from("images")
         .upload(filePath, file, {

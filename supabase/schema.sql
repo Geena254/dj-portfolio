@@ -142,3 +142,10 @@ CREATE POLICY "Admins can update images" ON storage.objects
 
 CREATE POLICY "Admins can delete images" ON storage.objects
   FOR DELETE USING (bucket_id = 'images' AND auth.role() = 'authenticated');
+
+-- Grant necessary permissions
+GRANT ALL ON events TO authenticated;
+GRANT ALL ON mixes TO authenticated;
+GRANT ALL ON gallery_images TO authenticated;
+GRANT ALL ON hero_slides TO authenticated;
+GRANT ALL ON site_content TO authenticated;

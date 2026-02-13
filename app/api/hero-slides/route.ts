@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase"
+import { getAuthenticatedUser, unauthorizedResponse } from "@/lib/auth-helpers"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET() {
@@ -22,6 +23,11 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const user = await getAuthenticatedUser()
+  if (!user) {
+    return unauthorizedResponse()
+  }
+
   try {
     const body = await request.json()
     const { image_url, alt, page, order_index } = body
@@ -52,6 +58,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const user = await getAuthenticatedUser()
+  if (!user) {
+    return unauthorizedResponse()
+  }
+
   try {
     const body = await request.json()
     const { id, image_url, alt, page, order_index } = body
@@ -80,6 +91,11 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const user = await getAuthenticatedUser()
+  if (!user) {
+    return unauthorizedResponse()
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get("id")

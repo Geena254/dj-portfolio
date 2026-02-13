@@ -8,6 +8,7 @@ import PageLoading from "@/components/page-loading"
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://shangatatu.net'),
   title: "SHANGATATU | DJ & Music Producer",
   description: "Electronic and House Music DJ based in Diani, Kenya",
   generator: 'v0.dev',

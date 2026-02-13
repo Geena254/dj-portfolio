@@ -67,8 +67,8 @@ export default function HeroSlidesManager() {
     }
 
     // Validate required fields
-    if (!slideData.image_url || !slideData.alt) {
-      alert("Please fill in all required fields (Image URL and Alt Text)")
+    if (!slideData.image_url) {
+      alert("Please upload an image")
       return
     }
 
@@ -147,11 +147,11 @@ export default function HeroSlidesManager() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/80">Alt Text</label>
+                <label className="block text-sm font-medium mb-2 text-white/80">Alt Text (optional)</label>
                 <input
                   name="alt"
                   defaultValue={editingSlide?.alt || ""}
-                  required
+                  placeholder="Description for accessibility"
                   className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 transition-all"
                 />
               </div>

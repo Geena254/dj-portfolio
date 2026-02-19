@@ -20,6 +20,18 @@ export default function ArtGalleryPage() {
     { src: "/images/dj-mix.jpg", alt: "Digital Art" },
   ]
 
+  const djGalleryImages = [
+    { src: "/images/img9.jpg", alt: "Shangatatu at BTB" },
+    { src: "/images/img8.jpg", alt: "Wira 9.0" },
+    { src: "/images/img7.PNG", alt: "Wira 10.0" },
+    { src: "/images/img6.PNG", alt: "Spin sesh" },
+    { src: "/images/img5.jpg", alt: "Wira 9.0" },
+    { src: "/images/img4.HEIC", alt: "BTB Moment" },
+    { src: "/images/img3.HEIC", alt: "Wira 9.0" },
+    { src: "/images/img2.jpg", alt: "Wira 9.0" },
+    { src: "/images/img1.jpg", alt: "Wira 9.0" },
+  ]
+
   // Auto-advance slides
   useEffect(() => {
     const interval = setInterval(() => {
@@ -169,6 +181,58 @@ export default function ArtGalleryPage() {
                     Your browser does not support the video tag.
                   </video>
                 </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </SectionTransition>
+
+      {/* DJ Gallery Section */}
+      <SectionTransition>
+        <section id="gallery" className="relative px-4 py-20 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-16 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+                <h2 className="text-4xl font-bold gradient-text">DJ Gallery</h2>
+                <div className="h-1 w-10 bg-secondary rounded-full"></div>
+              </div>
+            </div>
+            <div className="relative overflow-hidden">
+              <motion.div
+                className="flex gap-6"
+                animate={{
+                  x: [0, -264 * djGalleryImages.length],
+                }}
+                transition={{
+                  x: {
+                    repeat: Number.POSITIVE_INFINITY,
+                    repeatType: "loop",
+                    duration: 30,
+                    ease: "linear",
+                  },
+                }}
+              >
+                {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative flex-shrink-0 w-60 h-56 rounded-2xl overflow-hidden group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ImageWithLoading
+                      src={image.src || "/placeholder.svg"}
+                      width={300}
+                      height={200}
+                      className="w-full h-full object-cover"
+                      alt={""}                    
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <p className="text-white font-semibold text-sm">{image.alt}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
             </div>
           </div>

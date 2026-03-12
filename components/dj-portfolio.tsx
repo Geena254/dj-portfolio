@@ -76,17 +76,16 @@ export default function DJPortfolio() {
     { src: "/images/IMG_8064.JPG", alt: "Wira 9.0" },
     { src: "/images/shangatatu-beach.jpg", alt: "BTB Moment" },
     { src: "/images/BK 7.jpg", alt: "Wira 9.0 Event" },
-    { src: "/images/079A3031.jpg", alt: "Wira 9.0" },
     { src: "/images/BK 9.jpg", alt: "Wira Performance" },
-    { src: "/images/079A3006.jpg", alt: "Wira 9.0" },
     { src: "/images/IMG_8088.JPEG.jpg", alt: "Wira 9.0" },
-    { src: "/images/079A3004.jpg", alt: "Wira 9.0" },
+    { src: "/images/img1.jpg", alt: "Wira 9.0" },
+    { src: "/images/s4.jpg", alt: "Shangatatu Day Set" },
     { src: "/images/dj-event.jpg", alt: "Wira Hello Moment" },
     { src: "/images/IMG_8065.JPG", alt: "Wira 9.0" },
     { src: "/images/mixes.jpg", alt: "Wira Post Event" },
-    { src: "/images/dj-mix.jpeg", alt: "Wira 8.0 Edition" },
-    { src: "/images/dj-back.jpg", alt: "Wira Kilifi Crowd" },
-    { src: "/images/wira-9.0.jpg", alt: "Wira 9.0 Stage" },
+    { src: "/images/shang1.jpg", alt: "Wira 9.0 Stage" },
+    { src: "/images/s3.jpg", alt: "Shangatatu Night Set" },
+    { src: "/images/img2.jpg", alt: "Wira 9.0" },
   ]
 
   return (
@@ -314,17 +313,16 @@ export default function DJPortfolio() {
               <motion.div
                 className="flex gap-6"
                 animate={{
-                  x: [0, -100 * djGalleryImages.length],
+                  x: [0, -264 * djGalleryImages.length],
                 }}
                 transition={{
                   x: {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "loop",
-                    duration: 50,
+                    duration: 30,
                     ease: "linear",
                   },
                 }}
-                style={{ width: `${djGalleryImages.length * 2 * 100}%` }}
               >
                 {[...djGalleryImages, ...djGalleryImages].map((image, index) => (
                   <motion.div
@@ -335,10 +333,10 @@ export default function DJPortfolio() {
                   >
                     <ImageWithLoading
                       src={image.src || "/placeholder.svg"}
-                      alt={image.alt}
                       width={320}
                       height={250}
                       className="w-full h-full object-cover"
+                      alt={""}                    
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
